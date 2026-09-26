@@ -1,0 +1,1375 @@
+{
+  "declarations": {
+    "Bass.IsRightUnimodular": {
+      "end_line": 33,
+      "line": 30,
+      "position": 1,
+      "display_kind": "def",
+      "doc_sha256": "e71d54aa130ca960d35a8a2d77631c16ee3073a9cb7b10bf7a10c945289590e2",
+      "header_sha256": "b85714ebe68e11e96faaee174d751c6187f87d6b798b37ab1c189488302de812",
+      "kind": "def",
+      "module": "StableRange.Basic"
+    },
+    "Bass.IsRightUnimodular.map": {
+      "end_line": 84,
+      "line": 78,
+      "position": 6,
+      "display_kind": "theorem",
+      "doc_sha256": "8fdfd9c70b831f8939db47160eb22e894860d84c246efaf7a90ccc6cac7d6eda",
+      "header_sha256": "58d5449452938f1435a6514086cd00209075177ca849d0f5672c8c5b6b23e562",
+      "kind": "theorem",
+      "module": "StableRange.Basic"
+    },
+    "Bass.IsRightUnimodularCons": {
+      "end_line": 39,
+      "line": 35,
+      "position": 2,
+      "display_kind": "def",
+      "doc_sha256": "c3f74c1491ca37a089c806a32145e5335233217af4a6edd4bbb9039428388dc2",
+      "header_sha256": "35ab5c6bbedb48bb7ef1b1891f1075299118829fb2fe8f80fc66c931871e485e",
+      "kind": "def",
+      "module": "StableRange.Basic"
+    },
+    "Bass.IsRightUnimodularCons.map": {
+      "end_line": 95,
+      "line": 86,
+      "position": 7,
+      "display_kind": "theorem",
+      "doc_sha256": "7a0c8c555de3bc93fba1f78cc5b108d48080169398a62c1c2777cdc857deec57",
+      "header_sha256": "b0464bff828308a0dd7eb3e421d70ec742d1b8d4b5afd12daf514dba7b5f9cc7",
+      "kind": "theorem",
+      "module": "StableRange.Basic"
+    },
+    "Bass.IsStableRange": {
+      "end_line": 155,
+      "line": 150,
+      "position": 12,
+      "display_kind": "def",
+      "doc_sha256": "3b6fdbd74632e4f33a8586b3346bdfebb97d0c193820cc428b1e761e7016bc91",
+      "header_sha256": "0d7f8b590f89c33e97b9c4db9d2778d6c22adb105fa19c541b4dce68eebaa944",
+      "kind": "def",
+      "module": "StableRange.Basic"
+    },
+    "Bass.IsUnitRegular": {
+      "end_line": 165,
+      "line": 162,
+      "position": 10,
+      "display_kind": "def",
+      "doc_sha256": "1cfdd212a3214fb423e338a896418b7d29ce538c7ff5f74184adc3e52a57ddc9",
+      "header_sha256": "7fb3ef7291af203a59163c58f347b0cce7e0701bb1d9052c53e1602e0ad7d9e9",
+      "kind": "def",
+      "module": "StableRange.Regular"
+    },
+    "Bass.IsUnitRegular.isDedekindFinite": {
+      "end_line": 251,
+      "line": 248,
+      "position": 14,
+      "display_kind": "theorem",
+      "doc_sha256": "c5cb1fb214b373747915704846e115442de80682066cf31efc8ec7e30e81e863",
+      "header_sha256": "e13fcff8368e8eabe6dbae19ed281c96b48957f7dd2e6a2bab496cfaa69eabd2",
+      "kind": "theorem",
+      "module": "StableRange.Regular"
+    },
+    "Bass.IsUnitRegular.isVonNeumannRegular": {
+      "end_line": 172,
+      "line": 167,
+      "position": 11,
+      "display_kind": "theorem",
+      "doc_sha256": "49937cc77da9e3297a07567861f23d9a6015593de2f748403d180bcc866bb17f",
+      "header_sha256": "45b2b7d5e26b08554d116986a4f90378289f071e69e17c837bcd6fcfa946c9ea",
+      "kind": "theorem",
+      "module": "StableRange.Regular"
+    },
+    "Bass.IsUnitRegular.stableRangeCondition_one": {
+      "end_line": 246,
+      "line": 183,
+      "position": 13,
+      "display_kind": "theorem",
+      "doc_sha256": "9f46d846ab58df705d2a4a9b05516c7f9f3954fb9bc9a7583d7aa3be8fc00c19",
+      "header_sha256": "1fb0114e3f02c2614ceda7cd34dbdf0104e210d5eecf97d868d7896237738cd1",
+      "kind": "theorem",
+      "module": "StableRange.Regular"
+    },
+    "Bass.IsUnitRegular.stableRange_one": {
+      "end_line": 287,
+      "line": 280,
+      "position": 16,
+      "display_kind": "theorem",
+      "doc_sha256": "f1d3061e800d8c31b2dcfa334dc76569c254d182c56bf867d62f0858af8022dc",
+      "header_sha256": "71d0b2cd0cff387b3d92295acdf30afcbbec4d66367cb1af51fedf3065e09073",
+      "kind": "theorem",
+      "module": "StableRange.Regular"
+    },
+    "Bass.IsUnitRegular.subsingleton_of_fin_linearEquiv_fin_prod": {
+      "end_line": 190,
+      "line": 181,
+      "position": 3,
+      "display_kind": "theorem",
+      "doc_sha256": "1394965c80a4bce4dc09d0715c98d9ebfbe5b547421edd6042732238532a972d",
+      "header_sha256": "7807a48c97721be8f23ef9af6a849e2791526f82e7d16bf9a1d21ca977e6890c",
+      "kind": "theorem",
+      "module": "StableRange.Cancellation"
+    },
+    "Bass.IsVonNeumannRegular": {
+      "end_line": 81,
+      "line": 79,
+      "position": 3,
+      "display_kind": "def",
+      "doc_sha256": "4983470089619d2b3cd7d11da93a0eed880b6159af28cb01ebd0a136f60b8899",
+      "header_sha256": "14cf6d21902d768eb1c4dce0d111cec6f9b58b917d56f01cadc3aba60599dd0a",
+      "kind": "def",
+      "module": "StableRange.Regular"
+    },
+    "Bass.IsVonNeumannRegular.exists_principalRightIdeals_isCompl": {
+      "end_line": 181,
+      "line": 174,
+      "position": 12,
+      "display_kind": "theorem",
+      "doc_sha256": "b1c43adbba87c4ae57f95611b182f1f60347c62842db4b9079cedcb79b4666a4",
+      "header_sha256": "694c6f4e0d26b7625da36bf166fc2095e760f9fb02f56be9b901baa5a23e58cf",
+      "kind": "theorem",
+      "module": "StableRange.Regular"
+    },
+    "Bass.IsVonNeumannRegular.flat": {
+      "end_line": 136,
+      "line": 131,
+      "position": 7,
+      "display_kind": "theorem",
+      "doc_sha256": "2ea19a974e8cdf96ba18f5511ae1162a9f14b7f7bda6ca6afde6b94ffbdb4235",
+      "header_sha256": "e49455a72c84dd71f1e5baa7b9e14033f67e880cd8517c23fa52c0c4ffebdbd0",
+      "kind": "theorem",
+      "module": "StableRange.Commutative"
+    },
+    "Bass.IsVonNeumannRegular.isReduced": {
+      "end_line": 40,
+      "line": 31,
+      "position": 1,
+      "display_kind": "theorem",
+      "doc_sha256": "ecacff32741fad44bbee50b020dc6769903a87b2d314d9b41cf557f0ff96b35f",
+      "header_sha256": "71d660bc57959e39ba478a0de1ed5b64b58ba748cccc5f9ae8677a287659b73b",
+      "kind": "theorem",
+      "module": "StableRange.Commutative"
+    },
+    "Bass.IsVonNeumannRegular.isUnitRegular": {
+      "end_line": 98,
+      "line": 36,
+      "position": 1,
+      "display_kind": "theorem",
+      "doc_sha256": "716716b34ea20d03e7bae69c4fe1cfc64402e50aa3d8d3cb9a9248ce9c2b47fd",
+      "header_sha256": "8196c7d6f348a2b84ada08f40d0ecfd3f5f896aa695786ab28ea5c7ac3f8bb4d",
+      "kind": "theorem",
+      "module": "StableRange.CommutativeStableRange"
+    },
+    "Bass.IsVonNeumannRegular.krullDimLE_zero": {
+      "end_line": 61,
+      "line": 42,
+      "position": 2,
+      "display_kind": "theorem",
+      "doc_sha256": "672068f6cad6514459c8d9a8dce3adeb9f9643d2e8c44b813ff8305af02da315",
+      "header_sha256": "f889513932de75579aeb59295afc5bab80df1e68add953a349301ed27643143f",
+      "kind": "theorem",
+      "module": "StableRange.Commutative"
+    },
+    "Bass.StableRangeCondition": {
+      "end_line": 58,
+      "line": 54,
+      "position": 4,
+      "display_kind": "def",
+      "doc_sha256": "a55371f6178a0b79cf9dbe83697dd604b41f93d7aa92fe9597d9147e38b0e4f4",
+      "header_sha256": "9c8a6212583fde234e5a6d3f9a7ae6974766d444cfcb79da33a065440887e969",
+      "kind": "def",
+      "module": "StableRange.Basic"
+    },
+    "Bass.StableRangeCondition.map_equiv": {
+      "end_line": 106,
+      "line": 97,
+      "position": 8,
+      "display_kind": "theorem",
+      "doc_sha256": "e15a36d658a31eaff3169e581c35e9a445ab863cce3ce13f3edcbb2e7beac85d",
+      "header_sha256": "2d5892d7ce2cd83995f2a773d51f9da638bf1deb1432a09628b4ed9cb369b109",
+      "kind": "theorem",
+      "module": "StableRange.Basic"
+    },
+    "Bass.coefficientRowConsKernelEquivOfStableRangeCondition": {
+      "end_line": 295,
+      "line": 234,
+      "position": 16,
+      "display_kind": "noncomputable def",
+      "doc_sha256": "12771ddb0d8b9542a8e4dd5eb83e8447fa48fc9f372ae0290fa0ffb0a708df0e",
+      "header_sha256": "0b9943dc9aeea913bfb0b79c1926718edb0f95c0c1efd96647a3ebfed8bc8145",
+      "kind": "def",
+      "module": "StableRange.RowKernel"
+    },
+    "Bass.coefficientRowConsMap": {
+      "end_line": 106,
+      "line": 100,
+      "position": 8,
+      "display_kind": "def",
+      "doc_sha256": "57fcabdb52379fb4285ed051b5ac5f25f76f46a92a288a4fe6fe7fee0c9a683a",
+      "header_sha256": "6c8899d344806d54036eb3ef33fba316109b3899ac3cfb6f36e131e1072fa4b2",
+      "kind": "def",
+      "module": "StableRange.RowKernel"
+    },
+    "Bass.coefficientRowConsMap_apply": {
+      "end_line": 113,
+      "line": 108,
+      "position": 9,
+      "display_kind": "theorem",
+      "doc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "header_sha256": "3ee53a53e612e68d33550dccab36bed7322c404ab51dbcbb2c6018c909e826b2",
+      "kind": "theorem",
+      "module": "StableRange.RowKernel"
+    },
+    "Bass.coefficientRowKernelEquivOfMatrixInverse": {
+      "end_line": 180,
+      "line": 156,
+      "position": 12,
+      "display_kind": "noncomputable def",
+      "doc_sha256": "8e43b54abc04ba043701e33b8fbfa7c99185d3b194fa4cacf6453f5622533312",
+      "header_sha256": "06e2fe812ea512021336799beddc9e49326fe49807dd661a7c1224e9134848c8",
+      "kind": "def",
+      "module": "StableRange.RowKernel"
+    },
+    "Bass.coefficientRowKernelEquivSuccOfStableRangeCondition": {
+      "end_line": 333,
+      "line": 308,
+      "position": 18,
+      "display_kind": "noncomputable def",
+      "doc_sha256": "1e7504cfe0ae3d67c625e934c5a7e7b50e24e4fa4b2e2f5bddd9c8a517596d72",
+      "header_sha256": "b48a14baf4658a5a291edd4fa58e9f6515c3ff3a4d4f3764b42fab049d4b8e8e",
+      "kind": "def",
+      "module": "StableRange.RowKernel"
+    },
+    "Bass.coefficientRowLinearMap": {
+      "end_line": 42,
+      "line": 38,
+      "position": 2,
+      "display_kind": "def",
+      "doc_sha256": "a4c373f956a2419cfbe22c5816454698965556ed192fc02464fa133057f4aec8",
+      "header_sha256": "09394b04e2c488e443d26484fcc7436de30999b2b69950ba372257815f57f475",
+      "kind": "def",
+      "module": "StableRange.RowKernel"
+    },
+    "Bass.coefficientRowLinearMap_apply": {
+      "end_line": 47,
+      "line": 44,
+      "position": 3,
+      "display_kind": "theorem",
+      "doc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "header_sha256": "21e0f869736355d4d656b80ee87d99f73b20b123b3404434e5a0b7df287b7b44",
+      "kind": "theorem",
+      "module": "StableRange.RowKernel"
+    },
+    "Bass.coefficientRowMatrix": {
+      "end_line": 36,
+      "line": 33,
+      "position": 1,
+      "display_kind": "def",
+      "doc_sha256": "57e1605c011d786a88cb6d87452fa2592c29982f5daf34430222ab744f9c5abf",
+      "header_sha256": "586ae6ce3648209f202a34109f92bb183599d35810210ad342038f058959e7c3",
+      "kind": "def",
+      "module": "StableRange.RowKernel"
+    },
+    "Bass.coefficientRowScalarMap": {
+      "end_line": 77,
+      "line": 74,
+      "position": 5,
+      "display_kind": "def",
+      "doc_sha256": "5c3cbf3f30e5081558599c73d014e15c3b09899597c1e8aa6347e4cf8c10bcc9",
+      "header_sha256": "defd38ab2278027af0cc5f0746c3c1ae60c10a399fb2551e35c2d4112cf1ba73",
+      "kind": "def",
+      "module": "StableRange.RowKernel"
+    },
+    "Bass.coefficientRowScalarMap_apply": {
+      "end_line": 83,
+      "line": 79,
+      "position": 6,
+      "display_kind": "theorem",
+      "doc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "header_sha256": "1f4e38510646dec89bbd0621c0f34195c41644420072e46ac09d44d135fa228b",
+      "kind": "theorem",
+      "module": "StableRange.RowKernel"
+    },
+    "Bass.coordinateHyperplaneEquiv": {
+      "end_line": 154,
+      "line": 135,
+      "position": 11,
+      "display_kind": "noncomputable def",
+      "doc_sha256": "33382ef12e4c6565a6f1c1c9a94f5e96c2d680c6072b8201e94d321cbdc75197",
+      "header_sha256": "f095e980ecf3135b548587fa8c5b5bb3c837382ff8da3bae310cd0dd0a3437ed",
+      "kind": "def",
+      "module": "StableRange.RowKernel"
+    },
+    "Bass.exists_linearEquiv_of_prod_of_end_stableRangeCondition_one": {
+      "end_line": 150,
+      "line": 33,
+      "position": 1,
+      "display_kind": "theorem",
+      "doc_sha256": "ab7ccf1fcf814dc938cd7b7aa1bc2f5c0b299d8833b9174743e0e35475307fe1",
+      "header_sha256": "683941a7bef3de831623d122cb05b2687acf6bb45c551ec51e492052b3b0a9dd",
+      "kind": "theorem",
+      "module": "StableRange.Cancellation"
+    },
+    "Bass.exists_mem_span_add_avoids_finite_antichain": {
+      "end_line": 167,
+      "line": 50,
+      "position": 2,
+      "display_kind": "theorem",
+      "doc_sha256": "5daa7c563a3b1121f29e69b129860dbe0d17ff572acd895971828f422743adff",
+      "header_sha256": "ebac100528f1d9a7a6797ca8a40a40074c6f0d87f67e84e95b034bf3439d3de6",
+      "kind": "theorem",
+      "module": "StableRange.BassDimension"
+    },
+    "Bass.exists_rightUnimodular_lift_of_surjective": {
+      "end_line": 51,
+      "line": 28,
+      "position": 1,
+      "display_kind": "theorem",
+      "doc_sha256": "b95a1f1aac69dbeeceb9b15df7097eca981706dfd6b75bd89b4d10510eead3e0",
+      "header_sha256": "72b1fbdb9658098096ce0b99a7a4da09926d22deb55dae3c234d321e223f62d8",
+      "kind": "theorem",
+      "module": "StableRange.Quotient"
+    },
+    "Bass.flat_of_isReduced_krullDimLE_zero": {
+      "end_line": 129,
+      "line": 113,
+      "position": 6,
+      "display_kind": "theorem",
+      "doc_sha256": "a1bbd96dcac106e1f05853842bada13bb342ca39b155beddd0231d1105bdef43",
+      "header_sha256": "a5b94a6bb86391175d953899127bbe792a71086945e138c936677b14babb3588",
+      "kind": "theorem",
+      "module": "StableRange.Commutative"
+    },
+    "Bass.free_ker_coefficientRowConsMap_of_stableRangeCondition": {
+      "end_line": 306,
+      "line": 297,
+      "position": 17,
+      "display_kind": "theorem",
+      "doc_sha256": "c2f8779743b320df875c1c720151db9520a4a2dcec554cb64f7076a223c0a263",
+      "header_sha256": "d3ada717b361ca940871f6b7cbee97ad281d3b11d87324c9c0a6f215c1ea3ff8",
+      "kind": "theorem",
+      "module": "StableRange.RowKernel"
+    },
+    "Bass.free_ker_coefficientRowLinearMap_of_matrix_inverse": {
+      "end_line": 191,
+      "line": 182,
+      "position": 13,
+      "display_kind": "theorem",
+      "doc_sha256": "c57647ac53465305f73d141d327b82a37a55dc6c8ffbe82c59f04a62d14316f2",
+      "header_sha256": "5bb5a569145f845cd3b54377e535ffe3e260c2e1bc6ac747579f6dfb005cb738",
+      "kind": "theorem",
+      "module": "StableRange.RowKernel"
+    },
+    "Bass.free_ker_coefficientRowLinearMap_of_stableRangeCondition": {
+      "end_line": 358,
+      "line": 346,
+      "position": 20,
+      "display_kind": "theorem",
+      "doc_sha256": "e3e03a95c823ff88b83582a4869711e07a2958b195b083922203843213cb09a4",
+      "header_sha256": "297585db26f3b2bfbfb7a9e6792b4750dbc133856ee687794e545caf260a5f62",
+      "kind": "theorem",
+      "module": "StableRange.RowKernel"
+    },
+    "Bass.free_ker_coefficientRowLinearMap_succ_of_stableRangeCondition": {
+      "end_line": 344,
+      "line": 335,
+      "position": 19,
+      "display_kind": "theorem",
+      "doc_sha256": "c3c9100ddf28ba11ac6dbdc283df76c893fa6fe67b73de9cbc0452995e0e075a",
+      "header_sha256": "035644fa323860ce722e8c08e27d12ed23bdcc4ed3df803c9e3ccf2fdf77d1eb",
+      "kind": "theorem",
+      "module": "StableRange.RowKernel"
+    },
+    "Bass.ideal_eq_top_of_natCast_succ_le_height_minimalPrimes": {
+      "end_line": 298,
+      "line": 277,
+      "position": 9,
+      "display_kind": "theorem",
+      "doc_sha256": "16b35eabaa739922edc076b8de764145d7eeb2a93cdb754336179616176417ff",
+      "header_sha256": "3e0d70b268d56239054cace7305a3bf858adc1fcf191b58eb5f9cda33e2d0476",
+      "kind": "theorem",
+      "module": "StableRange.BassDimension"
+    },
+    "Bass.isIdempotentElem_mul_innerInverse": {
+      "end_line": 106,
+      "line": 101,
+      "position": 6,
+      "display_kind": "theorem",
+      "doc_sha256": "3ac855ddb8af49fd7c152e7ea2499d1693fb5289da33508d908c332cc014b099",
+      "header_sha256": "7495be5fb621593685e3adcd071885c4864bc37e0afe6a05b39ef39b5993a075",
+      "kind": "theorem",
+      "module": "StableRange.Regular"
+    },
+    "Bass.isRightUnimodular_finSucc_iff": {
+      "end_line": 52,
+      "line": 41,
+      "position": 3,
+      "display_kind": "theorem",
+      "doc_sha256": "9992f38fc32a661d849efe9e64fbc3644778cc99935e57d8ad5f75f25d494c96",
+      "header_sha256": "ff33534463c91348bfd8ff3249d0e7edc5aee5485e8f9d4c62ace6be153fbdeb",
+      "kind": "theorem",
+      "module": "StableRange.Basic"
+    },
+    "Bass.isRightUnimodular_iff_span_range_eq_top": {
+      "end_line": 48,
+      "line": 34,
+      "position": 1,
+      "display_kind": "theorem",
+      "doc_sha256": "1b5747cd5925f9f63579104f7b29b0ee76b9a28f03e7a7449ea187716c2a08a9",
+      "header_sha256": "2769a8845e7a2530c77fb4bfa4e38e6c4f26e6d23b1be2f6fca2df4eae9c8fed",
+      "kind": "theorem",
+      "module": "StableRange.BassDimension"
+    },
+    "Bass.isRightUnimodular_iff_surjective_coefficientRowLinearMap": {
+      "end_line": 72,
+      "line": 49,
+      "position": 4,
+      "display_kind": "theorem",
+      "doc_sha256": "12d6fe2569b4a3429e280b3b8270c18a56df231a620c1e63bed1c8887649a32c",
+      "header_sha256": "9d6f6fef12b610c57b6705e3a20516699cfb52d2d600b9c94ed9c5fafb1f1ecd",
+      "kind": "theorem",
+      "module": "StableRange.RowKernel"
+    },
+    "Bass.isRightUnimodular_of_quotient": {
+      "end_line": 123,
+      "line": 89,
+      "position": 5,
+      "display_kind": "theorem",
+      "doc_sha256": "cb7169b64f357dc422b51b2b7c8465b7b4c60b00b547087ba8ae286fc4bfea24",
+      "header_sha256": "3cb5fc1ee8dfffd339d5acd6ca6f8e35749396854c9e6cbd7a9b349162d04c1e",
+      "kind": "theorem",
+      "module": "StableRange.Quotient"
+    },
+    "Bass.isUnitRegular_iff_stableRangeCondition_one": {
+      "end_line": 335,
+      "line": 329,
+      "position": 19,
+      "display_kind": "theorem",
+      "doc_sha256": "0eacaa7ba00179b8fcd510cc35d685fa02d35b18ebdaddebd3e38a7600abfe90",
+      "header_sha256": "da7988616eac7532dc3b721db32d80b93240d9fd45ee74a5dd04605f311067a2",
+      "kind": "theorem",
+      "module": "StableRange.Regular"
+    },
+    "Bass.isUnitRegular_iff_stableRange_one": {
+      "end_line": 342,
+      "line": 337,
+      "position": 20,
+      "display_kind": "theorem",
+      "doc_sha256": "7d8753b928e398a108643539bb701b650c48711cf4203bc6d9d9dd8985ff9e9e",
+      "header_sha256": "ba0a30d77355bd45f9969467cc15cd56ce267396db3ea327f9dab3a40d8b0374",
+      "kind": "theorem",
+      "module": "StableRange.Regular"
+    },
+    "Bass.isUnitRegular_matrix": {
+      "end_line": 151,
+      "line": 123,
+      "position": 4,
+      "display_kind": "theorem",
+      "doc_sha256": "9f97d76db77bf4b7d543c2ebdcc62eb69e6a3a9392f5a2b721f401711a53d9bd",
+      "header_sha256": "3af35e3428f181437b4fd3b1d4491a136c56ec04d637bcefc73f9dc6710cb19c",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRing"
+    },
+    "Bass.isUnitRegular_of_stableRangeCondition_one": {
+      "end_line": 319,
+      "line": 289,
+      "position": 17,
+      "display_kind": "theorem",
+      "doc_sha256": "e640f9789c9d6a168467a0a18cceba176ad9dce4a2eda99b9f9831c5d96f4da5",
+      "header_sha256": "05e06b4dd80e319a12119a774a02edaae331fa8300a4ffdd8525fea2cdc45d77",
+      "kind": "theorem",
+      "module": "StableRange.Regular"
+    },
+    "Bass.isUnitRegular_of_stableRange_one": {
+      "end_line": 327,
+      "line": 321,
+      "position": 18,
+      "display_kind": "theorem",
+      "doc_sha256": "83d564adbbb838526f2fd239dd562b6cd755af3c9fb23984b56b34f1f47c34d2",
+      "header_sha256": "bfb426af408c47aad1680ab2f1c7e5ddb4c880a049aefbfddbcfa706aab0186a",
+      "kind": "theorem",
+      "module": "StableRange.Regular"
+    },
+    "Bass.isUnit_first_or_isUnit_second": {
+      "end_line": 85,
+      "line": 59,
+      "position": 2,
+      "display_kind": "theorem",
+      "doc_sha256": "060dd352d89994d703332c05ff1c4f4afce4b822d62ac7a83ce8bb4368e6a8b3",
+      "header_sha256": "2aa18f3d0b71522457f7af2af0470fb13e046584d9df50e744e2fd675586b04f",
+      "kind": "theorem",
+      "module": "StableRange.Local"
+    },
+    "Bass.isUnit_of_mul_eq_one_of_stableRangeCondition_one": {
+      "end_line": 77,
+      "line": 72,
+      "position": 2,
+      "display_kind": "theorem",
+      "doc_sha256": "75a07908ba9697b44df4c27a79236025c6bafb3eb4cdb14bb7cb194ddd2b5968",
+      "header_sha256": "ea2d328987f2c1532399b85bd9cc4a271a758ff97cffa62282df6d4ba9d9d2fd",
+      "kind": "theorem",
+      "module": "StableRange.Regular"
+    },
+    "Bass.isUnit_of_mul_eq_one_right": {
+      "end_line": 57,
+      "line": 29,
+      "position": 1,
+      "display_kind": "theorem",
+      "doc_sha256": "5bbf5754c27d96e7341b3b3d50eb6759ee2b13a416dc2b7bea2114b9c9ed4d66",
+      "header_sha256": "cbcd733952405d39fd98de0de3fa4ca463f5f4092510390d946ea0a92af2ad3e",
+      "kind": "theorem",
+      "module": "StableRange.Local"
+    },
+    "Bass.isVonNeumannRegular_iff_isReduced_and_krullDimLE_zero": {
+      "end_line": 111,
+      "line": 101,
+      "position": 5,
+      "display_kind": "theorem",
+      "doc_sha256": "9a0ebdf31c10e524d209145a4ba5780a52abd32c405bae6657d43ca75579cc03",
+      "header_sha256": "9c0721a577bf8500d10f3100d2f8f1af986c0cacfdffb91b3db4d7ec28af2e23",
+      "kind": "theorem",
+      "module": "StableRange.Commutative"
+    },
+    "Bass.isVonNeumannRegular_moduleEnd": {
+      "end_line": 119,
+      "line": 115,
+      "position": 3,
+      "display_kind": "theorem",
+      "doc_sha256": "00f52e92cf0ee89480833d6747b34d619a345bf703aa5b332c9538d153b6c94f",
+      "header_sha256": "569eed7408e2d2a3013c77205dbb796270c4fff4835866482baad2966137b61f",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRing"
+    },
+    "Bass.isVonNeumannRegular_of_isReduced_krullDimLE_zero": {
+      "end_line": 99,
+      "line": 86,
+      "position": 4,
+      "display_kind": "theorem",
+      "doc_sha256": "75e15f31312b33db0ee2e4a6b34ada5139b8683aa23f6b3b041ad89f0a130517",
+      "header_sha256": "4096e7d2b7992a727542992a33b9abe75ca87a014f6620af4b0808697243e69e",
+      "kind": "theorem",
+      "module": "StableRange.Commutative"
+    },
+    "Bass.ker_coefficientRowScalarMap_eq": {
+      "end_line": 98,
+      "line": 85,
+      "position": 7,
+      "display_kind": "theorem",
+      "doc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "header_sha256": "563400ab415e18273bff44c5bd7837faabe00b6df0df5ad4b4b6dc4d2e24d84e",
+      "kind": "theorem",
+      "module": "StableRange.RowKernel"
+    },
+    "Bass.kernelEquivOfLinearEquiv": {
+      "end_line": 133,
+      "line": 115,
+      "position": 10,
+      "display_kind": "noncomputable def",
+      "doc_sha256": "ffa9380144db6aa74fc0ce1dfbc82b2b7c296ab2f945479a8d73d3005c50fc9e",
+      "header_sha256": "f909dadbc139adbab72c1910e598883b091ea3a6772d84f8e23f492b1f7cba72",
+      "kind": "def",
+      "module": "StableRange.RowKernel"
+    },
+    "Bass.kernelProdEquivOfIsRightUnimodular": {
+      "end_line": 232,
+      "line": 214,
+      "position": 15,
+      "display_kind": "noncomputable def",
+      "doc_sha256": "0ea4616caf501fc4ac3e68e8bb109dc972e165c97f02625c988e892b105cb638",
+      "header_sha256": "1fa2a1dca4ce3df5c497b08ded8cc73913cc96347f6b3103869ab5e65d202a19",
+      "kind": "def",
+      "module": "StableRange.RowKernel"
+    },
+    "Bass.kernelProdEquivOfRightInverse": {
+      "end_line": 212,
+      "line": 193,
+      "position": 14,
+      "display_kind": "noncomputable def",
+      "doc_sha256": "2cb7696adec046a7bcfd0f5c1a6381f83b3f843e28918166523f87f4e6fe6d66",
+      "header_sha256": "eee2248a71b0a80dd07aad32d1fb63b15502f58ca6311bdb918feec486b7fac5",
+      "kind": "def",
+      "module": "StableRange.RowKernel"
+    },
+    "Bass.mem_principalRightIdeal": {
+      "end_line": 99,
+      "line": 96,
+      "position": 5,
+      "display_kind": "theorem",
+      "doc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "header_sha256": "7a32437a7984666b2a16ab3a3a66e527e0fef6abfdf4b4a0e7451a34a9a6f203",
+      "kind": "theorem",
+      "module": "StableRange.Regular"
+    },
+    "Bass.natCast_le_height_of_mem_minimalPrimes_prefixIdeal": {
+      "end_line": 220,
+      "line": 183,
+      "position": 6,
+      "display_kind": "theorem",
+      "doc_sha256": "0b4c38c6d9566c7079f237d8355aab17da055235299e09985e70df5774141688",
+      "header_sha256": "c503a573a2ada3bed168767e8dde8814114872c05c36ef9d7c42561175f5d8f7",
+      "kind": "theorem",
+      "module": "StableRange.BassDimension"
+    },
+    "Bass.natCast_succ_le_height_minimalPrimes_sup_span_singleton": {
+      "end_line": 275,
+      "line": 249,
+      "position": 8,
+      "display_kind": "theorem",
+      "doc_sha256": "c0d5c1db970078ab1dacb3378912e5f367b0cc2e40002ebc1fffa7fb57db99ad",
+      "header_sha256": "887d380ebcde7d29cad5a63c36b987b9568c04f98f06a30da792975879239e66",
+      "kind": "theorem",
+      "module": "StableRange.BassDimension"
+    },
+    "Bass.not_isUnitRegular_moduleEnd_finsupp_nat": {
+      "end_line": 278,
+      "line": 253,
+      "position": 15,
+      "display_kind": "theorem",
+      "doc_sha256": "ebc7b0d51cc9adfaf7cff2b8932aa6062939f97b4983637dab92851d5abb8782",
+      "header_sha256": "ac904260b21155846a256ff064d86382601decb76e67f7e6fa31dca93e100e0d",
+      "kind": "theorem",
+      "module": "StableRange.Regular"
+    },
+    "Bass.not_stableRangeCondition_zero": {
+      "end_line": 120,
+      "line": 109,
+      "position": 4,
+      "display_kind": "theorem",
+      "doc_sha256": "bbb19428b601c03a97abedef9359cf54b4ccee15264653df7cd11c2ba03b3998",
+      "header_sha256": "15c1d78886fd520c2de1449d333c765de4a97caec58e26689a80e897847b6264",
+      "kind": "theorem",
+      "module": "StableRange.Local"
+    },
+    "Bass.prefixIdeal": {
+      "end_line": 172,
+      "line": 169,
+      "position": 3,
+      "display_kind": "def",
+      "doc_sha256": "cf143a283230fdd8ac571d2555cc1b308e674fdd13f45d236cf066af21d49f2a",
+      "header_sha256": "f39cf50a9a5452899b909c3dac40db68701090a855d27647138635ab06d3152b",
+      "kind": "def",
+      "module": "StableRange.BassDimension"
+    },
+    "Bass.prefixIdeal_eq_top_of_avoids_minimalPrimes": {
+      "end_line": 247,
+      "line": 222,
+      "position": 7,
+      "display_kind": "theorem",
+      "doc_sha256": "c26082d788ba6b8402776b63826c2b511370f13090ef5dc655ff883576da93a9",
+      "header_sha256": "f10f0e3f80629c7faab78da3a9c80faa7015d66a45ddf1076614d3438b2c30de",
+      "kind": "theorem",
+      "module": "StableRange.BassDimension"
+    },
+    "Bass.prefixIdeal_succ": {
+      "end_line": 181,
+      "line": 178,
+      "position": 5,
+      "display_kind": "theorem",
+      "doc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "header_sha256": "84c3d46837416f95a459429619dcce269473973c291dd57255f7681d21ed694b",
+      "kind": "theorem",
+      "module": "StableRange.BassDimension"
+    },
+    "Bass.prefixIdeal_zero": {
+      "end_line": 176,
+      "line": 174,
+      "position": 4,
+      "display_kind": "theorem",
+      "doc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "header_sha256": "0c5c50ab585df317592190e113329bc320b833b21dcc1fd7aeab73f3a318589a",
+      "kind": "theorem",
+      "module": "StableRange.BassDimension"
+    },
+    "Bass.principalRightIdeal": {
+      "end_line": 94,
+      "line": 83,
+      "position": 4,
+      "display_kind": "def",
+      "doc_sha256": "4e4c5657c52b59159715dd3f42e8e7d9b679fa2b0de23938f3940b7e95fee819",
+      "header_sha256": "491c6824a2e24c2896c34660473ba3af4053d4bab42d1f8d849b754a4bd2e993",
+      "kind": "def",
+      "module": "StableRange.Regular"
+    },
+    "Bass.principalRightIdeal_eq_mul_innerInverse": {
+      "end_line": 151,
+      "line": 137,
+      "position": 8,
+      "display_kind": "theorem",
+      "doc_sha256": "bb428e62a2f0a0bef7d373d388100f59645c5a363b631946646474999d805f92",
+      "header_sha256": "1446d1b07ab0285e8890f2df22937e3486f93d2a06e542e98d15085ad79cfea9",
+      "kind": "theorem",
+      "module": "StableRange.Regular"
+    },
+    "Bass.principalRightIdeals_isCompl_of_innerInverse": {
+      "end_line": 160,
+      "line": 153,
+      "position": 9,
+      "display_kind": "theorem",
+      "doc_sha256": "51dd0c7f0d55089017c6f763f4ad399bbb890bac2b79166d6526d7d663e40f59",
+      "header_sha256": "8c741511016798acd1da428034063b23592c874bc217321989802eda766bcec1",
+      "kind": "theorem",
+      "module": "StableRange.Regular"
+    },
+    "Bass.principalRightIdeals_isCompl_of_isIdempotentElem": {
+      "end_line": 135,
+      "line": 108,
+      "position": 7,
+      "display_kind": "theorem",
+      "doc_sha256": "864251d746beec3c3ee8b2be75f54185b60916b2c99fe85ab50668e7d065df74",
+      "header_sha256": "a96bb42758815b2282fdb871dc3803098d2dce614a1796c102a31845316c68ac",
+      "kind": "theorem",
+      "module": "StableRange.Regular"
+    },
+    "Bass.span_sq_eq_span_of_isReduced_krullDimLE_zero": {
+      "end_line": 84,
+      "line": 63,
+      "position": 3,
+      "display_kind": "theorem",
+      "doc_sha256": "6ae00c28dc40e553d10b01a45cfb2f627ef08fac4f1a491a34c43fa50a4e7e85",
+      "header_sha256": "8e386a8976f7ea72bb389742938b92ef64c9c0dfbb4f96254c03162c3f4c8473",
+      "kind": "theorem",
+      "module": "StableRange.Commutative"
+    },
+    "Bass.stableRangeCondition_equiv_iff": {
+      "end_line": 113,
+      "line": 108,
+      "position": 9,
+      "display_kind": "theorem",
+      "doc_sha256": "ecd50b8ca8728ffe066fe74e65aff496ecbfea06569bedc218148ab0b2666019",
+      "header_sha256": "ba5f7271c84cf1d60c0c8127822a89e36059caf0d3d21fadd2bedab01053844f",
+      "kind": "theorem",
+      "module": "StableRange.Basic"
+    },
+    "Bass.stableRangeCondition_iff_literal": {
+      "end_line": 76,
+      "line": 60,
+      "position": 5,
+      "display_kind": "theorem",
+      "doc_sha256": "31ea37ea8d33ff86a1ea83465c10680eaaac5a95038c127f17de3b1bce26c281",
+      "header_sha256": "c0d8ebd90ee71a9d8f980a47fb9b031fdd77721d868557f83f71dfbea1df471d",
+      "kind": "theorem",
+      "module": "StableRange.Basic"
+    },
+    "Bass.stableRangeCondition_mono": {
+      "end_line": 148,
+      "line": 142,
+      "position": 11,
+      "display_kind": "theorem",
+      "doc_sha256": "fcc5066260e8fa82f87e2287e04bb5d76d8992e7293c728cf8f2e66c9f3c4f8a",
+      "header_sha256": "367c4e9ede65a30a95f7c627d809af48faf4f290367427125d6f503285a401d2",
+      "kind": "theorem",
+      "module": "StableRange.Basic"
+    },
+    "Bass.stableRangeCondition_of_isStableRange": {
+      "end_line": 162,
+      "line": 157,
+      "position": 13,
+      "display_kind": "theorem",
+      "doc_sha256": "1a1ed6eac226605087574c70ba9f73e3563d70465335c29537bc9fe4e9a15df1",
+      "header_sha256": "6051ad99f4f91db0d4810d80f38a70cf3ee03673ae4cef667312bae718dd87a0",
+      "kind": "theorem",
+      "module": "StableRange.Basic"
+    },
+    "Bass.stableRangeCondition_of_surjective": {
+      "end_line": 71,
+      "line": 53,
+      "position": 2,
+      "display_kind": "theorem",
+      "doc_sha256": "f015e15b01d84847564ac2608a8919e9059488fada32a43d610455c4acf71a56",
+      "header_sha256": "60b612788e7181a4e0c14927c8304054d9bd2858b831a02a0d36b450336dcf8e",
+      "kind": "theorem",
+      "module": "StableRange.Quotient"
+    },
+    "Bass.stableRangeCondition_one_isDedekindFinite": {
+      "end_line": 70,
+      "line": 37,
+      "position": 1,
+      "display_kind": "theorem",
+      "doc_sha256": "7840a6862d96d7f7041bf8c99a1ddce090cc45d2fbfb030aba8108ad1ad9ba4b",
+      "header_sha256": "fe6661a2c0dad11b26aef524affa78dadacab18c4585ca8506a03822c1121131",
+      "kind": "theorem",
+      "module": "StableRange.Regular"
+    },
+    "Bass.stableRangeCondition_one_of_isLocalRing": {
+      "end_line": 107,
+      "line": 87,
+      "position": 3,
+      "display_kind": "theorem",
+      "doc_sha256": "3b8c473234121159d82ae3324d41d41c8f4ee0c9999dd06f555ef04b5b8b6ac8",
+      "header_sha256": "4633cd7197ed8a3d1211ebf41864365d12d748600a1e88092d9b502415960db3",
+      "kind": "theorem",
+      "module": "StableRange.Local"
+    },
+    "Bass.stableRangeCondition_one_of_krullDimLE_zero": {
+      "end_line": 122,
+      "line": 100,
+      "position": 2,
+      "display_kind": "theorem",
+      "doc_sha256": "eb4c988e7c1bbf6fbaa7276f0d35c2840971573f38f46c3c155dfb2510ad0ee2",
+      "header_sha256": "eb7ca92429208282a826f4b1e5181b727e55925109c2d42cca5f568a54dcbd96",
+      "kind": "theorem",
+      "module": "StableRange.CommutativeStableRange"
+    },
+    "Bass.stableRangeCondition_quotient": {
+      "end_line": 79,
+      "line": 73,
+      "position": 3,
+      "display_kind": "theorem",
+      "doc_sha256": "bf1601be8f1e2fa93ed76f219b451837d4eff3f1559c2e9aa77bba29486bd06d",
+      "header_sha256": "f7e98a881868bb3a1ad5809700ff4f918ffa5b777d179789f5b589c97098109b",
+      "kind": "theorem",
+      "module": "StableRange.Quotient"
+    },
+    "Bass.stableRangeCondition_quotient_iff": {
+      "end_line": 142,
+      "line": 125,
+      "position": 6,
+      "display_kind": "theorem",
+      "doc_sha256": "408a194295b6249a551cbc4a1a9834da7c808cee70954647c43f09cd62c8f7b5",
+      "header_sha256": "c9a2037b2cbd0ddfdfaf0d47117c41d27e1991b6553593eb15ff524162672aad",
+      "kind": "theorem",
+      "module": "StableRange.Quotient"
+    },
+    "Bass.stableRangeCondition_succ": {
+      "end_line": 140,
+      "line": 115,
+      "position": 10,
+      "display_kind": "theorem",
+      "doc_sha256": "d83260a62bfdc9f504a1c48697ad3abce698377ef2ac264a9c1c92efd415aeca",
+      "header_sha256": "a308cf31fb4e19a8de7993c234c5160ccdaf8289c326b64f34e8202dbf992194",
+      "kind": "theorem",
+      "module": "StableRange.Basic"
+    },
+    "Bass.stableRangeCondition_succ_of_krullDimLE": {
+      "end_line": 580,
+      "line": 543,
+      "position": 10,
+      "display_kind": "theorem",
+      "doc_sha256": "aeaa72a5d8d26a17c39ed42cebb23cafc7b939ce72980d10a28ab12f8744e2e7",
+      "header_sha256": "241c4f0e372705b043ad82aaf41b973bde8c750df350887ecab9cf5b29973101",
+      "kind": "theorem",
+      "module": "StableRange.BassDimension"
+    },
+    "Bass.stableRange_eq_quotient": {
+      "end_line": 153,
+      "line": 144,
+      "position": 7,
+      "display_kind": "theorem",
+      "doc_sha256": "99722cd5aa017f7a8f289e4c8c5ddd15028c7102abd9a3fe0b9728009d4d2f6a",
+      "header_sha256": "1cf6a96117201c00dc0b51e60b0c165371bd98cd882be0d73297da700d5d427f",
+      "kind": "theorem",
+      "module": "StableRange.Quotient"
+    },
+    "Bass.stableRange_one_of_isLocalRing": {
+      "end_line": 129,
+      "line": 122,
+      "position": 5,
+      "display_kind": "theorem",
+      "doc_sha256": "950eaa1a0cda8b321ce6c63d2300e62162fb9238894b53560378f38f21539c1d",
+      "header_sha256": "f3c4afadd1884ef10016f7f5e7ccda3c3af440b46a59dea0f05b454a38e4a934",
+      "kind": "theorem",
+      "module": "StableRange.Local"
+    },
+    "Bass.stableRange_one_of_krullDimLE_zero": {
+      "end_line": 132,
+      "line": 124,
+      "position": 3,
+      "display_kind": "theorem",
+      "doc_sha256": "79f79cfe01328a08ccbf12be44596debfba12c1093be97a8e56da4484b617673",
+      "header_sha256": "439ba56aafc19710b272e251463072d3249c30fbdea5ee75ffe9a1275971d008",
+      "kind": "theorem",
+      "module": "StableRange.CommutativeStableRange"
+    },
+    "Bass.stableRange_quotient_le": {
+      "end_line": 87,
+      "line": 81,
+      "position": 4,
+      "display_kind": "theorem",
+      "doc_sha256": "8f9d52a59f4192aad530c1b0e473f5a4d623fe594c397dfc748389ae4a586b7c",
+      "header_sha256": "e759a2591dc18e26635a1a32f4b79d6ead6df0e7289573d6f4640f8fd3a8b7fc",
+      "kind": "theorem",
+      "module": "StableRange.Quotient"
+    },
+    "Bass.subsingleton_of_pi_linearEquiv_pi_prod": {
+      "end_line": 179,
+      "line": 152,
+      "position": 2,
+      "display_kind": "theorem",
+      "doc_sha256": "3e15a6cb0c4ced900c8b91306ab5d37ce10f7a10fd06e2f20a49fb7a17499a8e",
+      "header_sha256": "595c2cec8a178b352e556a9c3f1b1c0d21531385dfa813b8c669fc23c6b3147c",
+      "kind": "theorem",
+      "module": "StableRange.Cancellation"
+    },
+    "LinearMap.exists_innerInverse": {
+      "end_line": 73,
+      "line": 35,
+      "position": 1,
+      "display_kind": "theorem",
+      "doc_sha256": "3f38a79fcb9cc2a0fc9b06e364df388fa1aaa8ff8fbcee48be9c7e9b8ecf1db2",
+      "header_sha256": "a3b6c68fb0e03c8ff6e2f7bb4edb8cf37fc6eed3b012b5713962d1001a3f7b26",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRing"
+    },
+    "LinearMap.exists_linearEquiv_innerInverse": {
+      "end_line": 106,
+      "line": 77,
+      "position": 2,
+      "display_kind": "theorem",
+      "doc_sha256": "559638cec0ed1da27be8aae9d39ea860cf2596a005c8f8822de285c62aa5ccaf",
+      "header_sha256": "54ea953a0651351ae8680aa72584bbce5d4a15f851c6dd31f566253b99640952",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRing"
+    },
+    "Matrix.exists_normalizedRowRank_eq": {
+      "end_line": 338,
+      "line": 332,
+      "position": 14,
+      "display_kind": "theorem",
+      "doc_sha256": "5edd2dcf6d6cdb5bd4575386fe7e4da578a92aa3808c5989d673ffe08b3bfbb7",
+      "header_sha256": "62bed3953ed4179987e091bbf44d10a96d0099d67a7dc91610266eb97840e122",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRingRank"
+    },
+    "Matrix.exists_rowRank_eq": {
+      "end_line": 157,
+      "line": 149,
+      "position": 8,
+      "display_kind": "theorem",
+      "doc_sha256": "cf8d51f21b382df53e4db07a63f9cafb88bc50467cabf8500110fee9352be2c6",
+      "header_sha256": "4ecb1ddacf5965bb7bc5d3e0367ebea7ecaf12ac946da44babde8f1f09718c62",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRingRank"
+    },
+    "Matrix.normalizedRowRank": {
+      "end_line": 330,
+      "line": 328,
+      "position": 13,
+      "display_kind": "noncomputable def",
+      "doc_sha256": "8dbe7aa9e933a14dfed1f5af6629d17eb898413ed1ad01d9b23772b91c8b76a8",
+      "header_sha256": "b4e5c033331ab7fb4fe413ea24d29de1d2fe854aaa5b2c34e28649e7f5c2ad23",
+      "kind": "def",
+      "module": "StableRange.DivisionRingRank"
+    },
+    "Matrix.normalizedRowRank_add_of_orthogonal_idempotents": {
+      "end_line": 406,
+      "line": 399,
+      "position": 22,
+      "display_kind": "theorem",
+      "doc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "header_sha256": "e5a37c835995d70ea7f0d9b537880741d7abfcacd018b41b4e4256e36d966cdd",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRingRank"
+    },
+    "Matrix.normalizedRowRank_mem_Icc": {
+      "end_line": 370,
+      "line": 361,
+      "position": 16,
+      "display_kind": "theorem",
+      "doc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "header_sha256": "f5addc7cbfa6d2c907d8d40daa1a0e9af812c15c763dfdd478d950ee4e963c85",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRingRank"
+    },
+    "Matrix.normalizedRowRank_mul_le_left": {
+      "end_line": 391,
+      "line": 388,
+      "position": 20,
+      "display_kind": "theorem",
+      "doc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "header_sha256": "6bf2183ca1e01320db1a8906aa4321ce9630d31c162041fc4e914822ca8c3f84",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRingRank"
+    },
+    "Matrix.normalizedRowRank_mul_le_right": {
+      "end_line": 396,
+      "line": 393,
+      "position": 21,
+      "display_kind": "theorem",
+      "doc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "header_sha256": "1d448a6b4cd9192028ab30520f9bacc89546e0715ab5df1a410c4cab15304d32",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRingRank"
+    },
+    "Matrix.normalizedRowRank_one": {
+      "end_line": 381,
+      "line": 378,
+      "position": 18,
+      "display_kind": "theorem",
+      "doc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "header_sha256": "ecf19e492aa023824ecdd66a41ba6d8923665e23e6be27d3b5a03c6b413913da",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRingRank"
+    },
+    "Matrix.normalizedRowRank_pos_iff": {
+      "end_line": 386,
+      "line": 383,
+      "position": 19,
+      "display_kind": "theorem",
+      "doc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "header_sha256": "7166e4d3d6bf3dccbe40ea16bd3d669c6e4af3bafea7a8c274ae0bf2b6e9e4af",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRingRank"
+    },
+    "Matrix.normalizedRowRank_reindex": {
+      "end_line": 349,
+      "line": 344,
+      "position": 15,
+      "display_kind": "theorem",
+      "doc_sha256": "1d2353e89d38d9cfec48d2d44ff220ac21520a5c949219e550a72fe7286f0cfa",
+      "header_sha256": "b4b82dca8b035c95013841b2ded149f98747a309b712f1b8ac3fbefc56ec7e3a",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRingRank"
+    },
+    "Matrix.normalizedRowRank_repeatBlock": {
+      "end_line": 421,
+      "line": 410,
+      "position": 23,
+      "display_kind": "theorem",
+      "doc_sha256": "c8ff9349af942b430f260ced1dc72abbfcd32ed4809186100984d9a4fa928989",
+      "header_sha256": "16e7f1885bb03deabab90e8b37aea06cef8791eabcb796e0d3b467941f076e84",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRingRank"
+    },
+    "Matrix.normalizedRowRank_zero": {
+      "end_line": 376,
+      "line": 373,
+      "position": 17,
+      "display_kind": "theorem",
+      "doc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "header_sha256": "27945a996af28ce159d2f67eb7eb3784d99e60d8224cc38aa6bcd8e344d92243",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRingRank"
+    },
+    "Matrix.repeatBlock": {
+      "end_line": 36,
+      "line": 34,
+      "position": 1,
+      "display_kind": "def",
+      "doc_sha256": "bf1f5942c71cff5a87e6d0840e6327d64ec6260aac2eb755b9914a93e7731cc3",
+      "header_sha256": "0dd4996cf08f8adeba908a3120901318309e52bdbbd6b68e02a1886ab3829650",
+      "kind": "def",
+      "module": "StableRange.RepeatedBlock"
+    },
+    "Matrix.repeatBlockHom": {
+      "end_line": 54,
+      "line": 51,
+      "position": 3,
+      "display_kind": "def",
+      "doc_sha256": "5002767790778168f26f500aa8dd03683f350cd2316b38811faee82fb52c6dbd",
+      "header_sha256": "c76f2bd99aff81f943ed7a1ee84d988e3dc32b928f309d142dc727192bf0877f",
+      "kind": "def",
+      "module": "StableRange.RepeatedBlock"
+    },
+    "Matrix.repeatBlockHom_apply": {
+      "end_line": 59,
+      "line": 56,
+      "position": 4,
+      "display_kind": "theorem",
+      "doc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "header_sha256": "c78e35299a061a4a9346817463a32fa218715d2f7463f24fd3d29a910e5d42af",
+      "kind": "theorem",
+      "module": "StableRange.RepeatedBlock"
+    },
+    "Matrix.repeatBlockHom_apply_eq_kronecker_one": {
+      "end_line": 66,
+      "line": 61,
+      "position": 5,
+      "display_kind": "theorem",
+      "doc_sha256": "21589e4087089a3866317f2fc5e1819c4278eeb070a9c756c53c96036ba2eca0",
+      "header_sha256": "59938c324350219e43bb7cf10c26e0dbf565cb1c9cce77b39d5759d9d0e5821f",
+      "kind": "theorem",
+      "module": "StableRange.RepeatedBlock"
+    },
+    "Matrix.repeatBlockHom_injective": {
+      "end_line": 75,
+      "line": 68,
+      "position": 6,
+      "display_kind": "theorem",
+      "doc_sha256": "5c64e170f7c35e7a2841c9d5cced22e37ba88d708eaf483da4c1f217871054ba",
+      "header_sha256": "e5902391ecf3f8197ecdcb4291543cb4205cef24c6753afa36860e91be280a12",
+      "kind": "theorem",
+      "module": "StableRange.RepeatedBlock"
+    },
+    "Matrix.repeatBlock_eq_kronecker_one": {
+      "end_line": 42,
+      "line": 38,
+      "position": 2,
+      "display_kind": "theorem",
+      "doc_sha256": "5215b9533d4b6a46d789bb57d390c4998c51e23ced4f74ab9889a4d8794d7cd8",
+      "header_sha256": "cc7d21bda4d9fe8d3392f99ba7f31a1615aa97102cd138b5630441e5a5006e7c",
+      "kind": "theorem",
+      "module": "StableRange.RepeatedBlock"
+    },
+    "Matrix.rowRank": {
+      "end_line": 43,
+      "line": 41,
+      "position": 1,
+      "display_kind": "noncomputable def",
+      "doc_sha256": "401ddaee94b4a47dbb5ba54cb4e5cc45f0ee011a921a7cf381c7bf7b627e3ea0",
+      "header_sha256": "b357b2680393daef6d35e0f8a89962795c2c9ba55d78d9d44fd691928522498b",
+      "kind": "def",
+      "module": "StableRange.DivisionRingRank"
+    },
+    "Matrix.rowRank_add_of_orthogonal_idempotents": {
+      "end_line": 229,
+      "line": 172,
+      "position": 11,
+      "display_kind": "theorem",
+      "doc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "header_sha256": "635d4f306bb39ddb9c335812614db5a9a3c960d323e9b7435a367e932b6bbab9",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRingRank"
+    },
+    "Matrix.rowRank_eq_zero_iff": {
+      "end_line": 72,
+      "line": 62,
+      "position": 5,
+      "display_kind": "theorem",
+      "doc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "header_sha256": "3e69ba76948d3b6579fb2439b401f642a5dc43ae04c5cdfef9bc770f6fb777cb",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRingRank"
+    },
+    "Matrix.rowRank_le_card": {
+      "end_line": 59,
+      "line": 56,
+      "position": 4,
+      "display_kind": "theorem",
+      "doc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "header_sha256": "605a5ebeacbbd41fed93471b2ecf2c727d13e9cf1cbc8a136fb8a219cca8b749",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRingRank"
+    },
+    "Matrix.rowRank_mul_le_left": {
+      "end_line": 163,
+      "line": 160,
+      "position": 9,
+      "display_kind": "theorem",
+      "doc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "header_sha256": "09d277779c8551f5557a83aaaba3454c98936a14275674a5ab7a147b2614cae6",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRingRank"
+    },
+    "Matrix.rowRank_mul_le_right": {
+      "end_line": 170,
+      "line": 166,
+      "position": 10,
+      "display_kind": "theorem",
+      "doc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "header_sha256": "88c5a6efe132cd51c43f8e39dbff01c2988c8f92e3ef73b7a4892e13c0251efa",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRingRank"
+    },
+    "Matrix.rowRank_one": {
+      "end_line": 53,
+      "line": 50,
+      "position": 3,
+      "display_kind": "theorem",
+      "doc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "header_sha256": "10d37229089ea03988b354f3b9531c8525ccc3eddb9bfefd3ebf5fd27aad8223",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRingRank"
+    },
+    "Matrix.rowRank_pos_iff": {
+      "end_line": 76,
+      "line": 75,
+      "position": 6,
+      "display_kind": "theorem",
+      "doc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "header_sha256": "48683af0d68ea23f62341b9480e47f1bb30dd0cb0d2763449fc9819f3e1751f6",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRingRank"
+    },
+    "Matrix.rowRank_reindex": {
+      "end_line": 115,
+      "line": 109,
+      "position": 7,
+      "display_kind": "theorem",
+      "doc_sha256": "260bc8e8b7a63aa7ee85aa6600e98e80f42df8747845b5e249f7885fd91f5ef7",
+      "header_sha256": "bce4066bb3aadd9b15568b38f1c53307a3503ac4920e343e23ac6910015c7a4d",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRingRank"
+    },
+    "Matrix.rowRank_repeatBlock": {
+      "end_line": 324,
+      "line": 317,
+      "position": 12,
+      "display_kind": "theorem",
+      "doc_sha256": "ef3b727aa13117d515c00851277858b1d93540d9f49af7083b35b6d5364b6050",
+      "header_sha256": "8bdec1c6cc9c0ebe2e4670c67b2568bb7cd1148c9648c7c40dfe99cd9b550c91",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRingRank"
+    },
+    "Matrix.rowRank_zero": {
+      "end_line": 48,
+      "line": 46,
+      "position": 2,
+      "display_kind": "theorem",
+      "doc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "header_sha256": "a66f3eb3a2fd4c78ea0bc340710745d87e9fac34a4fab107aef979056373c030",
+      "kind": "theorem",
+      "module": "StableRange.DivisionRingRank"
+    }
+  },
+  "modules": {
+    "PublicAPIClient": {
+      "display_sites": 0,
+      "imports": [
+        "Init",
+        "Mathlib.Data.ZMod.Basic",
+        "Mathlib.RingTheory.Spectrum.Prime.Noetherian",
+        "StableRange"
+      ],
+      "instances": []
+    },
+    "StableRange": {
+      "display_sites": 0,
+      "imports": [
+        "Init",
+        "StableRange.Basic",
+        "StableRange.BassDimension",
+        "StableRange.Cancellation",
+        "StableRange.Commutative",
+        "StableRange.CommutativeStableRange",
+        "StableRange.DivisionRing",
+        "StableRange.DivisionRingRank",
+        "StableRange.Local",
+        "StableRange.Quotient",
+        "StableRange.Regular",
+        "StableRange.RepeatedBlock",
+        "StableRange.RowKernel"
+      ],
+      "instances": []
+    },
+    "StableRange.Basic": {
+      "display_sites": 13,
+      "imports": [
+        "Init",
+        "Mathlib.Algebra.BigOperators.Fin",
+        "Mathlib.Algebra.Ring.Equiv",
+        "Mathlib.Tactic.Abel"
+      ],
+      "instances": []
+    },
+    "StableRange.BassDimension": {
+      "display_sites": 10,
+      "imports": [
+        "Init",
+        "Mathlib.RingTheory.Ideal.Height",
+        "Mathlib.RingTheory.Ideal.MinimalPrime.Noetherian",
+        "Mathlib.RingTheory.Ideal.Operations",
+        "StableRange.CommutativeStableRange"
+      ],
+      "instances": []
+    },
+    "StableRange.Cancellation": {
+      "display_sites": 3,
+      "imports": [
+        "Init",
+        "Mathlib.LinearAlgebra.Pi",
+        "Mathlib.LinearAlgebra.Prod",
+        "StableRange.Regular"
+      ],
+      "instances": []
+    },
+    "StableRange.Commutative": {
+      "display_sites": 7,
+      "imports": [
+        "Init",
+        "Mathlib.LinearAlgebra.Basis.VectorSpace",
+        "Mathlib.RingTheory.Flat.Localization",
+        "Mathlib.RingTheory.KrullDimension.Zero",
+        "Mathlib.RingTheory.LocalProperties.Reduced",
+        "StableRange.Regular"
+      ],
+      "instances": []
+    },
+    "StableRange.CommutativeStableRange": {
+      "display_sites": 3,
+      "imports": [
+        "Init",
+        "Mathlib.RingTheory.Ideal.Quotient.Nilpotent",
+        "StableRange.Commutative",
+        "StableRange.Local",
+        "StableRange.Quotient"
+      ],
+      "instances": []
+    },
+    "StableRange.DivisionRing": {
+      "display_sites": 4,
+      "imports": [
+        "Init",
+        "Mathlib.LinearAlgebra.FiniteDimensional.Basic",
+        "Mathlib.LinearAlgebra.Matrix.ToLin",
+        "Mathlib.LinearAlgebra.Projection",
+        "StableRange.Regular"
+      ],
+      "instances": []
+    },
+    "StableRange.DivisionRingRank": {
+      "display_sites": 23,
+      "imports": [
+        "Init",
+        "Mathlib.Basic.Real.Basic",
+        "Mathlib.LinearAlgebra.Dimension.Constructions",
+        "Mathlib.LinearAlgebra.FiniteDimensional.Lemmas",
+        "Mathlib.LinearAlgebra.Matrix.ToLin",
+        "Mathlib.LinearAlgebra.Pi",
+        "StableRange.RepeatedBlock"
+      ],
+      "instances": []
+    },
+    "StableRange.Local": {
+      "display_sites": 5,
+      "imports": [
+        "Init",
+        "Mathlib.RingTheory.LocalRing.Basic",
+        "StableRange.Basic"
+      ],
+      "instances": []
+    },
+    "StableRange.Quotient": {
+      "display_sites": 7,
+      "imports": [
+        "GeneralLinearGroups.QuasiregularIdeal",
+        "Init",
+        "StableRange.Basic"
+      ],
+      "instances": []
+    },
+    "StableRange.Regular": {
+      "display_sites": 20,
+      "imports": [
+        "Init",
+        "Mathlib.Algebra.Module.Opposite",
+        "Mathlib.Algebra.Module.Submodule.Lattice",
+        "Mathlib.Algebra.Ring.Idempotent",
+        "Mathlib.LinearAlgebra.Finsupp.Defs",
+        "Mathlib.Tactic.NoncommRing",
+        "StableRange.Basic",
+        "StableRange.Local"
+      ],
+      "instances": []
+    },
+    "StableRange.RepeatedBlock": {
+      "display_sites": 6,
+      "imports": [
+        "Init",
+        "Mathlib.Data.Matrix.Block",
+        "Mathlib.LinearAlgebra.Matrix.Kronecker"
+      ],
+      "instances": []
+    },
+    "StableRange.RowKernel": {
+      "display_sites": 20,
+      "imports": [
+        "Init",
+        "Mathlib.LinearAlgebra.Basis.Prod",
+        "Mathlib.LinearAlgebra.Matrix.ToLin",
+        "Mathlib.LinearAlgebra.Pi",
+        "StableRange.Basic"
+      ],
+      "instances": []
+    }
+  }
+}
