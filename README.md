@@ -171,7 +171,11 @@ project modules in the default graph successfully: 2,259 jobs, 17.448 seconds
 wall time, 30.421 seconds user and 8.719 seconds system. This is one measured
 clean-project/warm-dependency run, not a cold-cache or portable performance promise.
 Ordinary source replay, including uppercase `-T0` (allocation timeout disabled),
-is not a trust-zero check or the separate stored-proof audit required for release.
+is neither a trust-zero check nor a complete transitive axiom audit. Release
+computational prerequisites are an applicable successful pinned build and a
+complete transitive standard-axiom audit including private declarations; exact-input
+evidence may be reused. Separate stored-proof replay, fresh expensive docgen and
+repeated consumer builds are not release prerequisites.
 
 The GLG pin above is the actual initial parentless official private GitHub root,
 tree `b220afb712444f8b37435b5878231b0a41d525a8`, promoted and mirrored on
