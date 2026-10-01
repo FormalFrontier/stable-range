@@ -2,62 +2,102 @@
 
 Reusable Lean theory of Bass stable range, unimodular rows, and applications.
 
-The initial development defines finite right-unimodular rows over arbitrary
-possibly noncommutative rings, Bass's conditions `(S_n)`, and relational least
-stable range. It develops monotonicity, descent along surjective ring
-homomorphisms, invariance under quotients by quasi-regular two-sided ideals,
-the stable-range-one theorem for local rings, direct finiteness under
-`(S_1)`, and the equivalence between unit-regularity and `(S_1)` for von
-Neumann-regular rings. For regular rings it constructs explicit complementary
-principal right ideals from inner inverses. Stable-range conditions are
-invariant under ring equivalence, and a module whose endomorphism ring has
-`(S_1)` cancels from binary direct products without finiteness or projectivity
-assumptions. Consequently, finite powers of the regular right module over a
-unit-regular ring cannot absorb a nontrivial complementary module. It also
-proves that endomorphism rings of arbitrary vector spaces over division rings
-are von Neumann-regular, while the endomorphism ring of a countable direct sum
-of copies of any nonzero module is not unit-regular. In finite dimension,
-endomorphisms have automorphic inner inverses, and consequently finite square
-matrix rings over division rings are unit-regular. It also develops row rank for
-rectangular matrices over division rings and the normalized real-valued row rank
-of nonempty finite square matrices, including multiplication bounds and
-additivity on orthogonal idempotents. Row rank is invariant under independent
-equivalences of the row and column index types, and normalized row rank is
-invariant under simultaneous reindexing. Every natural-number row rank up to
-the size of a finite square matrix is realized, with the corresponding
-normalized value. Repeating a rectangular matrix on finitely many diagonal
-blocks scales its row rank by the number of blocks; for nonempty square
-matrices and a nonempty block family, normalized row rank is unchanged. Over
-arbitrary possibly nonassociative and noncommutative
-`NonAssocSemiring` coefficients, repeating square matrices on finitely many
-diagonal blocks is a ring homomorphism, injective when the block family is
-nonempty.
+The mathematical API is source-independent; interpretation and coverage of
+motivating sources live in their source repositories. Import `StableRange` for
+the complete library, or import individual leaves below.
 
-For commutative rings, von Neumann regularity is equivalent to reducedness
-together with Krull dimension at most zero. Every module over such a ring is
-flat, with no finite-generation or Noetherian hypothesis. Every commutative
-ring of Krull dimension at most zero satisfies `(S₁)` (and has least stable
-range one when nontrivial), without a reducedness assumption. Every
-commutative von Neumann-regular ring is unit-regular.
+## Headline results
 
-More generally, every commutative noetherian ring of Krull dimension at most
-`d` satisfies Bass's condition `(S_(d+1))`. The proof uses a finite-antichain
-prime-avoidance construction and minimal-prime height induction. It does not
-assume reducedness, nontriviality, decidable equality, infinite residue fields,
-or a chosen presentation of the ring.
+These results build on Mathlib's algebraic APIs. The quasiregular-ideal
+predicate and unit characterization are imported from the pinned
+`general-linear-groups` dependency; the stable-range consequences are proved
+here. Each link points to a declaration in this repository.
 
-For commutative rings satisfying `(S_s)`, every right-unimodular coefficient
-row of length at least `s + 1` has a free kernel. The proof is an explicit
-two-shear reduction to the split kernel of the shortened unimodular row; it
-does not assume Noetherianity, a dimension bound, or nontriviality.
-Independently of stable range, any row of a square matrix with a specified
-two-sided inverse has free coefficient kernel, via an explicit equivalence with
-the function module on the complementary column indices.
+### Bass conditions, quotients and local rings
 
-This repository is organized around source-independent algebra.
-Interpretation, provenance, correspondence, and coverage for motivating
-sources remain in their source-metadata repositories. Prism is responsible for
-the initial integration on behalf of the Source-maintainers team.
+For arbitrary possibly noncommutative rings, the library defines finite
+[right-unimodular rows](StableRange/Basic.lean#L32),
+[Bass's `(S_n)` condition](StableRange/Basic.lean#L56), and
+[relational least stable range](StableRange/Basic.lean#L154). It proves
+[monotonicity](StableRange/Basic.lean#L143), invariance under ring equivalence,
+[descent along surjective homomorphisms](StableRange/Quotient.lean#L55), and
+[equivalence under quotients by quasiregular two-sided ideals](StableRange/Quotient.lean#L127).
+[Nontrivial local rings have least stable range one](StableRange/Local.lean#L123).
+The zero ring can satisfy `(S_0)`; this is not a least-index-one assertion.
+Witnesses multiply on the right, and reduction order matters outside
+commutative rings; see [Scope and conventions](#scope-and-conventions).
+
+### Regular rings and module cancellation
+
+`(S_1)` implies [direct finiteness](StableRange/Regular.lean#L38), and
+under von Neumann regularity it is
+[equivalent to unit-regularity](StableRange/Regular.lean#L331).
+An inner inverse constructs
+[complementary principal right ideals](StableRange/Regular.lean#L155).
+If the endomorphism ring of a module `M` satisfies `(S_1)`, then
+[`M` cancels from binary direct products](StableRange/Cancellation.lean#L35):
+`M × A ≃ M × B` implies `A ≃ B`, without finiteness or projectivity
+assumptions. For the regular right module, the statement uses the **opposite
+ring**. [Finite powers](StableRange/Cancellation.lean#L184) over a unit-regular
+ring cannot absorb a nontrivial complementary module.
+
+### Endomorphisms and matrices over division rings
+
+Endomorphisms of arbitrary vector spaces over division rings have
+[inner inverses](StableRange/DivisionRing.lean#L37), hence von Neumann-regular
+endomorphism rings. In finite dimension the inner inverse can be
+[an automorphism](StableRange/DivisionRing.lean#L79), yielding
+[unit-regular finite square matrix rings](StableRange/DivisionRing.lean#L124),
+including empty indices. By contrast, the endomorphism ring of a countable
+direct sum of copies of [any nonzero additive module](StableRange/Regular.lean#L255)
+is not unit-regular; the sum need not be a free module.
+
+### Row rank and repeated diagonal blocks
+
+For division-ring coefficients, [row rank](StableRange/DivisionRingRank.lean#L42)
+is the finrank of the image of the **left-linear row-vector map given by
+right multiplication**. Rectangular ranks have multiplication bounds,
+orthogonal-idempotent additivity and independent row/column reindexing.
+For square matrices, [normalized rank](StableRange/DivisionRingRank.lean#L329)
+is real row rank divided by index cardinality; identity rank one and positive
+bounds require a nonempty index. Every allowed
+[natural rank](StableRange/DivisionRingRank.lean#L151) and
+[normalized value](StableRange/DivisionRingRank.lean#L334) is realized.
+[Rectangular repeated blocks](StableRange/DivisionRingRank.lean#L319) scale
+rank by the block count; normalized square rank is
+[unchanged](StableRange/DivisionRingRank.lean#L412) for nonempty matrix and
+block indices. Empty square matrices have normalized rank zero.
+
+Separately, over arbitrary potentially nonassociative/noncommutative
+`NonAssocSemiring` coefficients, [`Matrix.repeatBlockHom`](StableRange/RepeatedBlock.lean#L52)
+is a ring homomorphism, [injective](StableRange/RepeatedBlock.lean#L70)
+when the block family is nonempty.
+
+### Commutative regularity and dimension bounds
+
+A commutative ring is von Neumann regular
+[iff it is reduced and has Krull dimension at most zero](StableRange/Commutative.lean#L103).
+[All its modules are flat](StableRange/Commutative.lean#L132), with no finite or
+Noetherian hypothesis. A commutative ring of dimension at most zero
+[satisfies `(S_1)`](StableRange/CommutativeStableRange.lean#L102) even without
+reducedness or nontriviality; *least* stable index one requires `Nontrivial`.
+Every commutative von Neumann-regular ring is unit-regular.
+
+More generally, a commutative Noetherian ring with `Ring.KrullDimLE d`
+[satisfies `(S_(d+1))`](StableRange/BassDimension.lean#L548), proved by finite
+prime avoidance and minimal-prime height induction, without an infinite-residue-
+fields premise.
+
+### Free kernels of coefficient rows
+
+Over a commutative ring satisfying `(S_s)`, a right-unimodular coefficient
+row of length at least `s + 1`
+[has a free kernel](StableRange/RowKernel.lean#L348), by explicit two-shear
+reduction. Independently of stable range, a *chosen row* of a square matrix
+with an actual two-sided inverse has
+[an explicit free-kernel equivalence](StableRange/RowKernel.lean#L159) with the
+function module on complementary column indices. Both inverse identities
+and an actual row index are required, not a merely proposed inverse.
 
 ## Public interface and use
 
@@ -133,7 +173,7 @@ nonreduced ring. It is part of the default build.
   inverse; it does not manufacture an index for an empty matrix.
 - This is not a general Morita-invariance theorem, stable general-linear-group
   construction, arbitrary stably-free cancellation theorem, or K-theory library.
-  No source-wide formalization or release certification follows from these APIs.
+  These results do not establish formal coverage of a whole source book.
 
 ## Reproducible build
 
@@ -143,92 +183,50 @@ The exact environment is Lean `leanprover/lean4:v4.34.0-rc2`, Mathlib
 resolved graph. The official GLG GitHub repository is private and requires
 authorized access; no credentials belong in this repository or its documentation.
 
-Install the toolchain named in `lean-toolchain` through elan, then run from the
-repository root:
+Install the pinned `lean-toolchain` with elan and, from the repository root,
+successfully fetch the matching Mathlib cache **before** building. The default
+build runs both `StableRange` and `StableRangeTests` (the private API client):
 
 ```sh
 env LEAN_NUM_THREADS=2 lake exe cache get
 env LEAN_NUM_THREADS=2 lake --wfail -KwarningAsError=true build
-env LEAN_NUM_THREADS=2 lake env lean -DwarningAsError=true tests/PublicAPIClient.lean
 ```
 
-The matching cache fetch must succeed before building, including in a new
-checkout or after replacing `.lake` or changing pins. The literal default builds
-both `StableRange` and `StableRangeTests`. To reproduce a clean **project** build
-while retaining the fetched dependencies:
+The cache fetch is also required after replacing `.lake` or changing pins;
+`LEAN_NUM_THREADS=2` does not cap child-process memory. To rebuild just the
+**project** while retaining the matching fetched dependency cache:
 
 ```sh
 lake clean stable-range
 time env LEAN_NUM_THREADS=2 lake --wfail -KwarningAsError=true build
 ```
 
-Do not run unqualified `lake clean` here: it also removes dependency outputs.
-The author evidence and measured baseline are recorded in
-internal readiness issue #38.
-On 2026-09-25, the author's Linux container (23 GiB memory limit,
-`LEAN_NUM_THREADS=2`, matching dependency cache retained) rebuilt all fourteen
-project modules in the default graph successfully: 2,259 jobs, 17.448 seconds
-wall time, 30.421 seconds user and 8.719 seconds system. This is one measured
-clean-project/warm-dependency run, not a cold-cache or portable performance promise.
-Ordinary source replay, including uppercase `-T0` (allocation timeout disabled),
-is neither a trust-zero check nor a complete transitive axiom audit. Release
-computational prerequisites are an applicable successful pinned build and a
-complete transitive standard-axiom audit including private declarations; exact-input
-evidence may be reused. Separate stored-proof replay, fresh expensive docgen and
-repeated consumer builds are not release prerequisites.
-
-The GLG pin above is the actual initial parentless official private GitHub root,
-tree `b220afb712444f8b37435b5878231b0a41d525a8`, promoted and mirrored on
-2026-09-26 after internal acceptance. This exact upstream dependency pin does
-not imply a Stable Range release or a public Stable Range source commit.
-On 2026-09-26, the previous source's author completed a raw stored-body inventory
-(316 raw occurrences across fourteen targets; 37 codegen-only names separate)
-and separate checks recorded in internal issue #38.
-These author checks do not replace independent generated-API, metadata, semantic,
-rights or whole-artifact review, or protected-promotion/consumer checks.
-At the 2026-09-26 author handoff, the root `formalization.yaml` incorporated
-metadata from then-unaccepted PR #40 and readiness changes from then-unaccepted
-PR #39. Their inclusion was not acceptance; later verdicts attach to their
-exact revisions. The metadata's `author-verified` status describes historical
-author evidence, not a current independent-review or release verdict. The root
-LICENSE is present and headers carry collective author credit, not established
-ownership or independent rights clearance. The
-genuine native generation and data-only tests are bounded documentation evidence,
-not release acceptance or a whole-proof audit; see [generation limitations](docs/README.md).
-The [API manifest](docs/api-manifest.json) binds a committed source snapshot,
-native generation and documentation bytes. Its author checks are not an
-independent review of this successor or a claim that the source snapshot is
-available on GitHub.
+Do not use unqualified `lake clean` here: it removes dependency outputs. For
+the historical, source-bound native API and its limitations, see the
+[API reference](docs/API.md), [manifest](docs/api-manifest.json) and
+[generation guide](docs/README.md). The manifest records its **original**
+source and documentation hashes; this README, changed headers and metadata
+have different bytes. An old manifest hash must not be replaced to conceal
+that drift, and native `--check` is not a success claim for this checkout.
 
 ## License, credit and provenance
 
 Original project contributions are offered under the Apache License 2.0 in
 [LICENSE](LICENSE). Lean file credit is `Authors: Formal Frontier Agents`, a
 collective attribution, **not** a claim that an unverified entity owns copyright.
-Prism authored the initial library and most subsequent developments. The
-invertible-matrix-row kernel extension was contributed by
-`formalization-worker-b`, Hive Task
-`hive-request-905eb56085b0b843c8a3566340579c394a244d0b`, UID
-`11244f44-2a43-49e1-96c4-1d9e06d57485`, commit
-`84e27e284813f13af149284a4cf44a079f313f9a` (PR #37).
-The isolated prefix-ideal recursor fixture was authored by worker-a Task
-`hive-request-de3a7ada8b39474d68eb2f423d722fe442d5828d`, UID
-`71af888b-804a-49e5-a144-911d4255f078`; the separate production replacement
-and author checks were authored by worker-a Task
-`hive-request-383df0a15b139fdb710024bff6a46b0e39e81849`, UID
-`7489031a-54cc-43f5-9bd2-ba749058f328`. Neither Task independently
-reviews or accepts its own work.
-Git history and exact-candidate review records retain individual contributions,
-corrections and reviewers; a historical approval alone does not transfer to a
-later revision.
+Prism contributed the principal mathematics, source research and internal
+adaptations. A distinct contributor developed the invertible-matrix-row
+kernel extension; a separate isolated prefix-ideal recursor fixture is not
+the later production recursor repair. The [documentation credits](docs/CREDITS.md)
+distinguish the original API adapter and authored notes from later source-link
+and lifecycle corrections. Git history and the private preservation record
+retain exact contribution and review identities; pooled worker identifiers
+are not individual names.
 
 Formal Frontier Agents are AI agents. AI assistance was used in research, Lean
-proof development, clients, documentation and maintenance. Attribution, a build,
-or an Apache notice alone does not establish lawful redistribution of third-party
-expression. The complete author-side current-file origin/notice packet and
-independent clearance scope were recorded in issue #38. The proposed
-truthful-header departure from Mathlib's copyright-format lint is not a
-rights waiver; any release needs its applicable independent disposition.
+proof development, clients, documentation and maintenance. Attribution, a build
+or an Apache notice alone does not establish ownership or lawful redistribution
+of third-party expression.
 
 Mathematical motivation includes Charles A. Weibel, *The K-book: An Introduction
 to Algebraic K-theory*, August 29, 2013 complete-book build, especially Chapter I
@@ -240,20 +238,16 @@ or import its prose as a proof.
 
 | Expression or formal dependency | Origin and treatment |
 | --- | --- |
-| Basic/quotient/local and commutative-regular development | Project-authored formal proofs related to retained Prism diagnostics in `source-weibel-k-book` at `a87ba2318d7e1c5e9d2f4f8784b6d4bc54588dba` and `c14b695a059e3c6888a2d1c9e4897aeb4a026df0`; naming, interfaces and native assumptions were generalized. Retention dates do not establish cross-repository precedence. |
+| Basic/quotient/local and commutative-regular development | Project-authored formal proofs share expression with retained Prism diagnostics; names, interfaces and native assumptions were generalized. They are not wholly independent reinventions; retention dates do not establish precedence. |
 | Remaining algebra/rank/cancellation/Bass proof | Project Lean constructions using native Mathlib APIs. `RepeatedBlock` was extracted from the earlier project rank module; it is not an independently sourced proof. |
-| Invertible-row kernel extension | The PR #37 contribution above specializes native `LinearMap.iInfKerProjEquiv` and composes project kernel transport; no source-only candidate is a dependency. |
-| Prefix-ideal recursor | The isolated fixture and the separate production replacement have distinct worker-a Task authors identified above; the production body uses `Nat.rec` while retaining the original public type and both definitional equations. |
+| Invertible-row kernel extension | A distinct contributor specializes native `LinearMap.iInfKerProjEquiv` and composes project kernel transport; no source-only candidate is a dependency. |
+| Prefix-ideal recursor | An isolated exact-type fixture and a separate production replacement have distinct contributors; the production body uses `Nat.rec` while retaining the original public type and both definitional equations. |
 | Mathlib and resolved support packages | Imported pinned dependencies, not vendored in this tree. Preserve their own licenses/attributions if separately redistributed; this project's LICENSE does not replace them. |
 | GLG quasi-regular ideals | Imported pinned `GeneralLinearGroups.QuasiregularIdeal`; source-independent predicate and unit characterization, with its own project provenance. |
 | License text | Unmodified official Apache 2.0 text from `https://www.apache.org/licenses/LICENSE-2.0.txt`; its appendix is a template, not an assertion of this project's holder. |
 
 No source PDF, scan, substantial book quotation, vendored dependency, generated
-API website or other binary asset is shipped in this tree. The local generated
-Markdown API and its adapter have separate provenance in `docs/CREDITS.md`;
-at the 2026-09-26 documentation-preparation checkpoint, independent review and
-redistribution clearance of those artifacts had not been established; neither
-is inherited from the mathematical source. Canonical source access is not a
-redistribution grant. Additional artifacts, notices and the history actually
-proposed for publication require their own inventory and clearance. This
-successor's author-side provenance does not decide those later reviews.
+API website or other binary asset is shipped. The local generated Markdown API
+and adapter have [separate provenance](docs/CREDITS.md). Source access grants
+no permission to reproduce book assets; no human mathematical review,
+source-author endorsement or unverified copyright holder is asserted.

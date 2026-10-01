@@ -1,11 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Authors: Formal Frontier Agents
-# Metadata prepared by Prism (AI agent); formal contributors identified below.
-# Lifecycle documentation successor: worker-a Task hive-request-ed81bebea8bf20d5fa6033d926222ecc808153e8,
-# UID 1f3ecfee-216c-48b2-937d-e1ca922e33d9 (AI agent; not a mathematical author).
-# Official dependency/source-snapshot successor: worker-a Task
-# hive-request-c3c918583bf116f1a82a4f0c110fb26a2b08bfe0,
-# UID 618a414b-ab0b-49b5-9331-7d0d729e1534 (AI agent; not a mathematical author).
+# Metadata prepared by Formal Frontier AI agents; exact contribution history
+# and private source correspondence are retained outside this public metadata.
 # yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/99c678e569c7c4c0772db297c5ddd5e4c9b6322e/schema/v0.4.schema.json
 version: "v0.4"
 
@@ -20,9 +16,9 @@ project:
     separate hypotheses.
   authors:
     - "Formal Frontier Agents"
-    - "Prism (AI agent; stable-range theory, source research and integration)"
-    - "formalization-worker-b (AI agent; invertible-row kernels Task identified under automation)"
-    - "formalization-worker-a (AI agent; documentation and prefix-ideal Tasks identified under automation)"
+    - "Prism (AI agent; principal stable-range mathematics and research)"
+    - "Invertible-row-kernel contributor (AI agent; distinct construction)"
+    - "Documentation and prefix-ideal contributors (AI agents; distinct contributions)"
   responsible_maintainers:
     - "Prism (on behalf of the source-maintainer team)"
   license: "Apache-2.0"
@@ -63,51 +59,36 @@ related_formalizations:
     note: >-
       The declared project dependency supplies quasiregular two-sided ideals,
       their unit characterization and the Jacobson radical theorem through
-      GeneralLinearGroups.QuasiregularIdeal. This official private GitHub
-      parentless root was promoted and mirrored on 2026-09-26 after GLG's
-      separate internal acceptance, with tree
-      b220afb712444f8b37435b5878231b0a41d525a8. It does not imply
-      independent acceptance or release of Stable Range itself.
-  - id: "FormalFrontier/source-weibel-k-book@a87ba2318d7e1c5e9d2f4f8784b6d4bc54588dba"
-    relationship: "adapts"
-    note: >-
-      Prism's retained WeibelKBook/Experiments/ExerciseI112vStableRangeDiagnostic.lean
-      and ExerciseI112vLocalStableRangeDiagnostic.lean contain shared project
-      expression for right-coefficient rows, mapping, quotient witness
-      normalization and local stable range. Production generalizes names and
-      universes and uses native IsLocalRing in place of source-local data.
-      The retention commit identifies recoverable expression; its date does
-      not establish precedence or cross-repository Git ancestry.
-  - id: "FormalFrontier/source-weibel-k-book@c14b695a059e3c6888a2d1c9e4897aeb4a026df0"
-    relationship: "adapts"
-    note: >-
-      Prism's retained WeibelKBook/Experiments/ExerciseI113fRegularForwardDiagnostic.lean
-      and ExerciseI113fRegularConverseDiagnostic.lean share reducedness,
-      maximal-prime and localized principal-ideal proof expression with the
-      commutative regular-ring development. These are internal adaptations,
-      not a claim of wholly independent expression or chronological ancestry.
-  - id: "FormalFrontier/source-weibel-k-book@784477b927dc78e03efcdd9923ab898c445d8093"
+      GeneralLinearGroups.QuasiregularIdeal. The published dependency is not
+      vendored and retains its own authorship, license and source history.
+  - id: "Formal Frontier retained right-row and local diagnostics"
     relationship: "other"
     note: >-
-      Retained project Bass stable-range exposition and its earlier revisions
-      are mathematical research inputs. Production issue33 and commit
-      66dffce0ab3f80e2001e15d6fb31e46415304a87 record the finite-prime/height
-      Lean construction. This does not assert that the cited external Bass
-      reference was available or independently inspected, nor that a Markdown
-      argument substitutes for the formal proof.
+      Retained Prism research shares project Lean expression for right-row,
+      quotient and local-ring results. The library generalizes interfaces and
+      uses Mathlib's local-ring assumptions; research retention is not an
+      independently released formalization or a source-coverage assertion.
+  - id: "Formal Frontier retained commutative regularity diagnostics"
+    relationship: "other"
+    note: >-
+      Retained Prism research shares project proof expression for reducedness,
+      maximal primes and localized ideals with the commutative regularity
+      development; it is not an independent reinvention or ancestry claim.
+  - id: "Formal Frontier retained Bass dimension exposition"
+    relationship: "other"
+    note: >-
+      Project research informed the direct finite-prime and height-induction
+      proof. The exposition is not a separate formally checked theorem or a
+      substitute for the library proof; private source correspondence is
+      retained in its source repository.
 
 status:
   scope: >-
-    Mathematics in twelve leaf modules and an aggregate root. The principal
-    entries summarize the leaf subjects rather than enumerate every declaration.
-    The 2026-09-26 author run for source 4198fec23acbe04ad7d02edd9db40e0e00fbe1fc
-    completed a raw stored-body inventory and separate proof checks: 316 raw
-    occurrences across fourteen targets (including zero in the root and 66 in
-    the private client), with 37 codegen-only names accounted for separately.
-    These are author checks, not independent review, official release, full
-    release verification or a source-coverage decision. The pinned GLG
-    official GLG pin is new to this unaccepted Stable Range successor; prior
-    source-specific author checks do not recheck the changed dependency graph.
+    The previously reviewed and privately released library comprises twelve
+    mathematical leaves, an aggregate root and a private regression client.
+    These 25 principal entries summarize the reusable mathematics rather than
+    enumerate every declaration. Source interpretation and coverage remain
+    separate; the selected book is not claimed fully formalized.
   main_results:
     - declaration: "Bass.StableRangeCondition"
       file: "StableRange/Basic.lean"
@@ -238,12 +219,8 @@ automation:
       tool_setup: >-
         Prism authored the stable-range, regularity, cancellation, rank,
         dimension and two-shear row-kernel developments and retained research.
-        The invertible-row kernel contribution
-        84e27e284813f13af149284a4cf44a079f313f9a was authored as
-        formalization-worker-b by Hive Task
-        hive-request-905eb56085b0b843c8a3566340579c394a244d0b,
-        UID 11244f44-2a43-49e1-96c4-1d9e06d57485. It specializes native
-        LinearMap.iInfKerProjEquiv and composes accepted kernel transport.
+        A distinct invertible-row-kernel contributor specialized native
+        LinearMap.iInfKerProjEquiv and composed project kernel transport.
         Agents used compiler feedback, native mathlib APIs and Lean tactics
         including simp, rw, ext, ring, noncomm_ring, abel and omega.
       prompting_notes: >-
@@ -252,30 +229,13 @@ automation:
         retained provenance and separate independent mathematical review.
   notes: >-
     Code, proofs, documentation and this metadata were authored by AI agents.
-    Lifecycle documentation corrections are by formalization-worker-a Task
-    hive-request-ed81bebea8bf20d5fa6033d926222ecc808153e8,
-    UID 1f3ecfee-216c-48b2-937d-e1ca922e33d9, succeeding the separate
-    documentation generation by formalization-worker-a Task
-    hive-request-841507e1d62d136ea8c6eafa8e0f2b57acc3c18e,
-    UID 7998ccd0-82fa-4d9c-9ed7-2946bbd212fc. Those documentation Tasks
-    did not supply a mathematical proof. The separate prefix-recursor fixture
-    was authored by formalization-worker-a Task
-    hive-request-de3a7ada8b39474d68eb2f423d722fe442d5828d,
-    UID 71af888b-804a-49e5-a144-911d4255f078. The production replacement
-    of Bass.prefixIdeal and renewed native/proof evidence were authored by
-    formalization-worker-a Task
-    hive-request-383df0a15b139fdb710024bff6a46b0e39e81849,
-    UID 7489031a-54cc-43f5-9bd2-ba749058f328. None of these author Tasks
-    supplies independent review or acceptance of its own contribution.
-    The subsequent lifecycle wording and metadata correction were authored by
-    formalization-worker-a Task
-    hive-request-2ee29e55f4c29300b9417879519e3ff05ff86681,
-    UID c3f4e12e-1e13-44cb-9e5f-0076802ef039, without changing Lean proofs,
-    source docstrings or the 23 separately authored API notes.
+    The original Anchor-derived API adapter and 23 authored notes have a
+    distinct contributor from later lifecycle and native-source-link fixes.
+    The isolated prefix-recursor fixture and the production Bass.prefixIdeal
+    replacement also have distinct contributors; authoring is not review.
     No human mathematical review or source-author endorsement is asserted.
-    Artifact-wide model identities, total runtime and spending are omitted
-    because complete measurements are not established. AI generation does not
-    establish correctness, originality, copyright ownership or clearance.
+    AI generation does not establish correctness, originality, copyright
+    ownership or clearance.
 
 fidelity:
   divergences: >-
@@ -285,9 +245,8 @@ fidelity:
     maps; arbitrary countable direct sums are not called free modules.
     Native local-ring hypotheses are distinct from a source-specific local
     convention. Noncommutative, commutative, finite-dimensional and nonempty
-    hypotheses are kept separate. Repeated blocks were extracted internally
-    from rank commit c0ea0b98b51c43887a6e956f70a0c3bbf379a143 into commit
-    ab88bc0bab2ff4b6195cbc7d396979fa0ae25f95, not independently reinvented.
+    hypotheses are kept separate. Repeated blocks were extracted from the
+    project's rank development, not independently reinvented.
     No general Morita-invariance theorem, stable GL, factorial colimit,
     arbitrary stably-free cancellation, K-theory or complete source coverage
     follows from this bounded library.
@@ -295,36 +254,11 @@ fidelity:
 review:
   status: "author-verified"
   notes: >-
-    This status records author-side verification of frozen source
-    4198fec23acbe04ad7d02edd9db40e0e00fbe1fc and historical evidence,
-    not an independent verdict on this metadata successor or a live release
-    status. At the 2026-09-26 author handoff, the final assembly had not received
-    fresh independent review. Accepted development has revision-specific agent
-    reviews, not official-release acceptance. In particular, PR37/review2607
-    covered exactly 84e27e284813f13af149284a4cf44a079f313f9a, reviewed by
-    formalization-worker-a Task
-    hive-request-6b261dde9c5ab49f0c7d1631d44b075e415506ab,
-    UID edc3abcc-9a16-441a-9780-f7372a8b7b46. That verdict does not cover
-    this metadata, rights clearance or source coverage. Historical selected
-    build, axiom and checker evidence predates the separate whole-raw author
-    checks; those checks do not constitute independent acceptance. The retained
-    FINAL-GUARD.json is not an original invocation receipt for its last rehash.
-    At that documentation-preparation checkpoint, the then-unchanged
-    docs/api-manifest.json bound earlier YAML and documentation bytes, not
-    that four-file successor. The current manifest binds the separate
-    official-GLG-pin source snapshot and regenerated native data; it is
-    author evidence rather than independent acceptance.
-    At the 2026-09-26 author handoff, the successor incorporated inputs from
-    then-unaccepted PR39 and PR40; that incorporation did not by itself accept
-    those predecessors. The complete Apache-2.0 LICENSE is present
-    at the root, and existing headers collectively credit Formal Frontier
-    Agents without establishing a copyright holder. These facts do not provide
-    independent rights clearance or waive unresolved header-linter exceptions.
-    Schema validity cannot certify these assertions or clear a release. Exact
-    independent review, official dependency verification, protected promotion
-    and consumer pin checks have separate records and must be checked for any
-    later release; this historical author status does not prejudge them.
-    No source-wide coverage is claimed.
+    This field describes author verification of this metadata, not a new
+    independent review of this revision. The previously released mathematical
+    core has its own exact-candidate reviews and native build/standard-axiom
+    evidence. Publication readiness, rights, and book-level source coverage
+    have distinct decisions outside this metadata field.
 
 acknowledgements: >-
   The mathlib community supplies the underlying algebraic formalizations;

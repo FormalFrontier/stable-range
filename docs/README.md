@@ -1,7 +1,10 @@
-# Native API documentation
+# Mathematical API and historical native displays
 
-[API.md](API.md) reproduces the native visible signatures and source docstrings
-for **121 display sites** across the twelve mathematical `StableRange.*` leaves.
+The [headline results](../README.md#headline-results) cover Bass stable range,
+regularity, division-ring ranks, commutative dimension bounds, cancellation
+and free coefficient-row kernels. [API.md](API.md) records historical native
+visible signatures and source docstrings for **121 display sites** across the
+twelve mathematical `StableRange.*` leaves.
 There are **23** supplementary explanations labeled *API note (not a source
 docstring)*. The aggregate `StableRange` and `PublicAPIClient` each have an
 explicit zero-site record. The latter is a private regression client, not a
@@ -15,8 +18,10 @@ sites correspond to the 134 named mathematical commands excluding 13 private
 helpers; the 65 named private clients are outside both counts. Additional
 compiler-generated names may exist. The historical selected 199-name axiom
 check covers 134 named commands plus 65 private clients, *not* all raw and
-generated declarations. This documentation is neither a kernel proof check nor
-independent semantic, rights, or release approval.
+generated declarations. A separately recorded native build and complete
+transitive standard-axiom audit covered the accepted original release; this
+fixed Markdown is not itself proof evidence, independent semantic review or a
+rights verdict.
 
 ## Mathematical orientation
 
@@ -46,21 +51,18 @@ arguments. Native rendering can suppress inferable types or abbreviate
 notations; the linked Lean source remains authoritative. Relative source links
 do not rely on an unpublished GitHub revision.
 
-## Reproduce native generation
+## Optional historical native reproduction
 
-At the 2026-09-26 author checkpoint, the documentation-preparation predecessor
-incorporated then-unaccepted PR #39 (`56e5f666b9bad3056fec9c6adbd0d5ffb628830e`)
-and root metadata from then-unaccepted PR #40; earlier candidate
-`77d82b09b03d0849cbc64d02194a4bfff120d627` was unaccepted then too.
-Those dated observations are not a verdict on later revisions. The analyzed
-source snapshot in [api-manifest.json](api-manifest.json) includes the
-`Bass.prefixIdeal` recursor and the official GLG dependency. Native records
-are newly generated for that exact local Git commit, rather than relabeled
-from the former `4198fec23acbe04ad7d02edd9db40e0e00fbe1fc` snapshot.
-Their source identifiers include the full unpublished commit and paths; the
-shipped API links to files in this checkout, not to a nonexistent GitHub
-Stable Range commit. The metadata's `author-verified` status is historical
-author evidence, not independent acceptance or rights clearance.
+The [committed manifest](api-manifest.json) describes a particular **original
+source snapshot**, original metadata and original native SQLite/doc-gen4 data.
+It is not a manifest for this checkout's changed README, YAML, docs index or
+SPDX-only Lean headers. Those changed inputs invalidate both its Git-object
+and committed-hash `--check` comparisons; do not update a hash merely to
+silence drift. The genuine original source revision, native records and SQLite
+database are retained in private task/issue evidence, **not supplied by the
+official published history or this repository**. Without those prerequisites,
+the following is an optional historical recipe, not a current-checkout
+`--check` pass claim or a request to regenerate documentation for this cleanup.
 
 Keep a separate **unchanged core-only** `leanprover/doc-gen4` checkout at
 `97d4ecdfc8e09e7f511724c25e303d448de6a3db`, tree
@@ -76,10 +78,12 @@ env LEAN_NUM_THREADS=2 lake exe cache get
 env LEAN_NUM_THREADS=2 lake --wfail -KwarningAsError=true build
 ```
 
-These commands prepare genuine native reproduction for the bound source. The
-final `--check` reports `matched` when the source and pins, native records,
-SQLite database, and generated documentation match; it refuses source/native/
-database drift or changed documentation without a refreshed manifest.
+Run these commands only in a checkout of the manifest's **original source**
+with genuine matching native data and SQLite database. On unchanged inputs,
+the final `--check` reports `matched` only when source, pins, native records,
+SQLite database and generated documentation all agree. It refuses changed
+source, pin or documentation bytes. Here that check would rightly refuse;
+synthetic tests do not authenticate native regeneration.
 Set the executable to the native build's absolute path. The source-linker
 argument is a neutral `source-snapshot/<fullcommit>/<path>` identifier, not a
 GitHub URL or an end-range suffix. The native SQLite database supplies the
@@ -117,24 +121,19 @@ hash commitments; it may also verify the DB when supplied. `--check`
 compares the complete generated files and canonical native module records to
 the manifest without writing. The data-only test constructs synthetic header
 markup; it **does not authenticate native generation**. The actual fourteen
-native records and command output are retained separately in the task evidence
-branch. Rebuilds with a new source revision need a newly inspected inventory
-and source-bound manifest; do not just replace a hash to silence drift.
+original native records and command output are retained separately in private
+task evidence. Rebuilds with a new source revision need a newly inspected
+inventory and source-bound manifest; never replace a hash to silence drift.
 
 Where the analyzed Git commit is present, the adapter compares **all fourteen
 Lean sources**, the toolchain, Lake configuration/manifest, and root metadata
 against exact Git objects. For source-only trees or Git's explicit `missing`
-result, it instead requires the already shipped manifest's identical source
-hashes, source commit/tree, tool selection and module/path map. Broken Git or
-a non-commit object fails closed. The formerly stale manifest from the
-documentation-preparation input did not bind its changed YAML or prose. This
-new manifest is generated from the actual source and native records, with
-README/documentation inputs bound separately.
+result, it instead requires the original manifest's identical source hashes,
+source commit/tree, tool selection and module/path map. Broken Git or a
+non-commit object fails closed. The manifest binds its original README/docs
+inputs separately and cannot certify this changed checkout.
 
-GLG `1f8fd3e39080be39586ea22fa56c157167eefd00` is the accepted,
-promoted and privately mirrored official GitHub source root, not the old
-development dependency. Its publication does not approve this Stable Range
-successor, settle rights or waive independent review, protected integration or
-source-wide coverage decisions. Uppercase
-Lean `-T0` disables the allocation timeout; it is **not** trust-zero or separate
-stored-proof checking. Existing leaf header-linter exceptions remain unresolved.
+GLG `1f8fd3e39080be39586ea22fa56c157167eefd00` is the official pinned
+dependency, not vendored code. Uppercase Lean `-T0` disables the allocation
+timeout; it is **not** trust-zero or a separate stored-proof check. No
+source-wide coverage decision follows from these API displays.
