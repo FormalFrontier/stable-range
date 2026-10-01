@@ -201,8 +201,21 @@ lake clean stable-range
 time env LEAN_NUM_THREADS=2 lake --wfail -KwarningAsError=true build
 ```
 
-Do not use unqualified `lake clean` here: it removes dependency outputs. For
-the historical, source-bound native API and its limitations, see the
+Do not use unqualified `lake clean` here: it removes dependency outputs.
+
+### Historical build-cost observation
+
+On 2026-09-25, a Linux container limited to 23 GiB of memory, with
+`LEAN_NUM_THREADS=2` and the matching dependency cache retained, completed a
+clean **project** rebuild of the default graph: 14 project modules, 2,259 jobs,
+17.448 seconds wall time (30.421 seconds user, 8.719 seconds system). This is
+one warm-dependency, clean-project observation, **not** a measurement of this
+checkout or a cold-cache build and not a portable performance promise. The
+23 GiB figure is the container allocation limit, not measured peak memory or
+a minimum required allocation; actual memory use and cold-cache time are
+unknown from this run.
+
+For the historical, source-bound native API and its limitations, see the
 [API reference](docs/API.md), [manifest](docs/api-manifest.json) and
 [generation guide](docs/README.md). The manifest records its **original**
 source and documentation hashes; this README, changed headers and metadata
