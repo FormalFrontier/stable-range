@@ -6,16 +6,21 @@ module
 
 public import StableRange
 import StableRangeTests.PublicAPIClient
+import Mathlib.Algebra.Group.Units.Opposite
 import Mathlib.Data.ZMod.Basic
 import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.RingTheory.PowerSeries.Inverse
+import Mathlib.Tactic.NoncommRing
 
 /-!
 # Noncommutative stable-range clients
 
 Complementary projections in a two-by-two matrix ring give a right-unimodular
-pair of nonunits that shortens explicitly. Infinite and empty products and a
-formal-power-series radical quotient exercise the public stable-range API.
+pair of nonunits that shortens explicitly. A second pair distinguishes right
+and left multiplication in unit-valued shortening. Left- and right-regular
+modules exercise cancellation with arbitrary complementary modules. Infinite
+and empty products and a formal-power-series radical quotient exercise the
+public stable-range API.
 -/
 
 set_option warningAsError true
@@ -32,6 +37,8 @@ private def firstProjection : Matrix (Fin 2) (Fin 2) D := !![1, 0; 0, 0]
 private def secondProjection : Matrix (Fin 2) (Fin 2) D := !![0, 0; 0, 1]
 private def upperMatrixUnit : Matrix (Fin 2) (Fin 2) D := !![0, 1; 0, 0]
 private def lowerMatrixUnit : Matrix (Fin 2) (Fin 2) D := !![0, 0; 1, 0]
+private def twistedSecond : Matrix (Fin 2) (Fin 2) D :=
+  secondProjection + upperMatrixUnit
 
 private theorem projections_sum :
     (firstProjection : Matrix (Fin 2) (Fin 2) D) + secondProjection = 1 := by
@@ -119,6 +126,104 @@ private theorem semisimple_matrix_shortens_nonunits :
   exact ⟨shortening 0, witness 0, by
     simpa only [Bass.IsRightUnimodular, Fin.sum_univ_one] using hwitness⟩
 
+private theorem twistedSecond_nonunit :
+    ¬ IsUnit (twistedSecond : Matrix (Fin 2) (Fin 2) D) := by
+  intro h
+  obtain ⟨inverse, _, hleft⟩ := isUnit_iff_exists.mp h
+  have hentry := congrArg (fun matrix : Matrix (Fin 2) (Fin 2) D => matrix 0 0) hleft
+  simp [twistedSecond, secondProjection, upperMatrixUnit,
+    Matrix.mul_apply, Fin.sum_univ_two, Matrix.of_apply] at hentry
+
+private theorem twisted_pair_products :
+    (firstProjection : Matrix (Fin 2) (Fin 2) D) * twistedSecond = upperMatrixUnit ∧
+      (twistedSecond : Matrix (Fin 2) (Fin 2) D) * firstProjection = 0 := by
+  constructor
+  · ext row column; fin_cases row <;> fin_cases column <;>
+      simp [twistedSecond, firstProjection, secondProjection, upperMatrixUnit,
+        Matrix.mul_apply, Fin.sum_univ_two, Matrix.of_apply]
+  · ext row column; fin_cases row <;> fin_cases column <;>
+      simp [twistedSecond, firstProjection, secondProjection, upperMatrixUnit,
+        Matrix.mul_apply, Fin.sum_univ_two, Matrix.of_apply]
+
+private theorem upperMatrixUnit_ne_zero :
+    (upperMatrixUnit : Matrix (Fin 2) (Fin 2) D) ≠ 0 := by
+  intro h
+  have hentry := congrArg (fun matrix : Matrix (Fin 2) (Fin 2) D => matrix 0 1) h
+  simp [upperMatrixUnit, Matrix.of_apply] at hentry
+
+private theorem upperMatrixUnit_sq_zero :
+    (upperMatrixUnit : Matrix (Fin 2) (Fin 2) D) * upperMatrixUnit = 0 := by
+  ext row column; fin_cases row <;> fin_cases column <;>
+    simp [upperMatrixUnit, Matrix.mul_apply, Fin.sum_univ_two, Matrix.of_apply]
+
+private theorem twisted_pair_right_witness :
+    (firstProjection : Matrix (Fin 2) (Fin 2) D) *
+        (firstProjection - upperMatrixUnit) + twistedSecond * 1 = 1 := by
+  ext row column; fin_cases row <;> fin_cases column <;>
+    simp [twistedSecond, firstProjection, secondProjection, upperMatrixUnit,
+      Matrix.of_apply]
+
+private theorem twisted_pair_left_witness :
+    (1 : Matrix (Fin 2) (Fin 2) D) * firstProjection +
+      secondProjection * twistedSecond = 1 := by
+  ext row column; fin_cases row <;> fin_cases column <;>
+    simp [twistedSecond, firstProjection, secondProjection, upperMatrixUnit,
+      Matrix.of_apply]
+
+private theorem twisted_pair_right_shortening :
+    ∃ shortening : Matrix (Fin 2) (Fin 2) D,
+      IsUnit (twistedSecond - firstProjection * shortening) :=
+  (Bass.stableRangeCondition_one_iff_forall_isUnit_sub_mul.mp
+    (semisimple_matrix_condition (D := D))) firstProjection twistedSecond
+    ⟨firstProjection - upperMatrixUnit, 1, twisted_pair_right_witness⟩
+
+private theorem twisted_pair_left_shortening :
+    ∃ shortening : Matrix (Fin 2) (Fin 2) D,
+      IsUnit (twistedSecond - shortening * firstProjection) := by
+  let condition := Bass.stableRangeCondition_one_opposite (semisimple_matrix_condition (D := D))
+  have hpair : ∃ s w : (Matrix (Fin 2) (Fin 2) D)ᵐᵒᵖ,
+      MulOpposite.op firstProjection * s + MulOpposite.op twistedSecond * w = 1 := by
+    refine ⟨MulOpposite.op 1, MulOpposite.op secondProjection, ?_⟩
+    simpa only [MulOpposite.op_add, MulOpposite.op_mul, MulOpposite.op_one] using
+      congrArg MulOpposite.op (twisted_pair_left_witness (D := D))
+  obtain ⟨shortening, hunit⟩ :=
+    (Bass.stableRangeCondition_one_iff_forall_isUnit_sub_mul.mp condition)
+      (MulOpposite.op firstProjection) (MulOpposite.op twistedSecond) hpair
+  refine ⟨shortening.unop, ?_⟩
+  simpa only [MulOpposite.unop_sub, MulOpposite.unop_mul, MulOpposite.unop_op] using
+    hunit.unop
+
+private theorem twisted_pair_explicit_shortening :
+    IsUnit (twistedSecond - (-1 : Matrix (Fin 2) (Fin 2) D) * firstProjection) := by
+  have hunit : IsUnit (1 + (upperMatrixUnit : Matrix (Fin 2) (Fin 2) D)) := by
+    apply isUnit_iff_exists.mpr
+    refine ⟨1 - upperMatrixUnit, ?_, ?_⟩
+    · noncomm_ring [upperMatrixUnit_sq_zero (D := D)]
+    · noncomm_ring [upperMatrixUnit_sq_zero (D := D)]
+  convert hunit using 1
+  calc
+    twistedSecond - (-1 : Matrix (Fin 2) (Fin 2) D) * firstProjection =
+        firstProjection + secondProjection + upperMatrixUnit := by
+          simp only [neg_one_mul, sub_neg_eq_add, twistedSecond]
+          abel
+    _ = 1 + upperMatrixUnit := by rw [projections_sum]
+
+private theorem twisted_pair_nonvacuous :
+    ¬ IsUnit (firstProjection : Matrix (Fin 2) (Fin 2) D) ∧
+      ¬ IsUnit (twistedSecond : Matrix (Fin 2) (Fin 2) D) ∧
+      (firstProjection : Matrix (Fin 2) (Fin 2) D) * twistedSecond ≠ 0 ∧
+      (twistedSecond : Matrix (Fin 2) (Fin 2) D) * firstProjection = 0 ∧
+      (∃ shortening : Matrix (Fin 2) (Fin 2) D,
+        IsUnit (twistedSecond - firstProjection * shortening)) ∧
+      (∃ shortening : Matrix (Fin 2) (Fin 2) D,
+        IsUnit (twistedSecond - shortening * firstProjection)) ∧
+      IsUnit (twistedSecond - (-1 : Matrix (Fin 2) (Fin 2) D) * firstProjection) := by
+  refine ⟨firstProjection_nonunit, twistedSecond_nonunit, ?_,
+    twisted_pair_products.2, twisted_pair_right_shortening,
+    twisted_pair_left_shortening, twisted_pair_explicit_shortening⟩
+  rw [twisted_pair_products.1]
+  exact upperMatrixUnit_ne_zero
+
 private theorem nonzero_matrix_index_zero_fails :
     ¬ Bass.StableRangeCondition (Matrix (Fin 2) (Fin 2) D) 0 :=
   Bass.not_stableRangeCondition_zero
@@ -156,6 +261,20 @@ private theorem infinite_zero_ring_product_index_zero :
 
 private theorem zero_ring_index_one : Bass.StableRangeCondition (ZMod 1) 1 :=
   Bass.stableRangeCondition_one_of_isSemisimpleRing
+
+private theorem zero_ring_opposite_pair_unit (a b : (ZMod 1)ᵐᵒᵖ) :
+    ∃ t : (ZMod 1)ᵐᵒᵖ, IsUnit (b - a * t) := by
+  have condition := (Bass.stableRangeCondition_one_opposite_iff (R := ZMod 1)).mp
+    zero_ring_index_one
+  exact (Bass.stableRangeCondition_one_iff_forall_isUnit_sub_mul.mp condition) a b
+    ⟨0, 0, Subsingleton.elim _ _⟩
+
+private theorem zero_ring_round_trip_pair_unit (a b : ZMod 1) :
+    ∃ t : ZMod 1, IsUnit (b - a * t) := by
+  have opposite := Bass.stableRangeCondition_one_opposite zero_ring_index_one
+  have condition := (Bass.stableRangeCondition_one_opposite_iff (R := ZMod 1)).mpr opposite
+  exact (Bass.stableRangeCondition_one_iff_forall_isUnit_sub_mul.mp condition) a b
+    ⟨0, 0, Subsingleton.elim _ _⟩
 
 section PowerSeries
 
@@ -196,17 +315,36 @@ end PowerSeries
 
 section Cancellation
 
-variable {R : Type u} [Ring R] [IsSemisimpleRing R]
+variable {R : Type u} [Ring R]
 variable {A : Type v} {B : Type w}
 variable [AddCommGroup A] [AddCommGroup B] [Module R A] [Module R B]
 
-private theorem cancel_regular_summand
+private theorem cancel_left_regular_summand (h : Bass.StableRangeCondition R 1)
     (equivalence : (R × A) ≃ₗ[R] (R × B)) : Nonempty (A ≃ₗ[R] B) := by
   have condition : Bass.StableRangeCondition (Module.End R R) 1 :=
-    (Bass.stableRangeCondition_one_of_isSemisimpleRing (R := Rᵐᵒᵖ)).map_equiv
+    (Bass.stableRangeCondition_one_opposite h).map_equiv
       (RingEquiv.moduleEndSelf R)
   exact Bass.exists_linearEquiv_of_prod_of_end_stableRangeCondition_one condition equivalence
 
+private theorem cancel_regular_summand [IsSemisimpleRing R]
+    (equivalence : (R × A) ≃ₗ[R] (R × B)) : Nonempty (A ≃ₗ[R] B) :=
+  cancel_left_regular_summand
+    (Bass.stableRangeCondition_one_of_isSemisimpleRing (R := R)) equivalence
+
 end Cancellation
+
+section RightCancellation
+
+variable {R : Type u} [Ring R]
+variable {A : Type v} {B : Type w}
+variable [AddCommGroup A] [AddCommGroup B] [Module Rᵐᵒᵖ A] [Module Rᵐᵒᵖ B]
+
+private theorem cancel_right_regular_summand (h : Bass.StableRangeCondition R 1)
+    (equivalence : (R × A) ≃ₗ[Rᵐᵒᵖ] (R × B)) : Nonempty (A ≃ₗ[Rᵐᵒᵖ] B) := by
+  have condition : Bass.StableRangeCondition (Module.End Rᵐᵒᵖ R) 1 :=
+    h.map_equiv (RingEquiv.moduleEndSelfOp R)
+  exact Bass.exists_linearEquiv_of_prod_of_end_stableRangeCondition_one condition equivalence
+
+end RightCancellation
 
 end StableRangeTests.SemisimpleClient

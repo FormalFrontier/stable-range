@@ -76,6 +76,26 @@ theorem isUnit_of_mul_eq_one_of_stableRangeCondition_one
   have hba := (stableRangeCondition_one_isDedekindFinite h).mul_eq_one_symm hab
   exact isUnit_iff_exists.mpr ⟨b, hab, hba⟩
 
+/-- At index one, a right-unimodular pair can be shortened to a unit. -/
+theorem stableRangeCondition_one_iff_forall_isUnit_sub_mul :
+    StableRangeCondition R 1 ↔
+      ∀ a b : R, (∃ s w : R, a * s + b * w = 1) →
+        ∃ t : R, IsUnit (b - a * t) := by
+  constructor
+  · intro h a b hpair
+    obtain ⟨s, w, hw⟩ := hpair
+    obtain ⟨t, witness, hwitness⟩ :=
+      h a (fun _ : Fin 1 ↦ b) ⟨s, fun _ ↦ w, by simpa only [Fin.sum_univ_one] using hw⟩
+    refine ⟨t 0, isUnit_of_mul_eq_one_of_stableRangeCondition_one h
+      (a := b - a * t 0) (b := witness 0) ?_⟩
+    simpa only [IsRightUnimodular, Fin.sum_univ_one] using hwitness
+  · intro h a b hpair
+    obtain ⟨s, w, hw⟩ := hpair
+    obtain ⟨t, hunit⟩ := h a (b 0) ⟨s, w 0, by simpa only [Fin.sum_univ_one] using hw⟩
+    obtain ⟨inverse, hinverse, _⟩ := isUnit_iff_exists.mp hunit
+    refine ⟨fun _ ↦ t, fun _ ↦ inverse, ?_⟩
+    simpa only [IsRightUnimodular, Fin.sum_univ_one] using hinverse
+
 /-- A ring is von Neumann-regular when every element has an inner inverse. -/
 def IsVonNeumannRegular (R : Type u) [Ring R] : Prop :=
   ∀ a : R, ∃ x : R, a = a * x * a

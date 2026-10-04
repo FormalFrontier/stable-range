@@ -9,6 +9,7 @@ public import StableRange.Quotient
 public import StableRange.Local
 public import StableRange.Semilocal
 public import StableRange.Regular
+public import StableRange.Opposite
 public import StableRange.Product
 public import StableRange.Semisimple
 public import StableRange.Commutative

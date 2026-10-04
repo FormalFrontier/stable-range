@@ -42,10 +42,14 @@ the shortening is `b - a * t`, even when the maximal spectrum is empty.
 ### Regular rings and module cancellation
 
 `(S_1)` implies [direct finiteness](StableRange/Regular.lean#L38), and
-under von Neumann regularity it is
-[equivalent to unit-regularity](StableRange/Regular.lean#L331).
+is [equivalent to unit-valued shortening](StableRange/Regular.lean#L80)
+of every right-unimodular pair. For arbitrary rings, including the zero ring,
+[`(S_1)` is invariant under passage to the opposite ring](StableRange/Opposite.lean).
+It follows that the same condition supports unit-valued left-ordered shortening.
+Under von Neumann regularity it is
+[equivalent to unit-regularity](StableRange/Regular.lean#L351).
 An inner inverse constructs
-[complementary principal right ideals](StableRange/Regular.lean#L155).
+[complementary principal right ideals](StableRange/Regular.lean#L175).
 If the endomorphism ring of a module `M` satisfies `(S_1)`, then
 [`M` cancels from binary direct products](StableRange/Cancellation.lean#L35):
 `M × A ≃ M × B` implies `A ≃ B`, without finiteness or projectivity
@@ -61,7 +65,7 @@ endomorphism rings. In finite dimension the inner inverse can be
 [an automorphism](StableRange/DivisionRing.lean#L79), yielding
 [unit-regular finite square matrix rings](StableRange/DivisionRing.lean#L124),
 including empty indices. By contrast, the endomorphism ring of a countable
-direct sum of copies of [any nonzero additive module](StableRange/Regular.lean#L255)
+direct sum of copies of [any nonzero additive module](StableRange/Regular.lean#L275)
 is not unit-regular; the sum need not be a free module.
 
 ### Row rank and repeated diagonal blocks
@@ -152,7 +156,8 @@ by the root and add no public library declarations.
 | `Quotient` | `stableRangeCondition_of_surjective`, `stableRangeCondition_quotient_iff` |
 | `Local` | `stableRangeCondition_one_of_isLocalRing`, `stableRange_one_of_isLocalRing` |
 | `Semilocal` | commutative finite-maximal-spectrum `(S₁)` via Chinese remaindering |
-| `Regular` | `IsVonNeumannRegular`, `IsUnitRegular`, complementary principal right ideals and shift counterexample |
+| `Regular` | unit-valued pair shortening, `IsVonNeumannRegular`, `IsUnitRegular`, complementary principal right ideals and shift counterexample |
+| `Opposite` | `stableRangeCondition_one_opposite`, `stableRangeCondition_one_opposite_iff` |
 | `DivisionRing` | `LinearMap.exists_innerInverse`, `exists_linearEquiv_innerInverse`, matrix unit-regularity |
 | `Product` | dependent-product preservation of `(Sₙ)` |
 | `Semisimple` | `(S₁)` for semisimple rings and rings with semisimple Jacobson-radical quotient |
@@ -206,10 +211,10 @@ with an explicit elementary shear producing a unit pivot. The rank-one
 boundary is the public test fixture
 `StableRangeTests.ElementaryGenerationClient.rank_one_pivot`: an invertible
 rank-one matrix over a commutative ring already has a unit leading entry.
-These two fixtures are test-only, not production results; other client helpers
-are private. Separate applications of all three theorems use local rings,
-the nonlocal product of fields and finite Boolean indices. The independent
-boundary proofs do not rely on those applications.
+These two fixtures are test-only, not production results; other helpers in
+those two clients are private. Separate applications of all three theorems use
+local rings, the nonlocal product of fields and finite Boolean indices. The
+independent boundary proofs do not rely on those applications.
 Further clients apply determinant-one generation to a nonlocal product matrix
 and its Boolean reindexing, and check the stable quotient on nonidentity units.
 `tests/StableRangeTests/SemilocalClient.lean` also establishes finite maximal
@@ -221,6 +226,14 @@ criterion. Its zero-ring and local-ring specializations use the same theorem.
 No positive-dimensional product-of-local-rings example is
 compiled here. The integer pair `(5, 2)` shows that `(S₁)` fails without the
 finite-maximal-spectrum hypothesis.
+
+The [semisimple regression client](tests/StableRangeTests/SemisimpleClient.lean)
+checks complementary nonunit matrix projections and a stable-range shortening.
+Separately, it exhibits noncommuting matrix units through the public test-only
+theorem `StableRangeTests.SemisimpleClient.matrix_units_noncommutative`,
+not a production library result. The same client tests infinite and empty
+products, zero-index boundaries, a power-series ring with nonnilpotent Jacobson
+radical, and cancellation through opposite rings.
 
 ## Scope and conventions
 
@@ -255,7 +268,7 @@ authorized access; no credentials belong in this repository or its documentation
 
 Install the pinned `lean-toolchain` with elan and, from the repository root,
 successfully fetch the matching Mathlib cache **before** building. The default
-build runs both `StableRange` and `StableRangeTests` (including all three
+build runs both `StableRange` and `StableRangeTests` (including the
 regression clients):
 
 ```sh
