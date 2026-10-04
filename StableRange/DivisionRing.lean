@@ -17,6 +17,13 @@ division ring has an inner inverse, so its endomorphism ring is von
 Neumann-regular. In finite dimension the inner inverse can be chosen to be an
 automorphism. Via the right-linear matrix equivalence, it follows that every
 finite square matrix ring over a division ring is unit-regular.
+
+## References
+
+* C. A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
+  Exercise I.1.13(d) (regular endomorphisms and unit-regular matrix rings).
+* Mathlib, `LinearAlgebra.Projection`, `FiniteDimensional.Basic` and
+  `Matrix.ToLin` (complements and matrix/endomorphism equivalences).
 -/
 
 set_option warningAsError true
@@ -33,7 +40,8 @@ variable {K : Type u} [DivisionRing K]
 variable {V : Type v} [AddCommGroup V] [Module K V]
 
 /-- Every endomorphism of a vector space over a division ring has an inner
-inverse. No finite-dimensional hypothesis is needed. -/
+inverse. No finite-dimensional hypothesis is needed; compare Weibel,
+*The K-book*, Exercise I.1.13(d), for the countably generated case. -/
 theorem exists_innerInverse (f : Module.End K V) :
     ∃ g : Module.End K V, f = f * g * f := by
   obtain ⟨C, hC⟩ := Submodule.exists_isCompl (ker f)
@@ -120,7 +128,8 @@ theorem isVonNeumannRegular_moduleEnd :
 
 variable {n : Type v} [Fintype n] [DecidableEq n]
 
-/-- Every finite square matrix ring over a division ring is unit-regular. -/
+/-- Every finite square matrix ring over a division ring is unit-regular;
+compare Weibel, *The K-book*, Exercise I.1.13(d), which assumes positive size. -/
 theorem isUnitRegular_matrix : IsUnitRegular (Matrix n n K) := by
   intro A
   let f : Module.End K (n → K) := A.toLinearMapRight'

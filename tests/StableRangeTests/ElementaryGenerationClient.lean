@@ -10,7 +10,17 @@ public import Mathlib.Algebra.Field.ZMod
 public import Mathlib.RingTheory.Spectrum.Prime.Noetherian
 public import Mathlib.LinearAlgebra.Matrix.Notation
 
-/-! Stable-range-one finite determinant generation and the stable elementary quotient. -/
+/-!
+# Elementary generation clients
+
+These clients test finite determinant generation and the stable elementary
+quotient under stable range one using explicit coefficient rings.
+
+## References
+
+* Mathlib, `Data.ZMod.Basic`, `Algebra.Field.ZMod` and
+  `LinearAlgebra.Matrix.Notation` (finite-ring and matrix fixtures).
+-/
 
 set_option warningAsError true
 

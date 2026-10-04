@@ -16,13 +16,13 @@ developed here. Each link points to a declaration in this repository.
 ### Bass conditions, quotients and local rings
 
 For arbitrary possibly noncommutative rings, the library defines finite
-[right-unimodular rows](StableRange/Basic.lean#L32),
-[Bass's `(S_n)` condition](StableRange/Basic.lean#L56), and
-[relational least stable range](StableRange/Basic.lean#L154). It proves
-[monotonicity](StableRange/Basic.lean#L143), invariance under ring equivalence,
-[descent along surjective homomorphisms](StableRange/Quotient.lean#L55), and
-[equivalence under quotients by quasiregular two-sided ideals](StableRange/Quotient.lean#L127).
-[Nontrivial local rings have least stable range one](StableRange/Local.lean#L123).
+[right-unimodular rows](StableRange/Basic.lean#L38),
+[Bass's `(S_n)` condition](StableRange/Basic.lean#L62), and
+[relational least stable range](StableRange/Basic.lean#L162). It proves
+[monotonicity](StableRange/Basic.lean#L150), invariance under ring equivalence,
+[descent along surjective homomorphisms](StableRange/Quotient.lean#L62), and
+[equivalence under quotients by quasiregular two-sided ideals](StableRange/Quotient.lean#L135).
+[Nontrivial local rings have least stable range one](StableRange/Local.lean#L132).
 The zero ring can satisfy `(S_0)`; this is not a least-index-one assertion.
 Witnesses multiply on the right, and reduction order matters outside
 commutative rings; see [Scope and conventions](#scope-and-conventions).
@@ -36,7 +36,7 @@ also satisfy `(S₁)`, including empty indices and the zero ring. For nonempty f
 indices, the matrix ring satisfies `(S₁)` **if and only if** its coefficient ring
 does, for arbitrary possibly noncommutative rings; empty indices need not reflect
 `(S₁)`.
-For any idempotent `e` in such a ring, [its corner `eRe`](StableRange/Corner.lean#L27)
+For any idempotent `e` in such a ring, [its corner `eRe`](StableRange/Corner.lean#L35)
 also satisfies `(S₁)`, with identity `e`. This needs neither centrality nor
 fullness and includes `e = 0`, `e = 1` and zero rings.
 
@@ -49,66 +49,66 @@ the shortening is `b - a * t`, even when the maximal spectrum is empty.
 
 ### Regular rings and module cancellation
 
-`(S_1)` implies [direct finiteness](StableRange/Regular.lean#L38), and
-is [equivalent to unit-valued shortening](StableRange/Regular.lean#L80)
+`(S_1)` implies [direct finiteness](StableRange/Regular.lean#L46), and
+is [equivalent to unit-valued shortening](StableRange/Regular.lean#L88)
 of every right-unimodular pair. For arbitrary rings, including the zero ring,
 [`(S_1)` is invariant under passage to the opposite ring](StableRange/Opposite.lean).
 It follows that the same condition supports unit-valued left-ordered shortening.
 Under von Neumann regularity it is
-[equivalent to unit-regularity](StableRange/Regular.lean#L351).
+[equivalent to unit-regularity](StableRange/Regular.lean#L365).
 An inner inverse constructs
-[complementary principal right ideals](StableRange/Regular.lean#L175).
+[complementary principal right ideals](StableRange/Regular.lean#L185).
 If the endomorphism ring of a module `M` satisfies `(S_1)`, then
-[`M` cancels from binary direct products](StableRange/Cancellation.lean#L35):
+[`M` cancels from binary direct products](StableRange/Cancellation.lean#L44):
 `M × A ≃ M × B` implies `A ≃ B`, without finiteness or projectivity
 assumptions. For the regular right module, the statement uses the **opposite
-ring**. [Finite powers](StableRange/Cancellation.lean#L184) over a unit-regular
+ring**. [Finite powers](StableRange/Cancellation.lean#L193) over a unit-regular
 ring cannot absorb a nontrivial complementary module.
 
 ### Endomorphisms and matrices over division rings
 
 Endomorphisms of arbitrary vector spaces over division rings have
-[inner inverses](StableRange/DivisionRing.lean#L37), hence von Neumann-regular
+[inner inverses](StableRange/DivisionRing.lean#L45), hence von Neumann-regular
 endomorphism rings. In finite dimension the inner inverse can be
-[an automorphism](StableRange/DivisionRing.lean#L79), yielding
-[unit-regular finite square matrix rings](StableRange/DivisionRing.lean#L124),
+[an automorphism](StableRange/DivisionRing.lean#L87), yielding
+[unit-regular finite square matrix rings](StableRange/DivisionRing.lean#L133),
 including empty indices. By contrast, the endomorphism ring of a countable
-direct sum of copies of [any nonzero additive module](StableRange/Regular.lean#L275)
+direct sum of copies of [any nonzero additive module](StableRange/Regular.lean#L287)
 is not unit-regular; the sum need not be a free module.
 
 ### Row rank and repeated diagonal blocks
 
-For division-ring coefficients, [row rank](StableRange/DivisionRingRank.lean#L42)
+For division-ring coefficients, [row rank](StableRange/DivisionRingRank.lean#L49)
 is the finrank of the image of the **left-linear row-vector map given by
 right multiplication**. Rectangular ranks have multiplication bounds,
 orthogonal-idempotent additivity and independent row/column reindexing.
-For square matrices, [normalized rank](StableRange/DivisionRingRank.lean#L329)
+For square matrices, [normalized rank](StableRange/DivisionRingRank.lean#L338)
 is real row rank divided by index cardinality; identity rank one and positive
 bounds require a nonempty index. Every allowed
-[natural rank](StableRange/DivisionRingRank.lean#L151) and
-[normalized value](StableRange/DivisionRingRank.lean#L334) is realized.
-[Rectangular repeated blocks](StableRange/DivisionRingRank.lean#L319) scale
+[natural rank](StableRange/DivisionRingRank.lean#L158) and
+[normalized value](StableRange/DivisionRingRank.lean#L343) is realized.
+[Rectangular repeated blocks](StableRange/DivisionRingRank.lean#L327) scale
 rank by the block count; normalized square rank is
-[unchanged](StableRange/DivisionRingRank.lean#L412) for nonempty matrix and
+[unchanged](StableRange/DivisionRingRank.lean#L421) for nonempty matrix and
 block indices. Empty square matrices have normalized rank zero.
 
 Separately, over arbitrary potentially nonassociative/noncommutative
-`NonAssocSemiring` coefficients, [`Matrix.repeatBlockHom`](StableRange/RepeatedBlock.lean#L52)
-is a ring homomorphism, [injective](StableRange/RepeatedBlock.lean#L70)
+`NonAssocSemiring` coefficients, [`Matrix.repeatBlockHom`](StableRange/RepeatedBlock.lean#L59)
+is a ring homomorphism, [injective](StableRange/RepeatedBlock.lean#L77)
 when the block family is nonempty.
 
 ### Commutative regularity and dimension bounds
 
 A commutative ring is von Neumann regular
-[iff it is reduced and has Krull dimension at most zero](StableRange/Commutative.lean#L103).
-[All its modules are flat](StableRange/Commutative.lean#L132), with no finite or
+[iff it is reduced and has Krull dimension at most zero](StableRange/Commutative.lean#L111).
+[All its modules are flat](StableRange/Commutative.lean#L142), with no finite or
 Noetherian hypothesis. A commutative ring of dimension at most zero
-[satisfies `(S_1)`](StableRange/CommutativeStableRange.lean#L102) even without
+[satisfies `(S_1)`](StableRange/CommutativeStableRange.lean#L112) even without
 reducedness or nontriviality; *least* stable index one requires `Nontrivial`.
 Every commutative von Neumann-regular ring is unit-regular.
 
 More generally, a commutative Noetherian ring with `Ring.KrullDimLE d`
-[satisfies `(S_(d+1))`](StableRange/BassDimension.lean#L548), proved by finite
+[satisfies `(S_(d+1))`](StableRange/BassDimension.lean#L560), proved by finite
 prime avoidance and minimal-prime height induction, without an infinite-residue-
 fields premise.
 
@@ -116,21 +116,39 @@ fields premise.
 
 Over a commutative ring satisfying `(S_s)`, a right-unimodular coefficient
 row of length at least `s + 1`
-[has a free kernel](StableRange/RowKernel.lean#L348), by explicit two-shear
+[has a free kernel](StableRange/RowKernel.lean#L359), by explicit two-shear
 reduction. Independently of stable range, a *chosen row* of a square matrix
 with an actual two-sided inverse has
-[an explicit free-kernel equivalence](StableRange/RowKernel.lean#L159) with the
+[an explicit free-kernel equivalence](StableRange/RowKernel.lean#L169) with the
 function module on complementary column indices. Both inverse identities
 and an actual row index are required, not a merely proposed inverse.
+
+### Finite-free cancellation and first-row completion
+
+Over a commutative ring satisfying `(S_s)`, an explicit presentation
+`P × (Fin m → R) ≃ₗ[R] (Fin (n + m) → R)` with `s ≤ n`
+[cancels the finite free summand](StableRange/FiniteFree.lean#L47), giving
+`P ≃ₗ[R] (Fin n → R)` and hence `Module.Free R P`. The module `P` may live
+in a different universe from `R`; it need not already be free. Noetherian
+Krull-dimension-upper-bound specializations state their additional hypotheses
+separately. The exact coordinate count applies even to the zero ring; it does
+not claim that different free presentations have a unique rank.
+
+For a right-unimodular row `a : Fin (n + 1) → R` under the same `(S_s)` and
+`s ≤ n` bound, [first-row completion](StableRange/RowCompletion.lean#L44)
+constructs a linear self-equivalence whose zeroth output coordinate on `x`
+equals `a ⬝ᵥ x`. Its matrix has literal first row `a` and an explicit
+[two-sided inverse](StableRange/RowCompletion.lean#L134). Here too the zero
+ring is allowed; the dimension-bound form separately requires Noetherianity.
 
 ### Elementary diagonalization under `(S₁)`
 
 For a commutative ring satisfying Bass's `(S₁)`, an elementary left factor
-[makes the leading entry a unit](StableRange/ElementaryGeneration.lean#L31)
+[makes the leading entry a unit](StableRange/ElementaryGeneration.lean#L40)
 in every invertible successor-rank matrix. The resulting
-[two-sided elementary diagonalization](StableRange/ElementaryGeneration.lean#L83)
+[two-sided elementary diagonalization](StableRange/ElementaryGeneration.lean#L93)
 applies to every invertible `Fin n` matrix, including `n = 0`, and
-[transports to arbitrary finite decidable index types](StableRange/ElementaryGeneration.lean#L94).
+[transports to arbitrary finite decidable index types](StableRange/ElementaryGeneration.lean#L104).
 The proofs reuse the rectangular elementary shear, its first-column action,
 and the conditional all-rank unit-pivot induction from `general-linear-groups`.
 The condition is `(S₁)`, not a least-index-one assertion: it covers the zero
@@ -178,6 +196,8 @@ by the root and add no public library declarations.
 | `BassDimension` | finite-prime avoidance, prefix-ideal height bounds, `stableRangeCondition_succ_of_krullDimLE` |
 | `Cancellation` | `exists_linearEquiv_of_prod_of_end_stableRangeCondition_one` and finite-power consequences |
 | `RowKernel` | coefficient functionals, `kernelEquivOfLinearEquiv`, split kernels and explicit free-kernel equivalences |
+| `FiniteFree` | explicit finite-free summand cancellation and exact-size freeness under `(S_s)` or a noetherian dimension bound |
+| `RowCompletion` | first-coordinate equivalence, completed matrix and two-sided inverse under `(S_s)` or a noetherian dimension bound |
 | `ElementaryGeneration` | commutative `(S₁)` elementary unit pivots, diagonalization of `Fin n` matrices and finite reindexing |
 | `DeterminantGeneration` | finite determinant-one membership, stable determinant kernel and quotient-to-units equivalence under commutative `(S₁)` |
 
@@ -272,6 +292,10 @@ radical, and cancellation through opposite rings.
 - Coefficient-row kernel results here use commutative rings. The invertible-row
   construction takes an actual row index and a specified two-sided matrix
   inverse; it does not manufacture an index for an empty matrix.
+- Finite-free cancellation uses an explicit presentation and a stable-range
+  bound; no preliminary freeness or nontriviality hypothesis is needed.
+  First-row completion preserves the original row, not only its equivalence
+  class. Dimension-bound variants require a commutative noetherian ring.
 - This is not a general Morita-invariance theorem, stable general-linear-group
   construction, arbitrary stably-free cancellation theorem, or K-theory library.
   These results do not establish formal coverage of a whole source book.
@@ -311,14 +335,39 @@ For the historical, source-bound native API and its limitations, see the
 not this checkout; its historical signatures and line ranges are not current
 API documentation.
 
+## References
+
+- Charles A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
+  August 29, 2013 complete-book build, Chapter I, §1: unimodular rows,
+  the stable-range dimension bound, Theorem I.1.3 and Exercises I.1.5,
+  I.1.12(v), I.1.13(a)–(f). These supply mathematical statements and
+  context, not copied prose or an attribution of the library's independent
+  proofs to the book.
+- [Mathlib](https://github.com/leanprover-community/mathlib4) (pinned
+  revision in `lakefile.toml`): prior formalizations of rings, ideals,
+  local and semisimple rings, Krull dimension, flatness, modules, linear
+  equivalences, matrix blocks, idempotent corners, and rank. The proofs
+  use these definitions, theorems and constructions.
+- `general-linear-groups` (pinned revision in `lakefile.toml`): prior
+  formalizations of quasiregular two-sided ideals and their radical
+  criterion, matrix corners and ordered block units, elementary subgroups,
+  conditional unit-pivot induction, finite reindexing, the stable determinant
+  and its rank-one quotient section. The elementary-generation results
+  generalize its local statements using the stable-range hypothesis.
+
 ## License, credit and provenance
 
 Original project contributions are offered under the Apache License 2.0 in
 [LICENSE](LICENSE). Lean file credit is `Authors: Formal Frontier Agents`, a
 collective attribution, **not** a claim that an unverified entity owns copyright.
-Prism contributed the principal mathematics and two-shear kernel work; other
-contributors developed the invertible-matrix-row kernel and distinct
-prefix-ideal fixture and production work. The
+Prism contributed the principal stable-range, regularity, dimension, rank,
+cancellation and two-shear kernel work, together with the exact-coordinate
+finite-free cancellation and first-row assembly designs. Distinct agents
+proved finite-free peeling and the coordinate-first row/matrix completion
+from the existing kernel API; other agents contributed the
+semilocal, product, semisimple, opposite-ring, matrix/corner and elementary
+generation results, the invertible-matrix-row kernel construction and
+distinct prefix-ideal fixture and production work. The
 [documentation credits](docs/CREDITS.md) distinguish their work and the
 original API adapter and notes from later documentation fixes.
 
@@ -327,12 +376,13 @@ proof development, clients, documentation and maintenance. Attribution, a build
 or an Apache notice alone does not establish ownership or lawful redistribution
 of third-party expression.
 
-Mathematical motivation includes Charles A. Weibel, *The K-book: An Introduction
-to Algebraic K-theory*, August 29, 2013 complete-book build, especially Chapter I
-Exercises 1.12–1.13 and the Bass stable-range/cancellation discussion. The
-project's direct Bass-dimension proof does not import book prose as a proof.
-Mathlib and `general-linear-groups` are imported, not vendored, and retain
-their respective licenses and attributions.
+Weibel's *K-book* supplies published mathematical results as well as
+motivation; the dimension bound and exercise-level statements are credited
+in the relevant theorem docstrings. The finite-prime/height dimension
+argument does not claim to reproduce the cited Bass V.3.5 proof.
+Mathlib and `general-linear-groups` supply formalized interfaces and proof
+ingredients as detailed in [References](#references); both are imported,
+not vendored, and retain their respective licenses and attributions.
 
 No source PDF, scan, substantial book quotation, generated API website or
 other binary asset is shipped. The local Markdown API and adapter have

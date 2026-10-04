@@ -22,6 +22,11 @@ and left multiplication in unit-valued shortening. Left- and right-regular
 modules exercise cancellation with arbitrary complementary modules. Infinite
 and empty products and a formal-power-series radical quotient exercise the
 public stable-range API.
+
+## References
+
+* Mathlib, `Algebra.Group.Units.Opposite`, `LinearAlgebra.Matrix.Notation`
+  and `RingTheory.PowerSeries.Inverse` (opposite-ring, matrix and radical fixtures).
 -/
 
 set_option warningAsError true

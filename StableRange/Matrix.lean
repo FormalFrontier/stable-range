@@ -18,6 +18,15 @@ Bass's stable-range-one condition passes from any ring to its finite square
 matrix rings, including matrices indexed by the empty type. For nonempty finite
 indices, the matrix ring satisfies stable range one exactly when the coefficient
 ring does.
+
+## References
+
+* C. A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
+  Exercise I.1.5 (Bass's stable-range condition); the finite-matrix
+  preservation and reflection proofs here do not claim to follow that exercise.
+* `general-linear-groups`, `MatrixCorner`, `RectangularBlockUnits` and
+  `UnitPivotDiagonalization` (formalized entry/corner equivalence and ordered
+  block units used in matrix reduction).
 -/
 
 @[expose] public section
@@ -454,7 +463,9 @@ private theorem rectangular_completion_fin {R : Type u} [Ring R]
     rw [hback]
     exact ((Units.isUnit (L⁻¹)).mul hunitN).mul (Units.isUnit (V⁻¹))
 
-/-- Finite square matrices over a ring satisfying `(S₁)` also satisfy `(S₁)`. -/
+/-- Finite square matrices over a ring satisfying `(S₁)` also satisfy `(S₁)`.
+The block reduction uses `general-linear-groups`' rectangular block units;
+the stable-range convention is as in Weibel, *The K-book*, Exercise I.1.5. -/
 theorem stableRangeCondition_one_matrix
     {R : Type u} [Ring R] {ι : Type v} [Fintype ι] [DecidableEq ι]
     (h : StableRangeCondition R 1) :
@@ -470,7 +481,8 @@ theorem stableRangeCondition_one_matrix
     (Matrix.reindexRingEquiv R (Fintype.equivFin ι)).symm
 
 /-- For nonempty finite indices, the matrix ring satisfies `(S₁)` if and only if
-its coefficient ring does. -/
+its coefficient ring does. Reflection uses the diagonal matrix-unit corner
+formalized in `general-linear-groups`' `MatrixCorner`. -/
 theorem stableRangeCondition_one_matrix_iff
     {R : Type u} [Ring R] {ι : Type v} [Fintype ι] [DecidableEq ι] [Nonempty ι] :
     StableRangeCondition (Matrix ι ι R) 1 ↔ StableRangeCondition R 1 := by

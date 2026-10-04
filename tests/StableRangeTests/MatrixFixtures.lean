@@ -13,6 +13,10 @@ import Mathlib.LinearAlgebra.Matrix.Notation
 Complementary projections give a right-unimodular pair and an explicit
 right-sided shortening over any ring. Their nonunit properties additionally
 require a nontrivial coefficient ring.
+
+## References
+
+* Mathlib, `LinearAlgebra.Matrix.Notation` (explicit projection matrices).
 -/
 
 set_option warningAsError true

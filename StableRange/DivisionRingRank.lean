@@ -20,6 +20,13 @@ for right matrix multiplication. It proves the usual zero, identity,
 multiplication, orthogonal-idempotent, and repeated-diagonal-block properties
 and realizes every possible finite square-matrix row rank. It also packages
 the normalized real-valued row rank for nonempty finite square matrices.
+
+## References
+
+* C. A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
+  the rank-function paragraph and Exercise I.1.13(d) (finite matrix ranks).
+* Mathlib, `LinearAlgebra.FiniteDimensional.Lemmas`, `Dimension.Constructions`
+  and `Matrix.ToLin` (finrank and the row-vector linear map).
 -/
 
 set_option warningAsError true
@@ -326,7 +333,8 @@ theorem rowRank_repeatBlock (A : Matrix m n K) :
 
 end RepeatedBlocks
 
-/-- Row rank divided by the size of a finite square matrix, as a real number. -/
+/-- Row rank divided by the size of a finite square matrix, as a real number;
+compare Weibel, *The K-book*, Exercise I.1.13(d), for positive matrix size. -/
 noncomputable def normalizedRowRank (A : Matrix n n K) : ℝ :=
   (rowRank A : ℝ) / Fintype.card n
 

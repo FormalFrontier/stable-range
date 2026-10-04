@@ -15,6 +15,11 @@ Persistent proofs exercise the advertised API without `import all`,
 project-leaf imports or private implementation names. The extra Mathlib imports
 supply `ZMod` fixtures and the Artinian dimension instance. These are regression
 clients, not new `StableRange` library theorems or a complete release proof audit.
+
+## References
+
+* Mathlib, `Data.ZMod.Basic` and `RingTheory.Spectrum.Prime.Noetherian`
+  (the finite-ring and Artinian-dimension fixtures).
 -/
 
 set_option warningAsError true

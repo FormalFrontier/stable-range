@@ -12,6 +12,13 @@ public import GeneralLinearGroups.QuasiregularIdeal
 
 This file proves descent of Bass stable-range conditions along surjective ring
 homomorphisms and invariance under quotients by quasi-regular two-sided ideals.
+
+## References
+
+* C. A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
+  Exercises I.1.5(d) and I.1.12(v) (quotient monotonicity and radical quotients).
+* `general-linear-groups`, `QuasiregularIdeal` (formalization of quasi-regular
+  two-sided ideals and their unit criterion).
 -/
 
 set_option warningAsError true
@@ -123,7 +130,8 @@ theorem isRightUnimodular_of_quotient
       exact Units.val_inv a
 
 /-- A quasi-regular quotient satisfies exactly the same Bass stable-range
-conditions as the original ring. -/
+conditions as the original ring; compare Weibel, *The K-book*,
+Exercise I.1.12(v). -/
 theorem stableRangeCondition_quotient_iff
     {R : Type u} [Ring R] (I : TwoSidedIdeal R)
     (hI : I.IsQuasiregular) (n : ℕ) :
@@ -142,7 +150,8 @@ theorem stableRangeCondition_quotient_iff
     simpa only [map_sub, map_mul, ht] using hq
 
 /-- Quotienting by a quasi-regular two-sided ideal preserves supplied least
-stable-range indices. -/
+stable-range indices; see Weibel, *The K-book*, Exercise I.1.12(v).
+The quasi-regular-ideal API comes from `general-linear-groups`. -/
 theorem stableRange_eq_quotient
     {R : Type u} [Ring R] (I : TwoSidedIdeal R)
     (hI : I.IsQuasiregular) {sR sQ : ℕ}

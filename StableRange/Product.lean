@@ -13,6 +13,13 @@ import Mathlib.Algebra.BigOperators.Pi
 
 The stable-range condition for a dependent product of rings follows from the
 condition in each factor, for any index type and row length.
+
+## References
+
+* C. A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
+  Exercise I.1.5 (the stable-range condition applied componentwise).
+* Mathlib, `Algebra.Ring.Pi` and `Algebra.BigOperators.Pi` (dependent
+  product rings and coordinatewise finite sums).
 -/
 
 set_option warningAsError true

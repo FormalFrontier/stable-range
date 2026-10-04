@@ -13,6 +13,13 @@ public import Mathlib.LinearAlgebra.Matrix.Kronecker
 This file defines the operation that repeats a rectangular matrix on diagonal
 blocks. For square matrices, it packages that operation as an injective ring
 homomorphism whenever the finite block-indexing type is nonempty.
+
+## References
+
+* C. A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
+  Exercise I.1.13(e) (matrix stabilization by repeated diagonal blocks).
+* Mathlib, `Data.Matrix.Block` and `LinearAlgebra.Matrix.Kronecker`
+  (block diagonal matrices and Kronecker products used in this construction).
 -/
 
 set_option warningAsError true

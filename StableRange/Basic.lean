@@ -14,6 +14,12 @@ public import Mathlib.Tactic.Abel
 This file defines finite right-unimodular rows and Bass's stable-range
 conditions for arbitrary, possibly noncommutative rings. The multiplication
 order is explicit: witnesses occur on the right of the row entries.
+
+## References
+
+* C. A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
+  Chapter I, §1.2 and Exercise I.1.5 (unimodular rows and Bass stable range).
+* Mathlib, for finite sums and ring equivalences used to express these conditions.
 -/
 
 set_option warningAsError true
@@ -52,7 +58,7 @@ theorem isRightUnimodular_finSucc_iff {R : Type u} [Ring R] {n : ℕ}
     simpa [IsRightUnimodular, IsRightUnimodularCons, Fin.sum_univ_succ] using hs
 
 /-- Bass's condition `(S_n)`, stated with the distinguished first coordinate
-separated from a row of length `n`. -/
+separated from a row of length `n`; see Weibel, *The K-book*, Exercise I.1.5. -/
 def StableRangeCondition (R : Type u) [Ring R] (n : ℕ) : Prop :=
   ∀ (r0 : R) (r : Fin n → R), IsRightUnimodularCons r0 r →
     ∃ t : Fin n → R, IsRightUnimodular (fun i ↦ r i - r0 * t i)
@@ -112,7 +118,8 @@ theorem stableRangeCondition_equiv_iff
     StableRangeCondition R n ↔ StableRangeCondition S n :=
   ⟨fun h ↦ h.map_equiv e, fun h ↦ h.map_equiv e.symm⟩
 
-/-- Vaserstein's one-step implication: `(S_n)` implies `(S_(n+1))`. -/
+/-- Vaserstein's one-step implication: `(S_n)` implies `(S_(n+1))`;
+see Weibel, *The K-book*, Exercise I.1.5(a). -/
 theorem stableRangeCondition_succ {R : Type u} [Ring R] (n : ℕ) :
     StableRangeCondition R n → StableRangeCondition R (n + 1) := by
   intro hn r0 r hr
@@ -150,7 +157,8 @@ theorem stableRangeCondition_mono {R : Type u} [Ring R] {m n : ℕ}
 /-- `s` is the least natural index satisfying Bass's stable-range condition.
 
 This relational formulation does not assign a default natural number to a ring
-for which no finite stable range has been supplied. -/
+for which no finite stable range has been supplied; compare Weibel,
+*The K-book*, Exercise I.1.5. -/
 def IsStableRange (R : Type u) [Ring R] (s : ℕ) : Prop :=
   StableRangeCondition R s ∧ ∀ m, StableRangeCondition R m → s ≤ m
 

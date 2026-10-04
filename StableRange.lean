@@ -22,6 +22,8 @@ public import StableRange.RepeatedBlock
 public import StableRange.DivisionRingRank
 public import StableRange.Cancellation
 public import StableRange.RowKernel
+public import StableRange.FiniteFree
+public import StableRange.RowCompletion
 public import StableRange.ElementaryGeneration
 public import StableRange.DeterminantGeneration
 
@@ -52,10 +54,24 @@ Over commutative rings, sufficiently long right-unimodular coefficient rows
 have free kernels under the corresponding stable-range condition. Independently
 of stable range, a row in a matrix with a specified two-sided inverse has kernel
 equivalent to the function module on the complementary column indices.
+An explicit finite stable presentation cancels a finite free summand when the
+remaining coordinate count meets the stable-range bound, retaining the exact
+coordinate count even over the zero ring. Under the same bound, a right-unimodular
+row extends to an invertible matrix whose first row is the original row.
 It provides row rank and normalized row rank for matrices over division rings,
 including realization of every possible finite square-matrix row rank, scaling,
 and normalized invariance under repeated diagonal blocks.
 Repeated diagonal blocks of square matrices are also packaged as injective
 ring homomorphisms for nonempty finite block families over arbitrary possibly
 nonassociative and noncommutative `NonAssocSemiring` coefficients.
+
+## References
+
+* C. A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
+  Chapter I, §1 (stable range, finite stable presentations, row completion,
+  unimodular rows and Exercises I.1.5,
+  I.1.12–I.1.13).
+* Mathlib, for the underlying ring, module, ideal, dimension and matrix APIs.
+* `general-linear-groups`, for quasiregular ideals, elementary matrices and
+  stable determinant constructions.
 -/

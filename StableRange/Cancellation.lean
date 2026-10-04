@@ -15,6 +15,14 @@ This file proves that a module can be cancelled from a binary product whenever
 its endomorphism ring satisfies Bass's right stable-range-one condition.  The
 proof is an explicit two-by-two block reduction and imposes no finiteness or
 projectivity hypothesis on any module.
+
+## References
+
+* C. A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
+  Exercise I.1.13(c) (unit-regular cancellation), and Exercise I.1.5(b)–(c)
+  (stable-range cancellation context). The block argument here is more general.
+* Mathlib, `LinearAlgebra.Pi` and `LinearAlgebra.Prod` (linear equivalences
+  and binary product maps used in the block reduction).
 -/
 
 set_option warningAsError true
@@ -31,7 +39,8 @@ variable [AddCommGroup M] [AddCommGroup A] [AddCommGroup B]
 variable [Module R M] [Module R A] [Module R B]
 
 /-- A module whose endomorphism ring satisfies `(S₁)` cancels from a binary
-product. No finiteness or projectivity assumption is required. -/
+product. No finiteness or projectivity assumption is required. This strengthens
+the cancellation setting of Weibel, *The K-book*, Exercise I.1.13(c). -/
 theorem exists_linearEquiv_of_prod_of_end_stableRangeCondition_one
     (h : StableRangeCondition (Module.End R M) 1)
     (e : (M × A) ≃ₗ[R] (M × B)) :

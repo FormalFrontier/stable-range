@@ -13,6 +13,11 @@ import Mathlib.Tactic.Abel
 
 Ordered matrix units exhibit noncentral idempotents and noncommuting pairs of
 nonunits in their corners over any nontrivial coefficient ring.
+
+## References
+
+* Mathlib, `RingTheory.Idempotents` and `Data.Matrix.Basis`
+  (idempotent corners and indexed matrix units).
 -/
 
 set_option warningAsError true

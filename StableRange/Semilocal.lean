@@ -13,6 +13,14 @@ public import Mathlib.RingTheory.LocalProperties.Semilocal
 The finite maximal spectrum is expressed using Mathlib's `Finite (MaximalSpectrum R)`
 convention. Right-unimodular pairs have a distinguished first entry `a`, and the
 remaining entry is shortened in the form `b - a * t`. The zero ring is included.
+
+## References
+
+* C. A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
+  Chapter I, §1 (Bass stable range and its maximal-spectrum dimension bound).
+  The finite-spectrum proof here uses simultaneous maximal-ideal avoidance.
+* Mathlib, `RingTheory.LocalProperties.Semilocal` (the finite maximal spectrum)
+  and the Chinese remainder and maximal-ideal unit criteria used here.
 -/
 
 set_option warningAsError true
@@ -25,7 +33,9 @@ namespace Bass
 
 /-- A commutative ring with finitely many maximal ideals satisfies Bass's `(S₁)`.
 The right-unimodular reduction replaces `b` by `b - a * t`, including when the
-maximal spectrum is empty. -/
+maximal spectrum is empty. The maximal-ideal avoidance proof uses Mathlib's
+finite Chinese remainder interface; compare the stable-range dimension
+discussion in Weibel, *The K-book*, Chapter I, §1. -/
 theorem stableRangeCondition_one_of_finite_maximalSpectrum
     {R : Type*} [CommRing R] [Finite (MaximalSpectrum R)] :
     StableRangeCondition R 1 := by

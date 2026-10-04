@@ -16,6 +16,14 @@ import Mathlib.RingTheory.Ideal.Quotient.Operations
 Semisimple rings satisfy the right Bass stable-range condition `(S₁)`, as do
 rings whose quotient by the Jacobson radical is semisimple. Neither statement
 assumes nilpotence of the radical.
+
+## References
+
+* C. A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
+  Exercises I.1.5(c) and I.1.12(v) (Artinian stable range and radical quotients).
+* Mathlib, `RingTheory.SimpleModule.WedderburnArtin` (semisimple rings as
+  products of matrix rings over division rings); `general-linear-groups`,
+  `QuasiregularIdeal` (Jacobson radical criterion).
 -/
 
 set_option warningAsError true
@@ -26,7 +34,9 @@ namespace Bass
 
 universe u
 
-/-- A semisimple ring satisfies the right Bass stable-range condition `(S₁)`. -/
+/-- A semisimple ring satisfies the right Bass stable-range condition `(S₁)`.
+The proof uses Mathlib's Wedderburn–Artin decomposition and the finite-matrix
+stable-range theorem; compare Weibel, *The K-book*, Exercise I.1.5(c). -/
 theorem stableRangeCondition_one_of_isSemisimpleRing
     {R : Type u} [Ring R] [IsSemisimpleRing R] :
     StableRangeCondition R 1 := by

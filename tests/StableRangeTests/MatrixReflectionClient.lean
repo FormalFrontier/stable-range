@@ -17,6 +17,11 @@ Semisimplicity supplies the outer matrix condition independently. The
 nonempty-index reflection statement then yields a two-sided unit witness for a
 right-handed shortening over noncommutative coefficients. Trivial coefficients
 exercise the coefficient hypothesis without nontriviality.
+
+## References
+
+* Mathlib, `Data.ZMod.Basic` and `LinearAlgebra.Matrix.Notation`
+  (noncommutative matrix and trivial-coefficient fixtures).
 -/
 
 set_option warningAsError true

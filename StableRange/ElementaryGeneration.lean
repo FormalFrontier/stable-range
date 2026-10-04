@@ -14,6 +14,14 @@ For a commutative ring of Bass stable range one, elementary left multiplication
 can create a unit leading entry in any invertible successor-rank matrix.
 Two-sided elementary multiplication then reduces any invertible finite matrix
 to a diagonal of units. The finite-index statement includes empty index types.
+
+## References
+
+* C. A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
+  Chapter I, §1 (Bass's stable-range condition and unimodular rows).
+* `general-linear-groups`, `UnitPivotInduction` and
+  `UnitPivotDiagonalization` (the existing conditional pivot induction,
+  elementary factors and finite reindexing followed here).
 -/
 
 set_option warningAsError true
@@ -27,7 +35,8 @@ universe u v
 variable {R : Type u} [CommRing R]
 
 /-- Bass stable range one supplies an elementary left factor making the
-leading entry of an invertible matrix a unit. -/
+leading entry of an invertible matrix a unit. The factor uses the rectangular
+upper shear formalized in `general-linear-groups`' `RectangularBlockUnits`. -/
 theorem exists_elementary_unit_pivot_of_stableRangeCondition_one
     (stable : Bass.StableRangeCondition R 1) {rank : ℕ}
     (matrix : GL (Fin (rank + 1)) R) :
@@ -79,7 +88,8 @@ theorem exists_elementary_unit_pivot_of_stableRangeCondition_one
   exact hunit
 
 /-- A commutative stable-range-one ring admits elementary two-sided
-diagonalization of every invertible matrix, including the empty matrix. -/
+diagonalization of every invertible matrix, including the empty matrix.
+Uses the conditional pivot induction in `general-linear-groups`' `UnitPivotInduction`. -/
 theorem exists_elementary_diagonalization_of_stableRangeCondition_one
     (stable : Bass.StableRangeCondition R 1) {rank : ℕ} (matrix : GL (Fin rank) R) :
     ∃ (left right : elementarySubgroup (Fin rank) R) (diagonal : Fin rank → Rˣ),

@@ -15,6 +15,14 @@ elementary subgroup at every finite rank is the determinant-one subgroup.
 Consequently the stable elementary subgroup is the kernel of the existing
 stable determinant, and its quotient is equivalent to the coefficient units.
 The equivalence uses the existing quotient determinant and rank-one section.
+
+## References
+
+* C. A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
+  Chapter I, §1 (stable-range background and elementary matrices).
+* `general-linear-groups`, `LocalElementaryGeneration`,
+  `StableDeterminant` and `UnitPivotInduction` (the existing local result,
+  quotient determinant, rank-one section and pivot induction generalized here).
 -/
 
 set_option warningAsError true
@@ -64,7 +72,9 @@ private theorem mem_elementarySubgroup_iff_det_eq_one_fin_of_stableRangeConditio
       ((elementarySubgroup (Fin rank) R).inv_mem right.property)
 
 /-- Over a commutative ring satisfying Bass's `(S₁)`, an invertible matrix
-is elementary exactly when its determinant is one, at any finite rank. -/
+is elementary exactly when its determinant is one, at any finite rank.
+This generalizes the local result formalized in `general-linear-groups`'
+`LocalElementaryGeneration`. -/
 theorem mem_elementarySubgroup_iff_det_eq_one_of_stableRangeCondition_one
     (stable : Bass.StableRangeCondition R 1) {indices : Type v}
     [Fintype indices] [DecidableEq indices] (matrix : GL indices R) :
@@ -89,7 +99,8 @@ theorem mem_elementarySubgroup_iff_det_eq_one_of_stableRangeCondition_one
 namespace StableGL
 
 /-- Under Bass's `(S₁)`, the stable elementary subgroup is precisely the
-kernel of the stable determinant. -/
+kernel of the stable determinant formalized in `general-linear-groups`'
+`StableDeterminant`; compare its `LocalElementaryGeneration` local case. -/
 theorem elementary_eq_ker_det_of_stableRangeCondition_one
     (stable : Bass.StableRangeCondition R 1) :
     stableElementarySubgroup R = (det R).ker := by
@@ -125,8 +136,9 @@ theorem quotientDet_injective_of_stableRangeCondition_one
     (quotientDet_ker_eq_bot_of_stableRangeCondition_one stable)
 
 /-- The determinant identifies the stable elementary quotient with the
-coefficient units under Bass's `(S₁)`. Its inverse is the existing rank-one
-section of the quotient determinant. -/
+coefficient units under Bass's `(S₁)`. Its inverse is the rank-one section
+formalized in `general-linear-groups`' `StableDeterminant`; this generalizes
+the local equivalence in `LocalElementaryGeneration`. -/
 noncomputable def quotientDetMulEquivOfStableRangeConditionOne
     (stable : Bass.StableRangeCondition R 1) :
     (StableGL R ⧸ stableElementarySubgroup R) ≃* Rˣ where

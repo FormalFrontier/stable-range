@@ -16,6 +16,11 @@ import Mathlib.RingTheory.Spectrum.Prime.Noetherian
 Three-by-three matrices over a finite nonreduced ring and an infinite product
 have noncentral corners containing noncommuting right-unimodular nonunits.
 The corner-unit correction is distinguished from an ambient matrix unit.
+
+## References
+
+* Mathlib, `Data.ZMod.Basic` and `RingTheory.Spectrum.Prime.Noetherian`
+  (finite-ring and infinite-product fixtures).
 -/
 
 set_option warningAsError true

@@ -14,6 +14,13 @@ import Mathlib.Tactic.NoncommRing
 The index-one stable-range condition is expressed on right-unimodular rows.
 The opposite-ring formulation reverses the order of multiplication in these
 rows.
+
+## References
+
+* C. A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
+  Exercise I.1.5 (right-sided stable-range conventions).
+* Mathlib, `Algebra.Group.Units.Opposite` (opposite-ring units used to
+  transport the index-one condition).
 -/
 
 set_option warningAsError true

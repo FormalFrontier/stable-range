@@ -15,6 +15,11 @@ public import Mathlib.Algebra.Group.Int.Units
 
 These examples exercise the finite-maximal-spectrum hypothesis, right-handed
 shortening and the existing stable quotient determinant API.
+
+## References
+
+* Mathlib, `Data.ZMod.Basic`, `Algebra.Field.ZMod` and
+  `RingTheory.Artinian.Module` (finite maximal-spectrum fixtures).
 -/
 
 set_option warningAsError true

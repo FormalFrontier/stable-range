@@ -11,5 +11,18 @@ import StableRangeTests.ElementaryGenerationClient
 import StableRangeTests.SemilocalClient
 import StableRangeTests.SemisimpleClient
 import StableRangeTests.MatrixReflectionClient
+import StableRangeTests.FiniteFreeClient
+import StableRangeTests.RowCompletionClient
 
-/-! Public-import regression clients for stable range. -/
+/-!
+# Public-import regression clients for stable range
+
+The client modules use Mathlib's matrix, finite-ring, power-series and
+maximal-spectrum formalizations for concrete examples. Finite-free cancellation
+and first-row completion clients exercise fields, integers, independent module
+universes, an empty stabilizer and the zero ring.
+
+## References
+
+* Mathlib, for the algebraic fixtures exercised in the imported clients.
+-/

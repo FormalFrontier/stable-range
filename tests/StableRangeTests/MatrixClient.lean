@@ -20,6 +20,11 @@ These clients instantiate finite matrix preservation over a nonreduced ring,
 an infinite product of nonreduced rings, the zero ring, and a formal power-series
 ring. The two-by-two example has a right-unimodular pair of nonunits; its
 explicit correction is checked without using the matrix preservation theorem.
+
+## References
+
+* Mathlib, `Data.ZMod.Basic`, `LinearAlgebra.Matrix.Notation` and
+  `RingTheory.PowerSeries.Inverse` (matrix, finite-ring and power-series fixtures).
 -/
 
 set_option warningAsError true

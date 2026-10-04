@@ -21,6 +21,14 @@ The zero-dimensional result does not assume that the ring is reduced. Its
 proof passes to the reduced quotient by the Jacobson radical, uses
 commutative von Neumann regularity there, and lifts `(S₁)` through the
 quasi-regular radical.
+
+## References
+
+* C. A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
+  Exercise I.1.13(f) (zero-dimensional stable range and regular rings).
+* Mathlib, `RingTheory.Ideal.Quotient.Nilpotent` and the commutative
+  Krull-dimension and regularity APIs; `general-linear-groups`,
+  `QuasiregularIdeal`, for the radical quotient criterion.
 -/
 
 set_option warningAsError true
@@ -37,7 +45,8 @@ variable {R : Type u} [CommRing R]
 
 Starting from an inner inverse `x` of `a`, the reflexive inner inverse
 `y = x * a * x` makes `a * y` idempotent. The element
-`y + (1 - a * y)` is then a unit, with inverse `a + (1 - a * y)`. -/
+`y + (1 - a * y)` is then a unit, with inverse `a + (1 - a * y)`.
+See Weibel, *The K-book*, Exercise I.1.13(f). -/
 theorem IsVonNeumannRegular.isUnitRegular
     (hreg : IsVonNeumannRegular R) : IsUnitRegular R := by
   intro a
@@ -98,7 +107,8 @@ theorem IsVonNeumannRegular.isUnitRegular
   simpa only [add_zero] using hay
 
 /-- Every zero-dimensional commutative ring satisfies Bass's condition
-`(S₁)`. No reducedness or nontriviality hypothesis is needed. -/
+`(S₁)`. No reducedness or nontriviality hypothesis is needed; compare Weibel,
+*The K-book*, Exercise I.1.13(f), where the nonzero-ring convention applies. -/
 theorem stableRangeCondition_one_of_krullDimLE_zero
     [Ring.KrullDimLE 0 R] : StableRangeCondition R 1 := by
   let J : TwoSidedIdeal R := (Ring.jacobson R).toTwoSided
@@ -122,7 +132,7 @@ theorem stableRangeCondition_one_of_krullDimLE_zero
     TwoSidedIdeal.ringJacobson_isQuasiregular 1).mpr hquot
 
 /-- Every nontrivial zero-dimensional commutative ring has least Bass stable
-range one. -/
+range one; see Weibel, *The K-book*, Exercise I.1.13(f). -/
 theorem stableRange_one_of_krullDimLE_zero
     [Nontrivial R] [Ring.KrullDimLE 0 R] : IsStableRange R 1 := by
   refine ⟨stableRangeCondition_one_of_krullDimLE_zero, ?_⟩

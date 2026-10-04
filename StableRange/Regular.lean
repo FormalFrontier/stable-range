@@ -22,6 +22,14 @@ only if it is von Neumann-regular and satisfies `(S_1)`. It also represents
 principal right ideals as submodules of the right regular module and proves
 that an inner inverse supplies an explicit complementary principal right
 ideal.
+
+## References
+
+* C. A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
+  Exercise I.1.13(a)–(d) (regularity, ideal complements, stable range one,
+  cancellation and countable endomorphisms).
+* Mathlib, for idempotents, right-module submodules and the finitely
+  supported shift maps used in the endomorphism counterexample.
 -/
 
 set_option warningAsError true
@@ -96,7 +104,8 @@ theorem stableRangeCondition_one_iff_forall_isUnit_sub_mul :
     refine ⟨fun _ ↦ t, fun _ ↦ inverse, ?_⟩
     simpa only [IsRightUnimodular, Fin.sum_univ_one] using hinverse
 
-/-- A ring is von Neumann-regular when every element has an inner inverse. -/
+/-- A ring is von Neumann-regular when every element has an inner inverse;
+see Weibel, *The K-book*, Exercise I.1.13(a). -/
 def IsVonNeumannRegular (R : Type u) [Ring R] : Prop :=
   ∀ a : R, ∃ x : R, a = a * x * a
 
@@ -171,7 +180,8 @@ theorem principalRightIdeal_eq_mul_innerInverse {a x : R}
     exact ⟨x * b, by rw [mul_assoc]⟩
 
 /-- If `x` is an inner inverse for `a`, then `aR` and `(1 - a*x)R` are
-complementary principal right ideals. -/
+complementary principal right ideals; see Weibel, *The K-book*,
+Exercise I.1.13(a). -/
 theorem principalRightIdeals_isCompl_of_innerInverse {a x : R}
     (h : a = a * x * a) :
     IsCompl (principalRightIdeal a) (principalRightIdeal (1 - a * x)) := by
@@ -180,7 +190,7 @@ theorem principalRightIdeals_isCompl_of_innerInverse {a x : R}
     (isIdempotentElem_mul_innerInverse h)
 
 /-- A ring is unit-regular when every element has an inner inverse which is a
-unit. -/
+unit; see Weibel, *The K-book*, Exercise I.1.13(a). -/
 def IsUnitRegular (R : Type u) [Ring R] : Prop :=
   ∀ a : R, ∃ x : Rˣ, a = a * (x : R) * a
 
@@ -200,7 +210,8 @@ theorem IsVonNeumannRegular.exists_principalRightIdeals_isCompl
   obtain ⟨x, hx⟩ := h a
   exact ⟨x, principalRightIdeals_isCompl_of_innerInverse hx⟩
 
-/-- Every unit-regular ring satisfies Bass's condition `(S_1)`. -/
+/-- Every unit-regular ring satisfies Bass's condition `(S_1)`;
+see Weibel, *The K-book*, Exercise I.1.13(b). -/
 theorem IsUnitRegular.stableRangeCondition_one (h : IsUnitRegular R) :
     StableRangeCondition R 1 := by
   intro a r hr
@@ -271,7 +282,8 @@ theorem IsUnitRegular.isDedekindFinite (h : IsUnitRegular R) :
   stableRangeCondition_one_isDedekindFinite h.stableRangeCondition_one
 
 /-- The endomorphism ring of a countable direct sum of copies of a nonzero
-module is not unit-regular. -/
+module is not unit-regular. This extends the division-ring vector-space
+example of Weibel, *The K-book*, Exercise I.1.13(d). -/
 theorem not_isUnitRegular_moduleEnd_finsupp_nat
     (S : Type u) (M : Type v) [Semiring S] [AddCommGroup M] [Module S M]
     [Nontrivial M] :
@@ -306,7 +318,8 @@ theorem IsUnitRegular.stableRange_one [Nontrivial R] (h : IsUnitRegular R) :
   | zero => exact (not_stableRangeCondition_zero hn).elim
   | succ n => exact Nat.succ_le_succ (Nat.zero_le n)
 
-/-- A von Neumann-regular ring satisfying `(S_1)` is unit-regular. -/
+/-- A von Neumann-regular ring satisfying `(S_1)` is unit-regular;
+compare Weibel, *The K-book*, Exercise I.1.13(b), for least range one. -/
 theorem isUnitRegular_of_stableRangeCondition_one
     (hreg : IsVonNeumannRegular R)
     (hsr : StableRangeCondition R 1) :
@@ -347,7 +360,8 @@ theorem isUnitRegular_of_stableRange_one
   isUnitRegular_of_stableRangeCondition_one hreg hsr.1
 
 /-- For a von Neumann-regular ring, unit-regularity is equivalent to Bass's
-condition `(S_1)`. -/
+condition `(S_1)`; compare the least-range-one formulation in Weibel,
+*The K-book*, Exercise I.1.13(b). -/
 theorem isUnitRegular_iff_stableRangeCondition_one
     (hreg : IsVonNeumannRegular R) :
     IsUnitRegular R ↔ StableRangeCondition R 1 :=
@@ -355,7 +369,8 @@ theorem isUnitRegular_iff_stableRangeCondition_one
     isUnitRegular_of_stableRangeCondition_one hreg⟩
 
 /-- For a nontrivial von Neumann-regular ring, unit-regularity is equivalent
-to having least Bass stable range one. -/
+to having least Bass stable range one; see Weibel, *The K-book*,
+Exercise I.1.13(b). -/
 theorem isUnitRegular_iff_stableRange_one [Nontrivial R]
     (hreg : IsVonNeumannRegular R) :
     IsUnitRegular R ↔ IsStableRange R 1 :=

@@ -17,6 +17,16 @@ finite free modules. It gives the explicit two-shear passage from Bass stable
 range to freeness of sufficiently long row kernels. It also identifies the
 kernel of a row in an explicitly invertible matrix with the free module on the
 complementary column indices.
+
+## References
+
+* C. A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
+  Chapter I, §1.2.1 and Theorem I.1.3 (unimodular rows, completion and
+  high-rank freeness). The two-shear and inverse-matrix equivalences are
+  distinct constructions; the latter does not assume stable range.
+* Mathlib, `LinearAlgebra.Basis.Prod` and `LinearAlgebra.Matrix.ToLin`
+  (split kernels, finite free modules and row-vector maps), including
+  `LinearMap.iInfKerProjEquiv` for the inverse-matrix row construction.
 -/
 
 set_option warningAsError true
@@ -211,6 +221,33 @@ noncomputable def kernelProdEquivOfRightInverse
     (by ext a; simp [φ, ψ, kproj])
     (by ext p <;> simp [φ, ψ, kproj, hfg'])
 
+@[simp]
+theorem kernelProdEquivOfRightInverse_apply
+    {R A B : Type*} [Ring R]
+    [AddCommGroup A] [Module R A] [AddCommGroup B] [Module R B]
+    (f : A →ₗ[R] B) (g : B →ₗ[R] A)
+    (hfg : f.comp g = LinearMap.id) (p : LinearMap.ker f × B) :
+    kernelProdEquivOfRightInverse f g hfg p = p.1.1 + g p.2 := by
+  rfl
+
+/-- The second component of the inverse splitting is the original map. -/
+@[simp]
+theorem kernelProdEquivOfRightInverse_symm_snd
+    {R A B : Type*} [Ring R]
+    [AddCommGroup A] [Module R A] [AddCommGroup B] [Module R B]
+    (f : A →ₗ[R] B) (g : B →ₗ[R] A)
+    (hfg : f.comp g = LinearMap.id) (a : A) :
+    ((kernelProdEquivOfRightInverse f g hfg).symm a).2 = f a := by
+  have hfg' (b : B) : f (g b) = b := by
+    have h := LinearMap.congr_fun hfg b
+    simpa using h
+  have hsplit (p : LinearMap.ker f × B) :
+      f (kernelProdEquivOfRightInverse f g hfg p) = p.2 := by
+    rw [kernelProdEquivOfRightInverse_apply, map_add, LinearMap.mem_ker.mp p.1.2,
+      zero_add, hfg']
+  simpa only [LinearEquiv.apply_symm_apply] using
+    (hsplit ((kernelProdEquivOfRightInverse f g hfg).symm a)).symm
+
 /-- A right-unimodular coefficient row has the standard split presentation of
 its kernel. -/
 noncomputable def kernelProdEquivOfIsRightUnimodular
@@ -230,6 +267,16 @@ noncomputable def kernelProdEquivOfIsRightUnimodular
     rw [hb]
     simp
   exact kernelProdEquivOfRightInverse (coefficientRowScalarMap R n a) g hfg
+
+/-- The scalar coordinate of the inverse row splitting is the original row. -/
+@[simp]
+theorem kernelProdEquivOfIsRightUnimodular_symm_snd
+    (R : Type u) [CommRing R] (n : ℕ) (a : Fin n → R)
+    (ha : IsRightUnimodular a) (x : Fin n → R) :
+    ((kernelProdEquivOfIsRightUnimodular R n a ha).symm x).2 = a ⬝ᵥ x := by
+  unfold kernelProdEquivOfIsRightUnimodular
+  exact (kernelProdEquivOfRightInverse_symm_snd _ _ _ x).trans
+    (coefficientRowScalarMap_apply R n a x)
 
 /-- The explicit two-shear equivalence from the kernel of a right-unimodular
 split row to the shortened finite free module. The first shear replaces the
@@ -307,7 +354,8 @@ theorem free_ker_coefficientRowConsMap_of_stableRangeCondition
 
 /-- At the literal stable-range length, the kernel of a right-unimodular
 coefficient row is explicitly equivalent to the shortened finite free
-module. -/
+module. This provides the row-kernel ingredient for the high-rank freeness
+statement in Weibel, *The K-book*, Theorem I.1.3. -/
 noncomputable def coefficientRowKernelEquivSuccOfStableRangeCondition
     (R : Type u) [CommRing R] (n : ℕ)
     (hstable : StableRangeCondition R n) (a : Fin (n + 1) → R)

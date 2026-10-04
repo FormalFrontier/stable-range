@@ -16,6 +16,14 @@ import Mathlib.LinearAlgebra.Basis.VectorSpace
 This file characterizes commutative von Neumann regular rings as the reduced
 rings of Krull dimension at most zero. It also proves their absolute-flatness
 property: every module over such a ring is flat.
+
+## References
+
+* C. A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
+  Exercise I.1.13(f) (commutative regularity, dimension zero and flatness).
+* Mathlib, `RingTheory.KrullDimension.Zero`, `RingTheory.Flat.Localization`
+  and `RingTheory.LocalProperties.Reduced` (formalization of the local and
+  dimensional characterizations used here).
 -/
 
 set_option warningAsError true
@@ -99,7 +107,7 @@ theorem isVonNeumannRegular_of_isReduced_krullDimLE_zero
     _ = r * x * r := by ring
 
 /-- A commutative ring is von Neumann regular exactly when it is reduced and
-has Krull dimension at most zero. -/
+has Krull dimension at most zero; see Weibel, *The K-book*, Exercise I.1.13(f). -/
 theorem isVonNeumannRegular_iff_isReduced_and_krullDimLE_zero :
     IsVonNeumannRegular R ↔ IsReduced R ∧ Ring.KrullDimLE 0 R := by
   constructor
@@ -110,7 +118,8 @@ theorem isVonNeumannRegular_iff_isReduced_and_krullDimLE_zero :
     let _ : Ring.KrullDimLE 0 R := hdim
     exact isVonNeumannRegular_of_isReduced_krullDimLE_zero
 
-/-- Every module over a reduced zero-dimensional commutative ring is flat. -/
+/-- Every module over a reduced zero-dimensional commutative ring is flat;
+see Weibel, *The K-book*, Exercise I.1.13(f). -/
 theorem flat_of_isReduced_krullDimLE_zero
     (M : Type v) [AddCommGroup M] [Module R M]
     [IsReduced R] [Ring.KrullDimLE 0 R] : Module.Flat R M := by
@@ -128,7 +137,8 @@ theorem flat_of_isReduced_krullDimLE_zero
   exact Module.Flat.trans R (Localization.AtPrime P)
     (LocalizedModule P.primeCompl M)
 
-/-- Every module over a commutative von Neumann regular ring is flat. -/
+/-- Every module over a commutative von Neumann regular ring is flat;
+see Weibel, *The K-book*, Exercise I.1.13(f). -/
 theorem IsVonNeumannRegular.flat (hreg : IsVonNeumannRegular R)
     (M : Type v) [AddCommGroup M] [Module R M] : Module.Flat R M := by
   let _ : IsReduced R := hreg.isReduced

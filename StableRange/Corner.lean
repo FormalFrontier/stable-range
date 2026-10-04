@@ -13,6 +13,12 @@ import Mathlib.Tactic.NoncommRing
 
 An idempotent corner inherits Bass's stable-range-one condition from its ambient ring.
 The identity in the corner is the idempotent, even when the idempotent is not central.
+
+## References
+
+* C. A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
+  Exercise I.1.5 (the stable-range condition used here).
+* Mathlib, `RingTheory.Idempotents` (the formalization of idempotent corners).
 -/
 
 set_option warningAsError true
@@ -23,7 +29,9 @@ namespace Bass
 
 universe u
 
-/-- Stable range one passes to the corner of any idempotent in a ring. -/
+/-- Stable range one passes to the corner of any idempotent in a ring.
+The corner formalization is from Mathlib's `RingTheory.Idempotents`; the
+stable-range condition is as in Weibel, *The K-book*, Exercise I.1.5. -/
 theorem stableRangeCondition_one_corner
     {R : Type u} [Ring R] {e : R} (he : IsIdempotentElem e)
     (h : StableRangeCondition R 1) : StableRangeCondition he.Corner 1 := by

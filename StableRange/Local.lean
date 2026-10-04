@@ -12,6 +12,13 @@ public import Mathlib.RingTheory.LocalRing.Basic
 
 This file proves that every noncommutative local ring in mathlib's sense has
 Bass stable range one.
+
+## References
+
+* C. A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
+  Exercise I.1.12(v) (the local stable-range-one consequence); the direct
+  proof here instead uses Mathlib's `IsLocalRing` API.
+* Mathlib, `RingTheory.LocalRing.Basic` (local-ring unit criterion).
 -/
 
 set_option warningAsError true
@@ -84,7 +91,8 @@ theorem isUnit_first_or_isUnit_second [IsLocalRing R]
       _ = (u : R) * (↑(u⁻¹) : R) := by rw [← hu]
       _ = 1 := Units.val_inv u
 
-/-- Every local ring satisfies Bass's condition `(S_1)`. -/
+/-- Every local ring satisfies Bass's condition `(S_1)`; compare Weibel,
+*The K-book*, Exercise I.1.12(v). -/
 theorem stableRangeCondition_one_of_isLocalRing [IsLocalRing R] :
     StableRangeCondition R 1 := by
   intro r0 r hr
@@ -119,7 +127,8 @@ theorem not_stableRangeCondition_zero [Nontrivial R] :
     simpa only [Finset.univ_eq_empty, Finset.sum_empty] using hw
   exact zero_ne_one h01
 
-/-- Every local ring has least Bass stable range one. -/
+/-- Every local ring has least Bass stable range one; compare Weibel,
+*The K-book*, Exercise I.1.12(v), with its source-local convention. -/
 theorem stableRange_one_of_isLocalRing [IsLocalRing R] :
     IsStableRange R 1 := by
   refine ⟨stableRangeCondition_one_of_isLocalRing, ?_⟩

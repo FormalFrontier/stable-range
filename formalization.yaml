@@ -9,7 +9,8 @@ project:
     Bass stable-range conditions for finite right-unimodular rows, quotient
     and local-ring consequences, regular and unit-regular rings, cancellation,
     division-ring matrix row rank and repeated blocks, commutative dimension
-    bounds, explicit coefficient-row kernel equivalences, and elementary
+    bounds, explicit coefficient-row kernel equivalences, exact-size finite-free
+    cancellation and first-row completion, and elementary
     diagonalization over commutative rings satisfying Bass S_1, with
     determinant-one generation and the stable elementary quotient. A
     commutative ring with finite maximal spectrum satisfies S_1.
@@ -64,13 +65,16 @@ related_formalizations:
       source history.
 status:
   scope: >-
-    The aggregate root imports the mathematical leaves, including elementary
-    unit pivots and diagonalization over commutative S_1 rings. It also imports
+    The aggregate root imports the mathematical leaves, including exact-size
+    finite-free cancellation under a stable-range bound and coefficient-row
+    completion with the original row in the first matrix position. It includes
+    elementary unit pivots and diagonalization over commutative S_1 rings. It also imports
     finite determinant-one generation, the stable determinant kernel theorem
     and the quotient-to-units equivalence under S_1. It also imports S_1
     inheritance for the corner of any idempotent, without centrality or
     nontriviality. A separate test root imports PublicAPIClient,
-    ElementaryGenerationClient, SemilocalClient and CornerClient, with
+    FiniteFreeClient, RowCompletionClient, ElementaryGenerationClient,
+    SemilocalClient and CornerClient, with
     test-only zero-ring, rank-one and noncentral matrix-corner fixtures and a
     nonlocal product-of-fields example. The commutative finite-maximal-spectrum
     S_1 theorem supplies shortening and stable quotient determinant clients.
@@ -211,6 +215,20 @@ status:
         two-sided inverse has kernel equivalent to functions on the other
         indices. No stable-range assumption is used; i : Fin n supplies
         nonemptiness and n=1 gives the empty complementary index type.
+    - declaration: "Module.finLinearEquivOfStableRangeCondition"
+      file: "StableRange/FiniteFree.lean"
+      note: >-
+        For a commutative R satisfying S_s, an explicit equivalence
+        P x R^m = R^(n+m) with s <= n yields P = R^n, with the exact coordinate
+        count, independent module universe and zero ring allowed. The
+        noetherian Krull-dimension-bound specialization has separate hypotheses.
+    - declaration: "LinearEquiv.coefficientRowCompletionOfStableRangeCondition"
+      file: "StableRange/RowCompletion.lean"
+      note: >-
+        A right-unimodular row of length n+1 over a commutative ring satisfying
+        S_s with s <= n yields a self-equivalence whose first output coordinate
+        is the original coefficient functional. Its matrix has that first row
+        and the same specified inverse satisfies both inverse identities.
     - declaration: "Matrix.GeneralLinearGroup.exists_elementary_unit_pivot_of_stableRangeCondition_one"
       file: "StableRange/ElementaryGeneration.lean"
       note: >-
@@ -266,7 +284,11 @@ fidelity:
     maps; arbitrary countable direct sums are not called free modules.
     Native local-ring hypotheses are distinct from a source-specific local
     convention. Noncommutative, commutative, finite-dimensional and nonempty
-    hypotheses are kept separate.
+    hypotheses are kept separate. An explicit finite stable presentation yields
+    exact-coordinate cancellation, but does not assert uniqueness of rank among
+    different presentations; the zero ring is included. The first-row
+    completion preserves the original coefficient functional. Noetherianity
+    belongs only to the dimension-bound specializations.
     No general Morita-invariance theorem, new stable GL construction, factorial colimit,
     arbitrary stably-free cancellation, K-theory or complete source coverage
     follows from this bounded library.
