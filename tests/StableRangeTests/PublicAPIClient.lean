@@ -4,17 +4,17 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import StableRange
-import Mathlib.Data.ZMod.Basic
+public import StableRange
+public import Mathlib.Data.ZMod.Basic
 import Mathlib.RingTheory.Spectrum.Prime.Noetherian
 
 /-!
-# Ordinary public-import clients
+# Stable Range public-import clients
 
-Persistent private proofs exercise the advertised API without `import all`,
+Persistent proofs exercise the advertised API without `import all`,
 project-leaf imports or private implementation names. The extra Mathlib imports
 supply `ZMod` fixtures and the Artinian dimension instance. These are regression
-clients, not new public mathematical API or a complete release proof audit.
+clients, not new `StableRange` library theorems or a complete release proof audit.
 -/
 
 set_option warningAsError true
@@ -89,7 +89,8 @@ private theorem right_ideal_membership (a b : R) : b ∈ Bass.principalRightIdea
 
 end Rings
 
-private theorem zero_ring_condition : Bass.StableRangeCondition (ZMod 1) 0 := by
+/-- The zero ring satisfies the stable-range condition at index zero. -/
+public theorem zero_ring_condition : Bass.StableRangeCondition (ZMod 1) 0 := by
   intro a r _
   refine ⟨fun i ↦ Fin.elim0 i, fun i ↦ Fin.elim0 i, ?_⟩
   exact Subsingleton.elim _ _

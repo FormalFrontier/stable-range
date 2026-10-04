@@ -1,14 +1,22 @@
-# Generated API reference
+# Historical generated API reference
 
-Native doc-gen4 displays 121 named library sites across twelve mathematical leaves.
-The aggregate root and private regression client have no native public display sites.
-These sites are not a raw/private/generated declaration census or proof audit.
-The client has 65 named private tests outside this native display selection.
+This is a **frozen historical doc-gen4 display**, not today's API index. It
+records 121 named sites across twelve mathematical leaves at the original
+source revision bound by the [manifest](api-manifest.json). The aggregate root
+and original private regression client had no native public display sites;
+that client had 65 named private tests outside this display selection. Today's
+relocated client also has a public zero-ring fixture, not a production result.
+The sites are not a raw/private/generated declaration census or proof audit.
 
-Headers below are complete native *display* signatures, including implicit
-parameters and visible modifiers. They are not proof bodies. Pretty-printing
-can suppress inferable types; consult the linked source for elaboration context.
-Links resolve relative to this checkout, not to an unpublished GitHub commit.
+The headers below preserve the original native *display* signatures, including
+implicit parameters and visible modifiers, not proof bodies or necessarily
+current binders. In particular `Matrix.rowRank_mul_le_left` below shows an
+obsolete explicit `DecidableEq n` parameter absent from today's declaration.
+The [Source] links navigate to files in this checkout, but their line ranges
+belong to the **original snapshot** and may be stale in current files. Consult
+the current Lean modules for current signatures and positions; for historical
+source ranges use the manifest's original source revision. Native
+pretty-printing can also suppress inferable types.
 [Generation and limits](README.md) · [Credits](CREDITS.md) ·
 [source and tool manifest](api-manifest.json).
 

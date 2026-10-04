@@ -32,7 +32,10 @@ def fixture():
     records = {module: dict(name=module, imports=copy.deepcopy(meta["imports"]),
                             instances=copy.deepcopy(meta["instances"]), declarations=[])
                for module, meta in api.EXPECTED_MODULES.items()}
-    sources = {path: (ROOT / path).read_bytes() for path in api.INPUTS}
+    sources = {path: (ROOT / path).read_bytes() for path in api.INPUTS
+               if path != "tests/PublicAPIClient.lean"}
+    sources["tests/PublicAPIClient.lean"] = (
+        ROOT / "tests/StableRangeTests/PublicAPIClient.lean").read_bytes()
     for name, signature, prose in entries:
         api.require(name in api.EXPECTED, "synthetic fixture has unknown name")
         meta = api.EXPECTED[name]
@@ -226,12 +229,15 @@ class Controls(unittest.TestCase):
     def test_portable_parentless_fallback_and_stale_files(self):
         with tempfile.TemporaryDirectory(prefix="stable-api-portable-") as temporary:
             root = Path(temporary)
+            records, sources = fixture()
             for path in api.INPUTS + api.DOCUMENTATION_INPUTS + (
                 "docs/API.md", "docs/api-manifest.json"):
                 target = root / path
                 target.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(ROOT / path, target)
-            records, _ = fixture()
+                if path in sources:
+                    target.write_bytes(sources[path])
+                else:
+                    shutil.copyfile(ROOT / path, target)
             native = root / "native"
             native.mkdir()
             for module, record in records.items():

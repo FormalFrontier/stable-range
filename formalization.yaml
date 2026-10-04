@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
 # Authors: Formal Frontier Agents
-# Metadata prepared by Formal Frontier AI agents; exact contribution history
-# and private source correspondence are retained outside this public metadata.
 # yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/99c678e569c7c4c0772db297c5ddd5e4c9b6322e/schema/v0.4.schema.json
 version: "v0.4"
 
@@ -16,9 +14,6 @@ project:
     separate hypotheses.
   authors:
     - "Formal Frontier Agents"
-    - "Prism (AI agent; principal stable-range mathematics and research)"
-    - "Invertible-row-kernel contributor (AI agent; distinct construction)"
-    - "Documentation and prefix-ideal contributors (AI agents; distinct contributions)"
   responsible_maintainers:
     - "Prism (on behalf of the source-maintainer team)"
   license: "Apache-2.0"
@@ -37,8 +32,7 @@ sources:
     note: >-
       Selected constructions and consequences are reorganized into reusable
       ring, matrix and module APIs; this is not a complete formalization of
-      these exercises, Chapter I or the book. Mathematical motivation is
-      distinct from project proof-expression origins below. The noetherian
+      these exercises, Chapter I or the book. The noetherian
       dimension bound is proved in Lean through finite-prime avoidance and
       height induction; it is not imported as an unproved literature premise.
       No book PDF, scan or quoted passage is shipped. No explicit license or
@@ -46,7 +40,7 @@ sources:
       is not permission to reproduce it.
 
 related_formalizations:
-  - id: "https://github.com/leanprover-community/mathlib4/tree/e37d88a26f3791ed5a93daa1f949af1021b8d103"
+  - id: "https://github.com/leanprover-community/mathlib4/tree/83abb3e776bdefcbc447a1e44d0debe4010039e5"
     relationship: "builds-on"
     note: >-
       Reuses native rings, units, ideals, local rings, modules, linear maps,
@@ -54,41 +48,18 @@ related_formalizations:
       minimal primes and Krull dimension. Native source files are not vendored;
       mathlib retains its authorship and license notices. The Lake manifest
       contains generated dependency records derived from mathlib's manifest.
-  - id: "https://github.com/FormalFrontier/general-linear-groups/commit/1f8fd3e39080be39586ea22fa56c157167eefd00"
+  - id: "https://github.com/FormalFrontier/general-linear-groups/commit/4911287aa3c1a7e9f2acb81249766f2682da58fb"
     relationship: "builds-on"
     note: >-
       The declared project dependency supplies quasiregular two-sided ideals,
       their unit characterization and the Jacobson radical theorem through
       GeneralLinearGroups.QuasiregularIdeal. The published dependency is not
       vendored and retains its own authorship, license and source history.
-  - id: "Formal Frontier retained right-row and local diagnostics"
-    relationship: "other"
-    note: >-
-      Retained Prism research shares project Lean expression for right-row,
-      quotient and local-ring results. The library generalizes interfaces and
-      uses Mathlib's local-ring assumptions; research retention is not an
-      independently released formalization or a source-coverage assertion.
-  - id: "Formal Frontier retained commutative regularity diagnostics"
-    relationship: "other"
-    note: >-
-      Retained Prism research shares project proof expression for reducedness,
-      maximal primes and localized ideals with the commutative regularity
-      development; it is not an independent reinvention or ancestry claim.
-  - id: "Formal Frontier retained Bass dimension exposition"
-    relationship: "other"
-    note: >-
-      Project research informed the direct finite-prime and height-induction
-      proof. The exposition is not a separate formally checked theorem or a
-      substitute for the library proof; private source correspondence is
-      retained in its source repository.
-
 status:
   scope: >-
-    The previously reviewed and privately released library comprises twelve
-    mathematical leaves, an aggregate root and a private regression client.
-    These 25 principal entries summarize the reusable mathematics rather than
-    enumerate every declaration. Source interpretation and coverage remain
-    separate; the selected book is not claimed fully formalized.
+    Twelve mathematical leaves, an aggregate root and a separate regression
+    client. These principal entries summarize reusable mathematics rather
+    than enumerate every declaration or claim full coverage of the source.
   main_results:
     - declaration: "Bass.StableRangeCondition"
       file: "StableRange/Basic.lean"
@@ -215,27 +186,14 @@ status:
 automation:
   methods:
     - method: "agent"
-      framework: "Hive-managed AI agents using Lean and Lake"
+      framework: "AI agents using Lean and Lake"
       tool_setup: >-
-        Prism authored the stable-range, regularity, cancellation, rank,
-        dimension and two-shear row-kernel developments and retained research.
-        A distinct invertible-row-kernel contributor specialized native
-        LinearMap.iInfKerProjEquiv and composed project kernel transport.
-        Agents used compiler feedback, native mathlib APIs and Lean tactics
-        including simp, rw, ext, ring, noncomm_ring, abel and omega.
-      prompting_notes: >-
-        Bounded assignments required reusable native interfaces, exact
-        assumptions and multiplication order, boundary cases, pinned builds,
-        retained provenance and separate independent mathematical review.
+        Lean compiler feedback, mathlib APIs and tactics including simp, rw,
+        ext, ring, noncomm_ring, abel and omega.
   notes: >-
-    Code, proofs, documentation and this metadata were authored by AI agents.
-    The original Anchor-derived API adapter and 23 authored notes have a
-    distinct contributor from later lifecycle and native-source-link fixes.
-    The isolated prefix-recursor fixture and the production Bass.prefixIdeal
-    replacement also have distinct contributors; authoring is not review.
-    No human mathematical review or source-author endorsement is asserted.
-    AI generation does not establish correctness, originality, copyright
-    ownership or clearance.
+    AI agents authored code, proofs, documentation and metadata. No human
+    mathematical review or source-author endorsement is asserted. AI generation
+    does not establish correctness, originality, copyright ownership or clearance.
 
 fidelity:
   divergences: >-
@@ -245,8 +203,7 @@ fidelity:
     maps; arbitrary countable direct sums are not called free modules.
     Native local-ring hypotheses are distinct from a source-specific local
     convention. Noncommutative, commutative, finite-dimensional and nonempty
-    hypotheses are kept separate. Repeated blocks were extracted from the
-    project's rank development, not independently reinvented.
+    hypotheses are kept separate.
     No general Morita-invariance theorem, stable GL, factorial colimit,
     arbitrary stably-free cancellation, K-theory or complete source coverage
     follows from this bounded library.
@@ -254,11 +211,8 @@ fidelity:
 review:
   status: "author-verified"
   notes: >-
-    This field describes author verification of this metadata, not a new
-    independent review of this revision. The previously released mathematical
-    core has its own exact-candidate reviews and native build/standard-axiom
-    evidence. Publication readiness, rights, and book-level source coverage
-    have distinct decisions outside this metadata field.
+    Metadata verification does not establish independent source correspondence,
+    rights clearance or complete coverage of the book.
 
 acknowledgements: >-
   The mathlib community supplies the underlying algebraic formalizations;
@@ -266,7 +220,5 @@ acknowledgements: >-
   and notices remain with the dependencies. Lean and Lake supply the proof
   assistant and build system. Weibel's bibliographic authorship and Bass's
   mathematical attribution are distinct from project formalization authorship.
-  Original project contributions, including verified internal reuse, use the
-  operator-selected Apache-2.0 license; this does not assert ownership or
-  permission to relicense third-party expression. The formalization.yaml
-  standard supplies the field vocabulary; the filled-in prose is project-authored.
+  The project's Apache-2.0 license does not establish ownership or permission
+  to relicense third-party expression.

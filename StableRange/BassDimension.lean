@@ -30,6 +30,7 @@ namespace Bass
 universe u
 
 variable {R : Type u} [CommRing R]
+variable {d : ℕ}
 
 /-- Over a commutative ring, a finite row is right-unimodular exactly when
 its entries generate the unit ideal. -/

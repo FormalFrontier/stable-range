@@ -121,12 +121,12 @@ by the root and add no public library declarations.
 | `RowKernel` | coefficient functionals, `kernelEquivOfLinearEquiv`, split kernels and explicit free-kernel equivalences |
 
 Names without an explicit namespace in the table are in `Bass`, except the
-division-ring and matrix entries as indicated. The [generated API](docs/API.md)
+division-ring and matrix entries as indicated. The [historical generated API](docs/API.md)
 shows all 121 native mathematical-leaf display sites, their complete visible
 signatures and 23 labeled authored notes for missing source docstrings.
 The [generation guide](docs/README.md) explains its scope and exact snapshot;
 [documentation credits](docs/CREDITS.md) record the reused adapter expression.
-The aggregate root and private regression client are included as zero-site
+The aggregate root and historical regression client are included as zero-site
 module records. This complete example uses only
 the ordinary root import:
 
@@ -145,12 +145,14 @@ example (R : Type*) [CommRing R] (s n : ℕ)
   Bass.free_ker_coefficientRowLinearMap_of_stableRangeCondition R s n hs a ha hn
 ```
 
-`tests/PublicAPIClient.lean` contains persistent private proofs through the same
-ordinary root import. Its two extra Mathlib imports supply concrete `ZMod`
-fixtures and the Artinian dimension instance, not another route to project API.
-It covers every module family, independent universes, opposite division rings,
-nonassociative repeated-block coefficients, zero/empty boundaries, and a
-nonreduced ring. It is part of the default build.
+`tests/StableRangeTests/PublicAPIClient.lean` checks the ordinary root import
+with private regression proofs and one public zero-ring fixture
+(`zero_ring_condition`), which is not a production result. Its two extra
+Mathlib imports supply concrete `ZMod` fixtures and the Artinian dimension
+instance, not another route to project API. It covers every module family,
+independent universes, opposite division rings, nonassociative repeated-block
+coefficients, zero/empty boundaries, and a nonreduced ring. It is part of the
+default build.
 
 ## Scope and conventions
 
@@ -178,14 +180,15 @@ nonreduced ring. It is part of the default build.
 ## Reproducible build
 
 The exact environment is Lean `leanprover/lean4:v4.34.0-rc2`, Mathlib
-`e37d88a26f3791ed5a93daa1f949af1021b8d103`, and `general-linear-groups`
-`1f8fd3e39080be39586ea22fa56c157167eefd00`. `lake-manifest.json` pins the full
+`83abb3e776bdefcbc447a1e44d0debe4010039e5`, and `general-linear-groups`
+`4911287aa3c1a7e9f2acb81249766f2682da58fb`. `lake-manifest.json` pins the full
 resolved graph. The official GLG GitHub repository is private and requires
 authorized access; no credentials belong in this repository or its documentation.
 
 Install the pinned `lean-toolchain` with elan and, from the repository root,
 successfully fetch the matching Mathlib cache **before** building. The default
-build runs both `StableRange` and `StableRangeTests` (the private API client):
+build runs both `StableRange` and `StableRangeTests` (including the regression
+client):
 
 ```sh
 env LEAN_NUM_THREADS=2 lake exe cache get
@@ -203,38 +206,22 @@ time env LEAN_NUM_THREADS=2 lake --wfail -KwarningAsError=true build
 
 Do not use unqualified `lake clean` here: it removes dependency outputs.
 
-### Historical build-cost observation
-
-On 2026-09-25, a Linux container limited to 23 GiB of memory, with
-`LEAN_NUM_THREADS=2` and the matching dependency cache retained, completed a
-clean **project** rebuild of the default graph: 14 project modules, 2,259 jobs,
-17.448 seconds wall time (30.421 seconds user, 8.719 seconds system). This is
-one warm-dependency, clean-project observation, **not** a measurement of this
-checkout or a cold-cache build and not a portable performance promise. The
-23 GiB figure is the container allocation limit, not measured peak memory or
-a minimum required allocation; actual memory use and cold-cache time are
-unknown from this run.
-
 For the historical, source-bound native API and its limitations, see the
 [API reference](docs/API.md), [manifest](docs/api-manifest.json) and
-[generation guide](docs/README.md). The manifest records its **original**
-source and documentation hashes; this README, changed headers and metadata
-have different bytes. An old manifest hash must not be replaced to conceal
-that drift, and native `--check` is not a success claim for this checkout.
+[generation guide](docs/README.md). The manifest describes an older snapshot,
+not this checkout; its historical signatures and line ranges are not current
+API documentation.
 
 ## License, credit and provenance
 
 Original project contributions are offered under the Apache License 2.0 in
 [LICENSE](LICENSE). Lean file credit is `Authors: Formal Frontier Agents`, a
 collective attribution, **not** a claim that an unverified entity owns copyright.
-Prism contributed the principal mathematics, source research and internal
-adaptations. A distinct contributor developed the invertible-matrix-row
-kernel extension; a separate isolated prefix-ideal recursor fixture is not
-the later production recursor repair. The [documentation credits](docs/CREDITS.md)
-distinguish the original API adapter and authored notes from later source-link
-and lifecycle corrections. Git history and the private preservation record
-retain exact contribution and review identities; pooled worker identifiers
-are not individual names.
+Prism contributed the principal mathematics and two-shear kernel work; other
+contributors developed the invertible-matrix-row kernel and distinct
+prefix-ideal fixture and production work. The
+[documentation credits](docs/CREDITS.md) distinguish their work and the
+original API adapter and notes from later documentation fixes.
 
 Formal Frontier Agents are AI agents. AI assistance was used in research, Lean
 proof development, clients, documentation and maintenance. Attribution, a build
@@ -243,24 +230,13 @@ of third-party expression.
 
 Mathematical motivation includes Charles A. Weibel, *The K-book: An Introduction
 to Algebraic K-theory*, August 29, 2013 complete-book build, especially Chapter I
-Exercises 1.12–1.13 and the Bass stable-range/cancellation discussion. The source
-repository retains exact interpretation, exposition and correspondence records;
-the library does not require those records to state or use its results. The
-project's direct Bass-dimension proof does not certify an unavailable cited book
-or import its prose as a proof.
+Exercises 1.12–1.13 and the Bass stable-range/cancellation discussion. The
+project's direct Bass-dimension proof does not import book prose as a proof.
+Mathlib and `general-linear-groups` are imported, not vendored, and retain
+their respective licenses and attributions.
 
-| Expression or formal dependency | Origin and treatment |
-| --- | --- |
-| Basic/quotient/local and commutative-regular development | Project-authored formal proofs share expression with retained Prism diagnostics; names, interfaces and native assumptions were generalized. They are not wholly independent reinventions; retention dates do not establish precedence. |
-| Remaining algebra/rank/cancellation/Bass proof | Project Lean constructions using native Mathlib APIs. `RepeatedBlock` was extracted from the earlier project rank module; it is not an independently sourced proof. |
-| Invertible-row kernel extension | A distinct contributor specializes native `LinearMap.iInfKerProjEquiv` and composes project kernel transport; no source-only candidate is a dependency. |
-| Prefix-ideal recursor | An isolated exact-type fixture and a separate production replacement have distinct contributors; the production body uses `Nat.rec` while retaining the original public type and both definitional equations. |
-| Mathlib and resolved support packages | Imported pinned dependencies, not vendored in this tree. Preserve their own licenses/attributions if separately redistributed; this project's LICENSE does not replace them. |
-| GLG quasi-regular ideals | Imported pinned `GeneralLinearGroups.QuasiregularIdeal`; source-independent predicate and unit characterization, with its own project provenance. |
-| License text | Unmodified official Apache 2.0 text from `https://www.apache.org/licenses/LICENSE-2.0.txt`; its appendix is a template, not an assertion of this project's holder. |
-
-No source PDF, scan, substantial book quotation, vendored dependency, generated
-API website or other binary asset is shipped. The local generated Markdown API
-and adapter have [separate provenance](docs/CREDITS.md). Source access grants
-no permission to reproduce book assets; no human mathematical review,
-source-author endorsement or unverified copyright holder is asserted.
+No source PDF, scan, substantial book quotation, generated API website or
+other binary asset is shipped. The local Markdown API and adapter have
+[separate provenance](docs/CREDITS.md). Source access grants no permission to
+reproduce book assets; no human mathematical review, source-author endorsement
+or unverified copyright holder is asserted.

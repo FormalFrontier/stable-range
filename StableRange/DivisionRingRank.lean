@@ -156,9 +156,10 @@ theorem exists_rowRank_eq (k : ℕ) (hk : k ≤ Fintype.card n) :
   refine ⟨(rankProjection (K := K) k (Fintype.card n - k)).reindex e e, ?_⟩
   rw [rowRank_reindex, rowRank_rankProjection]
 
-omit [Fintype p] [DecidableEq p] in
+omit [Fintype p] [DecidableEq p] [DecidableEq n] in
 theorem rowRank_mul_le_left (A : Matrix m n K) (B : Matrix n p K) :
     rowRank (A * B) ≤ rowRank A := by
+  classical
   rw [rowRank, rowRank, toLinearMapRight'_mul, LinearMap.range_comp]
   exact Submodule.finrank_map_le _ _
 
