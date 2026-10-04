@@ -10,8 +10,8 @@ the complete library, or import individual leaves below.
 
 These results build on Mathlib's algebraic APIs. The quasiregular-ideal
 predicate and unit characterization are imported from the pinned
-`general-linear-groups` dependency; the stable-range consequences are proved
-here. Each link points to a declaration in this repository.
+`general-linear-groups` dependency; the proved stable-range consequences are
+developed here. Each link points to a declaration in this repository.
 
 ### Bass conditions, quotients and local rings
 
@@ -26,6 +26,13 @@ For arbitrary possibly noncommutative rings, the library defines finite
 The zero ring can satisfy `(S_0)`; this is not a least-index-one assertion.
 Witnesses multiply on the right, and reduction order matters outside
 commutative rings; see [Scope and conventions](#scope-and-conventions).
+
+The [commutative semilocal `(S₁)` theorem](StableRange/Semilocal.lean)
+uses `[Finite (MaximalSpectrum R)]`, with no nontriviality, locality,
+Noetherianity or dimension bound. Finite Chinese remaindering chooses a
+coefficient that makes the shortened entry avoid every maximal ideal, hence
+a unit. For a distinguished entry `a` and right-unimodular pair `(a, b)`,
+the shortening is `b - a * t`, even when the maximal spectrum is empty.
 
 ### Regular rings and module cancellation
 
@@ -139,6 +146,7 @@ by the root and add no public library declarations.
 | `Basic` | `Bass.IsRightUnimodular`, `StableRangeCondition`, `IsStableRange`; monotonicity and equivalence |
 | `Quotient` | `stableRangeCondition_of_surjective`, `stableRangeCondition_quotient_iff` |
 | `Local` | `stableRangeCondition_one_of_isLocalRing`, `stableRange_one_of_isLocalRing` |
+| `Semilocal` | commutative finite-maximal-spectrum `(S₁)` via Chinese remaindering |
 | `Regular` | `IsVonNeumannRegular`, `IsUnitRegular`, complementary principal right ideals and shift counterexample |
 | `DivisionRing` | `LinearMap.exists_innerInverse`, `exists_linearEquiv_innerInverse`, matrix unit-regularity |
 | `RepeatedBlock` | `Matrix.repeatBlock`, `repeatBlockHom`, Kronecker formula and injectivity |
@@ -197,6 +205,15 @@ the nonlocal product of fields and finite Boolean indices. The independent
 boundary proofs do not rely on those applications.
 Further clients apply determinant-one generation to a nonlocal product matrix
 and its Boolean reindexing, and check the stable quotient on nonidentity units.
+`tests/StableRangeTests/SemilocalClient.lean` also establishes finite maximal
+spectrum for `ZMod 2 × ZMod 2` as the test-only public fixture
+`StableRangeTests.SemilocalClient.finite_maximalSpectrum_product`, checks a
+right-unimodular pair with neither entry a unit, and applies the semilocal
+theorem to its shortening and to the existing stable quotient determinant
+criterion. Its zero-ring and local-ring specializations use the same theorem.
+No positive-dimensional product-of-local-rings example is
+compiled here. The integer pair `(5, 2)` shows that `(S₁)` fails without the
+finite-maximal-spectrum hypothesis.
 
 ## Scope and conventions
 
@@ -231,8 +248,8 @@ authorized access; no credentials belong in this repository or its documentation
 
 Install the pinned `lean-toolchain` with elan and, from the repository root,
 successfully fetch the matching Mathlib cache **before** building. The default
-build runs both `StableRange` and `StableRangeTests` (including both regression
-clients):
+build runs both `StableRange` and `StableRangeTests` (including all three
+regression clients):
 
 ```sh
 env LEAN_NUM_THREADS=2 lake exe cache get

@@ -7,6 +7,7 @@ module
 public import StableRange.Basic
 public import StableRange.Quotient
 public import StableRange.Local
+public import StableRange.Semilocal
 public import StableRange.Regular
 public import StableRange.Commutative
 public import StableRange.CommutativeStableRange
@@ -24,7 +25,8 @@ public import StableRange.DeterminantGeneration
 
 Reusable definitions and results about finite right-unimodular rows, Bass
 stable-range conditions, quotient invariance, local rings, direct finiteness,
-regular rings, and finite matrix rings over division rings.
+regular rings, and finite matrix rings over division rings. Every commutative
+ring with finite maximal spectrum satisfies `(S₁)`.
 The library also proves free-summand cancellation for modules whose
 endomorphism rings satisfy stable range one.
 Endomorphism rings of arbitrary vector spaces over division rings are von

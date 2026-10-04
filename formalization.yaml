@@ -11,9 +11,10 @@ project:
     division-ring matrix row rank and repeated blocks, commutative dimension
     bounds, explicit coefficient-row kernel equivalences, and elementary
     diagonalization over commutative rings satisfying Bass S_1, with
-    determinant-one generation and the stable elementary quotient. General rings
-    need not be commutative; commutative and division-ring results retain their
-    separate hypotheses.
+    determinant-one generation and the stable elementary quotient. A
+    commutative ring with finite maximal spectrum satisfies S_1.
+    General rings need not be commutative; commutative and division-ring
+    results retain their separate hypotheses.
   authors:
     - "Formal Frontier Agents"
   responsible_maintainers:
@@ -66,11 +67,13 @@ status:
     unit pivots and diagonalization over commutative S_1 rings. It also imports
     finite determinant-one generation, the stable determinant kernel theorem
     and the quotient-to-units equivalence under S_1. A separate test
-    root imports PublicAPIClient and ElementaryGenerationClient, with test-only
-    zero-ring and rank-one fixtures and a nonlocal product-of-fields example.
+    root imports PublicAPIClient, ElementaryGenerationClient and
+    SemilocalClient, with test-only zero-ring and rank-one fixtures and a
+    nonlocal product-of-fields example. The commutative finite-maximal-spectrum
+    S_1 theorem supplies shortening and stable quotient determinant clients.
     Bass S_1 need not mean least stable index one: the zero ring also has S_0.
-    The principal results below summarize proved mathematics rather than
-    enumerate every declaration or claim full coverage of the source.
+    The remaining principal results below summarize proved mathematics rather
+    than enumerate every declaration or claim full coverage of the source.
   main_results:
     - declaration: "Bass.StableRangeCondition"
       file: "StableRange/Basic.lean"
@@ -78,6 +81,12 @@ status:
         Bass S_n uses finite right-unimodular rows with witness coefficients
         on the right; IsStableRange is a relational least natural index,
         not a default value when no finite bound exists.
+    - declaration: "Bass.stableRangeCondition_one_of_finite_maximalSpectrum"
+      file: "StableRange/Semilocal.lean"
+      note: >-
+        Under CommRing and finite maximal spectrum, the proved S_1 condition
+        shortens the second entry of a right-unimodular pair by b - a*t,
+        including the zero ring.
     - declaration: "Bass.stableRangeCondition_mono"
       file: "StableRange/Basic.lean"
       note: "S_m implies S_n for m <= n, over arbitrary possibly noncommutative rings."
