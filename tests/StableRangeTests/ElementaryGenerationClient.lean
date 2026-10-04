@@ -6,10 +6,11 @@ module
 
 public import StableRange
 public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Algebra.Field.ZMod
 public import Mathlib.RingTheory.Spectrum.Prime.Noetherian
 public import Mathlib.LinearAlgebra.Matrix.Notation
 
-/-! Stable-range-one elementary generation at finite-rank boundaries. -/
+/-! Stable-range-one finite determinant generation and the stable elementary quotient. -/
 
 set_option warningAsError true
 
@@ -53,6 +54,37 @@ private theorem zero_ring_pivot (rank : ℕ)
   have h : ((matrix : Matrix (Fin (rank + 1)) (Fin (rank + 1)) (ZMod 1)) 0 0) = 1 :=
     Subsingleton.elim _ _
   simpa only [OneMemClass.coe_one, one_mul, h] using (isUnit_one : IsUnit (1 : ZMod 1))
+
+private theorem empty_determinant_generation (stable : Bass.StableRangeCondition R 1)
+    (matrix : GL (Fin 0) R) : matrix ∈ elementarySubgroup (Fin 0) R := by
+  have hmatrix : matrix = 1 := by
+    apply Units.ext
+    ext index
+    exact index.elim0
+  have hdet : Matrix.GeneralLinearGroup.det matrix = 1 := by
+    rw [hmatrix]
+    exact map_one Matrix.GeneralLinearGroup.det
+  exact (mem_elementarySubgroup_iff_det_eq_one_of_stableRangeCondition_one
+    stable matrix).2 hdet
+
+private theorem rank_one_determinant_one_is_identity
+    (stable : Bass.StableRangeCondition R 1) (matrix : GL (Fin 1) R)
+    (hdet : Matrix.GeneralLinearGroup.det matrix = 1) : matrix = 1 := by
+  have hmem := (mem_elementarySubgroup_iff_det_eq_one_of_stableRangeCondition_one
+    stable matrix).2 hdet
+  rw [elementarySubgroup_eq_bot_of_subsingleton] at hmem
+  exact Subgroup.mem_bot.mp hmem
+
+private theorem zero_ring_generation (rank : ℕ)
+    (matrix : GL (Fin rank) (ZMod 1)) :
+    matrix ∈ elementarySubgroup (Fin rank) (ZMod 1) := by
+  have stable : Bass.StableRangeCondition (ZMod 1) 1 := by
+    intro distinguished remaining _
+    refine ⟨fun _ => 0, fun _ => 0, ?_⟩
+    exact Subsingleton.elim _ _
+  have hdet : Matrix.GeneralLinearGroup.det matrix = 1 := Subsingleton.elim _ _
+  exact (mem_elementarySubgroup_iff_det_eq_one_of_stableRangeCondition_one
+    stable matrix).2 hdet
 
 section ProductOfFields
 
@@ -127,6 +159,50 @@ private theorem product_nonvacuity :
   exact ⟨product_condition, nonlocal, productMatrix_det, hfirst, hsecond,
     factor, hpivot.symm ▸ isUnit_one⟩
 
+private theorem productMatrix_elementary_nonlocal :
+    productMatrix ∈ elementarySubgroup (Fin 2) Coefficients ∧
+    ¬ IsLocalRing Coefficients ∧
+    ¬ IsUnit ((productMatrix : Matrix (Fin 2) (Fin 2) Coefficients) 0 0) ∧
+    ¬ IsUnit ((productMatrix : Matrix (Fin 2) (Fin 2) Coefficients) 1 0) := by
+  exact ⟨(mem_elementarySubgroup_iff_det_eq_one_of_stableRangeCondition_one
+    product_condition productMatrix).2 productMatrix_det,
+    nonlocal, productMatrix_first_column_nonunit.1, productMatrix_first_column_nonunit.2⟩
+
+private theorem productMatrix_class_one :
+    QuotientGroup.mk' (stableElementarySubgroup Coefficients)
+      (StableGL.stage Coefficients 2 productMatrix) = 1 := by
+  apply (StableGL.quotientDet_injective_of_stableRangeCondition_one product_condition)
+  simp only [StableGL.quotientDet_mk, StableGL.det_stage, productMatrix_det,
+    map_one]
+
+private theorem productMatrix_bool_index :
+    let indexEquiv := finTwoEquiv
+    reindexEquiv Coefficients indexEquiv productMatrix ∈
+      elementarySubgroup Bool Coefficients := by
+  intro indexEquiv
+  have hdet : Matrix.GeneralLinearGroup.det
+      (reindexEquiv Coefficients indexEquiv productMatrix) = 1 := by
+    apply Units.ext
+    change (Matrix.reindex indexEquiv indexEquiv
+      (productMatrix : Matrix (Fin 2) (Fin 2) Coefficients)).det = 1
+    rw [Matrix.det_reindex_self]
+    exact congrArg Units.val productMatrix_det
+  exact (mem_elementarySubgroup_iff_det_eq_one_of_stableRangeCondition_one
+    product_condition (reindexEquiv Coefficients indexEquiv productMatrix)).2 hdet
+
+private theorem productMatrix_coefficient_map :
+    let projection := RingHom.fst (ZMod 2) (ZMod 2)
+    StableGL.quotientDetMulEquivOfStableRangeConditionOne
+      Bass.stableRangeCondition_one_of_isLocalRing
+      (QuotientGroup.map (stableElementarySubgroup Coefficients)
+        (stableElementarySubgroup (ZMod 2)) (StableGL.map projection)
+        ((Subgroup.map_le_iff_le_comap).mp (StableGL.map_elementarySubgroup_le projection))
+        (StableGL.quotientRankOneUnits Coefficients 1)) = 1 := by
+  intro projection
+  rw [StableGL.quotientDetMulEquivOfStableRangeConditionOne_map product_condition
+    Bass.stableRangeCondition_one_of_isLocalRing]
+  simp
+
 end ProductOfFields
 
 section TheoremApplications
@@ -167,5 +243,46 @@ private theorem boolean_index_diagonalization
     product_condition matrix
 
 end TheoremApplications
+
+section NontrivialUnits
+
+private instance : Fact (Nat.Prime 3) := ⟨by decide⟩
+
+private def nontrivialUnit : (ZMod 3)ˣ := ⟨2, 2, by decide, by decide⟩
+
+private theorem nontrivialUnit_ne_one : nontrivialUnit ≠ 1 := by decide
+
+private theorem nontrivial_finite_rank_one_not_elementary :
+    scalar (Fin 1) nontrivialUnit ∉ elementarySubgroup (Fin 1) (ZMod 3) := by
+  rw [mem_elementarySubgroup_iff_det_eq_one_of_stableRangeCondition_one
+    (Bass.stableRangeCondition_one_of_isLocalRing (R := ZMod 3))]
+  simpa only [Matrix.GeneralLinearGroup.det_scalar, Fintype.card_fin, pow_one] using
+    nontrivialUnit_ne_one
+
+private theorem nontrivial_rank_one_determinant :
+    StableGL.quotientDetMulEquivOfStableRangeConditionOne
+      (Bass.stableRangeCondition_one_of_isLocalRing (R := ZMod 3))
+      (StableGL.quotientRankOneUnits (ZMod 3) nontrivialUnit) = nontrivialUnit ∧
+    (StableGL.quotientDetMulEquivOfStableRangeConditionOne
+      (Bass.stableRangeCondition_one_of_isLocalRing (R := ZMod 3))).symm
+      nontrivialUnit = StableGL.quotientRankOneUnits (ZMod 3) nontrivialUnit ∧
+    StableGL.quotientRankOneUnits (ZMod 3) nontrivialUnit ≠ 1 := by
+  refine ⟨?_, ?_, ?_⟩
+  · simp only [StableGL.quotientDetMulEquivOfStableRangeConditionOne_apply,
+      StableGL.quotientDet_quotientRankOneUnits]
+  · exact StableGL.quotientDetMulEquivOfStableRangeConditionOne_symm_apply _ _
+  · intro equality
+    have hdet := congrArg (StableGL.quotientDet (ZMod 3)) equality
+    exact nontrivialUnit_ne_one (by
+      simpa only [StableGL.quotientDet_quotientRankOneUnits, map_one] using hdet)
+
+private theorem nontrivial_rank_one_not_elementary :
+    StableGL.rankOneUnits (ZMod 3) nontrivialUnit ∉
+      stableElementarySubgroup (ZMod 3) := by
+  rw [StableGL.elementary_eq_ker_det_of_stableRangeCondition_one
+    (Bass.stableRangeCondition_one_of_isLocalRing (R := ZMod 3))]
+  simpa only [MonoidHom.mem_ker, StableGL.det_rankOneUnits] using nontrivialUnit_ne_one
+
+end NontrivialUnits
 
 end StableRangeTests.ElementaryGenerationClient

@@ -111,8 +111,22 @@ The proofs reuse the rectangular elementary shear, its first-column action,
 and the conditional all-rank unit-pivot induction from `general-linear-groups`.
 The condition is `(S₁)`, not a least-index-one assertion: it covers the zero
 ring as well as local and nonlocal examples, without requiring `Nontrivial` or
-locality. These diagonalization results do not assert a determinant-one
-characterization of the elementary subgroup.
+locality. The diagonalization also supplies the determinant-one
+characterization below.
+
+### Determinants and elementary quotients under `(S₁)`
+
+[`DeterminantGeneration`](StableRange/DeterminantGeneration.lean) proves that
+an invertible finite matrix is elementary iff its determinant is one, and that
+the stable elementary subgroup is the kernel of the stable determinant, over
+any commutative ring satisfying `(S₁)`. It gives a quotient-to-units equivalence
+whose forward map is the existing quotient determinant and whose inverse is the
+existing rank-one section, with coefficient-map and local-ring comparison laws.
+The finite proof uses elementary two-sided diagonalization and the fact that
+a diagonal of units with product one is elementary. The stable and quotient
+results use finite-stage representatives and the rank-one section.
+The statements impose neither locality nor a nontriviality or positive-rank
+hypothesis. In particular, no general-ring determinant-one generation is claimed.
 
 ## Public interface and use
 
@@ -135,6 +149,7 @@ by the root and add no public library declarations.
 | `Cancellation` | `exists_linearEquiv_of_prod_of_end_stableRangeCondition_one` and finite-power consequences |
 | `RowKernel` | coefficient functionals, `kernelEquivOfLinearEquiv`, split kernels and explicit free-kernel equivalences |
 | `ElementaryGeneration` | commutative `(S₁)` elementary unit pivots, diagonalization of `Fin n` matrices and finite reindexing |
+| `DeterminantGeneration` | finite determinant-one membership, stable determinant kernel and quotient-to-units equivalence under commutative `(S₁)` |
 
 Names without an explicit namespace in the table are in `Bass`, except the
 division-ring and matrix entries as indicated. The [historical generated API](docs/API.md)
@@ -180,6 +195,8 @@ These two fixtures are test-only, not production results; other client helpers
 are private. Separate applications of all three theorems use local rings,
 the nonlocal product of fields and finite Boolean indices. The independent
 boundary proofs do not rely on those applications.
+Further clients apply determinant-one generation to a nonlocal product matrix
+and its Boolean reindexing, and check the stable quotient on nonidentity units.
 
 ## Scope and conventions
 

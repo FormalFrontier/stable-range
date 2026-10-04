@@ -10,7 +10,8 @@ project:
     and local-ring consequences, regular and unit-regular rings, cancellation,
     division-ring matrix row rank and repeated blocks, commutative dimension
     bounds, explicit coefficient-row kernel equivalences, and elementary
-    diagonalization over commutative rings satisfying Bass S_1. General rings
+    diagonalization over commutative rings satisfying Bass S_1, with
+    determinant-one generation and the stable elementary quotient. General rings
     need not be commutative; commutative and division-ring results retain their
     separate hypotheses.
   authors:
@@ -62,7 +63,9 @@ related_formalizations:
 status:
   scope: >-
     The aggregate root imports the mathematical leaves, including elementary
-    unit pivots and diagonalization over commutative S_1 rings. A separate test
+    unit pivots and diagonalization over commutative S_1 rings. It also imports
+    finite determinant-one generation, the stable determinant kernel theorem
+    and the quotient-to-units equivalence under S_1. A separate test
     root imports PublicAPIClient and ElementaryGenerationClient, with test-only
     zero-ring and rank-one fixtures and a nonlocal product-of-fields example.
     Bass S_1 need not mean least stable index one: the zero ring also has S_0.
@@ -207,6 +210,23 @@ status:
       note: >-
         The same diagonalization transports along a finite equivalence to any
         finite decidable index type, without a chosen order or Nontrivial.
+    - declaration: "Matrix.GeneralLinearGroup.mem_elementarySubgroup_iff_det_eq_one_of_stableRangeCondition_one"
+      file: "StableRange/DeterminantGeneration.lean"
+      note: >-
+        Over a commutative S_1 ring, an invertible matrix at any finite
+        decidable index type is elementary exactly when its determinant is one;
+        the empty index type and the zero ring are included.
+    - declaration: "Matrix.GeneralLinearGroup.StableGL.elementary_eq_ker_det_of_stableRangeCondition_one"
+      file: "StableRange/DeterminantGeneration.lean"
+      note: >-
+        The stable elementary subgroup is the kernel of the stable determinant,
+        by reducing a stable representative to a finite stage.
+    - declaration: "Matrix.GeneralLinearGroup.StableGL.quotientDetMulEquivOfStableRangeConditionOne"
+      file: "StableRange/DeterminantGeneration.lean"
+      note: >-
+        The stable elementary quotient is equivalent to the coefficient units;
+        the forward map is the quotient determinant and the inverse is the
+        existing rank-one section.
 
 automation:
   methods:
@@ -229,7 +249,7 @@ fidelity:
     Native local-ring hypotheses are distinct from a source-specific local
     convention. Noncommutative, commutative, finite-dimensional and nonempty
     hypotheses are kept separate.
-    No general Morita-invariance theorem, stable GL, factorial colimit,
+    No general Morita-invariance theorem, new stable GL construction, factorial colimit,
     arbitrary stably-free cancellation, K-theory or complete source coverage
     follows from this bounded library.
 
