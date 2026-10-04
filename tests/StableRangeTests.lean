@@ -7,5 +7,6 @@ module
 import StableRangeTests.PublicAPIClient
 import StableRangeTests.ElementaryGenerationClient
 import StableRangeTests.SemilocalClient
+import StableRangeTests.SemisimpleClient
 
 /-! Public-import regression clients for stable range. -/

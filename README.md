@@ -27,6 +27,11 @@ The zero ring can satisfy `(S_0)`; this is not a least-index-one assertion.
 Witnesses multiply on the right, and reduction order matters outside
 commutative rings; see [Scope and conventions](#scope-and-conventions).
 
+[Dependent products](StableRange/Product.lean) preserve `(S_n)` for arbitrary
+index sets and row lengths. [Semisimple rings](StableRange/Semisimple.lean)
+satisfy `(S_1)`, as do rings with a semisimple quotient by the Jacobson radical;
+nilpotence of the radical is not required.
+
 The [commutative semilocal `(S₁)` theorem](StableRange/Semilocal.lean)
 uses `[Finite (MaximalSpectrum R)]`, with no nontriviality, locality,
 Noetherianity or dimension bound. Finite Chinese remaindering chooses a
@@ -149,6 +154,8 @@ by the root and add no public library declarations.
 | `Semilocal` | commutative finite-maximal-spectrum `(S₁)` via Chinese remaindering |
 | `Regular` | `IsVonNeumannRegular`, `IsUnitRegular`, complementary principal right ideals and shift counterexample |
 | `DivisionRing` | `LinearMap.exists_innerInverse`, `exists_linearEquiv_innerInverse`, matrix unit-regularity |
+| `Product` | dependent-product preservation of `(Sₙ)` |
+| `Semisimple` | `(S₁)` for semisimple rings and rings with semisimple Jacobson-radical quotient |
 | `RepeatedBlock` | `Matrix.repeatBlock`, `repeatBlockHom`, Kronecker formula and injectivity |
 | `DivisionRingRank` | `Matrix.rowRank`, `normalizedRowRank`, reindexing, realization and repeated blocks |
 | `Commutative` | regular iff reduced and dimension at most zero; arbitrary-module flatness |
