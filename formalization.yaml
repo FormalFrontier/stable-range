@@ -13,6 +13,7 @@ project:
     diagonalization over commutative rings satisfying Bass S_1, with
     determinant-one generation and the stable elementary quotient. A
     commutative ring with finite maximal spectrum satisfies S_1.
+    Idempotent corners of arbitrary rings satisfying S_1 also satisfy S_1.
     General rings need not be commutative; commutative and division-ring
     results retain their separate hypotheses.
   authors:
@@ -66,9 +67,11 @@ status:
     The aggregate root imports the mathematical leaves, including elementary
     unit pivots and diagonalization over commutative S_1 rings. It also imports
     finite determinant-one generation, the stable determinant kernel theorem
-    and the quotient-to-units equivalence under S_1. A separate test
-    root imports PublicAPIClient, ElementaryGenerationClient and
-    SemilocalClient, with test-only zero-ring and rank-one fixtures and a
+    and the quotient-to-units equivalence under S_1. It also imports S_1
+    inheritance for the corner of any idempotent, without centrality or
+    nontriviality. A separate test root imports PublicAPIClient,
+    ElementaryGenerationClient, SemilocalClient and CornerClient, with
+    test-only zero-ring, rank-one and noncentral matrix-corner fixtures and a
     nonlocal product-of-fields example. The commutative finite-maximal-spectrum
     S_1 theorem supplies shortening and stable quotient determinant clients.
     Bass S_1 need not mean least stable index one: the zero ring also has S_0.
@@ -87,6 +90,12 @@ status:
         Under CommRing and finite maximal spectrum, the proved S_1 condition
         shortens the second entry of a right-unimodular pair by b - a*t,
         including the zero ring.
+    - declaration: "Bass.stableRangeCondition_one_corner"
+      file: "StableRange/Corner.lean"
+      note: >-
+        For any idempotent e in a possibly noncommutative ring satisfying S_1,
+        Mathlib's corner eRe with identity e also satisfies S_1. Neither
+        centrality, fullness nor nontriviality is required.
     - declaration: "Bass.stableRangeCondition_mono"
       file: "StableRange/Basic.lean"
       note: "S_m implies S_n for m <= n, over arbitrary possibly noncommutative rings."

@@ -6,6 +6,7 @@ module
 
 import StableRangeTests.PublicAPIClient
 import StableRangeTests.MatrixClient
+import StableRangeTests.CornerClient
 import StableRangeTests.ElementaryGenerationClient
 import StableRangeTests.SemilocalClient
 import StableRangeTests.SemisimpleClient

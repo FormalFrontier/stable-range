@@ -33,6 +33,9 @@ satisfy `(S_1)`, as do rings with a semisimple quotient by the Jacobson radical;
 nilpotence of the radical is not required.
 For any ring satisfying `(S₁)`, [finite square matrix rings](StableRange/Matrix.lean#L454)
 also satisfy `(S₁)`, including empty indices and the zero ring.
+For any idempotent `e` in such a ring, [its corner `eRe`](StableRange/Corner.lean#L27)
+also satisfies `(S₁)`, with identity `e`. This needs neither centrality nor
+fullness and includes `e = 0`, `e = 1` and zero rings.
 
 The [commutative semilocal `(S₁)` theorem](StableRange/Semilocal.lean)
 uses `[Finite (MaximalSpectrum R)]`, with no nontriviality, locality,
@@ -160,6 +163,7 @@ by the root and add no public library declarations.
 | `Semilocal` | commutative finite-maximal-spectrum `(S₁)` via Chinese remaindering |
 | `Regular` | unit-valued pair shortening, `IsVonNeumannRegular`, `IsUnitRegular`, complementary principal right ideals and shift counterexample |
 | `Matrix` | finite square-matrix preservation of `(S₁)` over arbitrary rings |
+| `Corner` | `(S₁)` for the corner of any idempotent in a ring satisfying `(S₁)` |
 | `Opposite` | `stableRangeCondition_one_opposite`, `stableRangeCondition_one_opposite_iff` |
 | `DivisionRing` | `LinearMap.exists_innerInverse`, `exists_linearEquiv_innerInverse`, matrix unit-regularity |
 | `Product` | dependent-product preservation of `(Sₙ)` |
@@ -229,6 +233,14 @@ criterion. Its zero-ring and local-ring specializations use the same theorem.
 No positive-dimensional product-of-local-rings example is
 compiled here. The integer pair `(5, 2)` shows that `(S₁)` fails without the
 finite-maximal-spectrum hypothesis.
+
+The [corner client](tests/StableRangeTests/CornerClient.lean) instantiates the
+theorem over `M₃(ZMod 4)` and `M₃(ℕ → ZMod 4)`, using a shared
+[matrix-unit fixture](tests/StableRangeTests/CornerMatrixFixtures.lean).
+Its idempotent is noncentral, and its ordered right-unimodular pair consists
+of noncommuting corner nonunits. It checks both an existential correction from
+`(S₁)` and an explicit corner unit that is not an ambient unit, as well as
+`e = 0`, `e = 1` and zero-ring cases.
 
 The [semisimple regression client](tests/StableRangeTests/SemisimpleClient.lean)
 checks complementary nonunit matrix projections and a stable-range shortening.
