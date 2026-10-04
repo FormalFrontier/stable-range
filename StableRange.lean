@@ -16,6 +16,7 @@ public import StableRange.RepeatedBlock
 public import StableRange.DivisionRingRank
 public import StableRange.Cancellation
 public import StableRange.RowKernel
+public import StableRange.ElementaryGeneration
 
 /-!
 # Bass stable range

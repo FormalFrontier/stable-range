@@ -16,7 +16,7 @@ rev = "83abb3e776bdefcbc447a1e44d0debe4010039e5"
 [[require]]
 name = "general-linear-groups"
 git = "https://github.com/FormalFrontier/general-linear-groups.git"
-rev = "4911287aa3c1a7e9f2acb81249766f2682da58fb"
+rev = "b1ae6c3bf18cf31acad0568969617c8a312f68fd"
 
 [[lean_lib]]
 name = "StableRange"

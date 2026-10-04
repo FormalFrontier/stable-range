@@ -99,10 +99,25 @@ with an actual two-sided inverse has
 function module on complementary column indices. Both inverse identities
 and an actual row index are required, not a merely proposed inverse.
 
+### Elementary diagonalization under `(S₁)`
+
+For a commutative ring satisfying Bass's `(S₁)`, an elementary left factor
+[makes the leading entry a unit](StableRange/ElementaryGeneration.lean#L31)
+in every invertible successor-rank matrix. The resulting
+[two-sided elementary diagonalization](StableRange/ElementaryGeneration.lean#L83)
+applies to every invertible `Fin n` matrix, including `n = 0`, and
+[transports to arbitrary finite decidable index types](StableRange/ElementaryGeneration.lean#L94).
+The proofs reuse the rectangular elementary shear, its first-column action,
+and the conditional all-rank unit-pivot induction from `general-linear-groups`.
+The condition is `(S₁)`, not a least-index-one assertion: it covers the zero
+ring as well as local and nonlocal examples, without requiring `Nontrivial` or
+locality. These diagonalization results do not assert a determinant-one
+characterization of the elementary subgroup.
+
 ## Public interface and use
 
 Use ordinary `import StableRange` for the complete interface, or import a leaf
-below. The root publicly re-exports all twelve leaves. The tests are not imported
+below. The root publicly re-exports the listed leaves. The tests are not imported
 by the root and add no public library declarations.
 
 | Module (under `StableRange`) | Representative interface |
@@ -119,6 +134,7 @@ by the root and add no public library declarations.
 | `BassDimension` | finite-prime avoidance, prefix-ideal height bounds, `stableRangeCondition_succ_of_krullDimLE` |
 | `Cancellation` | `exists_linearEquiv_of_prod_of_end_stableRangeCondition_one` and finite-power consequences |
 | `RowKernel` | coefficient functionals, `kernelEquivOfLinearEquiv`, split kernels and explicit free-kernel equivalences |
+| `ElementaryGeneration` | commutative `(S₁)` elementary unit pivots, diagonalization of `Fin n` matrices and finite reindexing |
 
 Names without an explicit namespace in the table are in `Bass`, except the
 division-ring and matrix entries as indicated. The [historical generated API](docs/API.md)
@@ -146,13 +162,24 @@ example (R : Type*) [CommRing R] (s n : ℕ)
 ```
 
 `tests/StableRangeTests/PublicAPIClient.lean` checks the ordinary root import
-with private regression proofs and one public zero-ring fixture
-(`zero_ring_condition`), which is not a production result. Its two extra
-Mathlib imports supply concrete `ZMod` fixtures and the Artinian dimension
-instance, not another route to project API. It covers every module family,
+with private regression proofs and the public zero-ring fixture
+`StableRangePublicAPIClient.zero_ring_condition`, which is not a production
+result. Its two extra Mathlib imports supply concrete `ZMod` fixtures and the
+Artinian dimension instance, not another route to project API. It covers every
+module family,
 independent universes, opposite division rings, nonassociative repeated-block
 coefficients, zero/empty boundaries, and a nonreduced ring. It is part of the
-default build.
+default build. The second default client,
+`tests/StableRangeTests/ElementaryGenerationClient.lean`, independently checks
+empty-rank, rank-one and zero-ring boundaries and a nonlocal `(S₁)` example
+with an explicit elementary shear producing a unit pivot. The rank-one
+boundary is the public test fixture
+`StableRangeTests.ElementaryGenerationClient.rank_one_pivot`: an invertible
+rank-one matrix over a commutative ring already has a unit leading entry.
+These two fixtures are test-only, not production results; other client helpers
+are private. Separate applications of all three theorems use local rings,
+the nonlocal product of fields and finite Boolean indices. The independent
+boundary proofs do not rely on those applications.
 
 ## Scope and conventions
 
@@ -181,14 +208,14 @@ default build.
 
 The exact environment is Lean `leanprover/lean4:v4.34.0-rc2`, Mathlib
 `83abb3e776bdefcbc447a1e44d0debe4010039e5`, and `general-linear-groups`
-`4911287aa3c1a7e9f2acb81249766f2682da58fb`. `lake-manifest.json` pins the full
+`b1ae6c3bf18cf31acad0568969617c8a312f68fd`. `lake-manifest.json` pins the full
 resolved graph. The official GLG GitHub repository is private and requires
 authorized access; no credentials belong in this repository or its documentation.
 
 Install the pinned `lean-toolchain` with elan and, from the repository root,
 successfully fetch the matching Mathlib cache **before** building. The default
-build runs both `StableRange` and `StableRangeTests` (including the regression
-client):
+build runs both `StableRange` and `StableRangeTests` (including both regression
+clients):
 
 ```sh
 env LEAN_NUM_THREADS=2 lake exe cache get

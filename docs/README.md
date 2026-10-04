@@ -44,15 +44,17 @@ source ranges no longer locate their declarations in today's files. Follow
 the relative links only to navigate to a Lean filename, then check its actual
 current declarations and positions. The old
 `general-linear-groups` revision `1f8fd3e39080be39586ea22fa56c157167eefd00`
-belongs to the earlier dependency graph; the current released dependency is
-`4911287aa3c1a7e9f2acb81249766f2682da58fb`, with Mathlib
-`83abb3e776bdefcbc447a1e44d0debe4010039e5`.
+belongs to the earlier dependency graph. For current released dependencies,
+consult the [root README](../README.md), [lakefile.toml](../lakefile.toml)
+and [lake-manifest.json](../lake-manifest.json).
 
 ## Building and historical reproduction
 
 The current library uses the toolchain and pins in `lean-toolchain`,
 `lakefile.toml` and `lake-manifest.json`. Fetch the matching Mathlib cache
-before building both default targets, including the regression client:
+before building both default targets, `StableRange` and `StableRangeTests`.
+The test root includes both `StableRangeTests.PublicAPIClient` and
+`StableRangeTests.ElementaryGenerationClient` regression clients:
 
 ```sh
 env LEAN_NUM_THREADS=2 lake exe cache get

@@ -9,7 +9,8 @@ project:
     Bass stable-range conditions for finite right-unimodular rows, quotient
     and local-ring consequences, regular and unit-regular rings, cancellation,
     division-ring matrix row rank and repeated blocks, commutative dimension
-    bounds, and explicit coefficient-row kernel equivalences. General rings
+    bounds, explicit coefficient-row kernel equivalences, and elementary
+    diagonalization over commutative rings satisfying Bass S_1. General rings
     need not be commutative; commutative and division-ring results retain their
     separate hypotheses.
   authors:
@@ -48,18 +49,25 @@ related_formalizations:
       minimal primes and Krull dimension. Native source files are not vendored;
       mathlib retains its authorship and license notices. The Lake manifest
       contains generated dependency records derived from mathlib's manifest.
-  - id: "https://github.com/FormalFrontier/general-linear-groups/commit/4911287aa3c1a7e9f2acb81249766f2682da58fb"
+  - id: "https://github.com/FormalFrontier/general-linear-groups/commit/b1ae6c3bf18cf31acad0568969617c8a312f68fd"
     relationship: "builds-on"
     note: >-
       The declared project dependency supplies quasiregular two-sided ideals,
-      their unit characterization and the Jacobson radical theorem through
-      GeneralLinearGroups.QuasiregularIdeal. The published dependency is not
-      vendored and retains its own authorship, license and source history.
+      their unit characterization and the Jacobson radical theorem, as well
+      as elementary subgroups, diagonal units, finite reindexing, the
+      rectangular upper shear and its first-column action, and the conditional
+      unit-pivot induction used for elementary diagonalization. The published
+      dependency is not vendored and retains its own authorship, license and
+      source history.
 status:
   scope: >-
-    Twelve mathematical leaves, an aggregate root and a separate regression
-    client. These principal entries summarize reusable mathematics rather
-    than enumerate every declaration or claim full coverage of the source.
+    The aggregate root imports the mathematical leaves, including elementary
+    unit pivots and diagonalization over commutative S_1 rings. A separate test
+    root imports PublicAPIClient and ElementaryGenerationClient, with test-only
+    zero-ring and rank-one fixtures and a nonlocal product-of-fields example.
+    Bass S_1 need not mean least stable index one: the zero ring also has S_0.
+    The principal results below summarize proved mathematics rather than
+    enumerate every declaration or claim full coverage of the source.
   main_results:
     - declaration: "Bass.StableRangeCondition"
       file: "StableRange/Basic.lean"
@@ -182,6 +190,23 @@ status:
         two-sided inverse has kernel equivalent to functions on the other
         indices. No stable-range assumption is used; i : Fin n supplies
         nonemptiness and n=1 gives the empty complementary index type.
+    - declaration: "Matrix.GeneralLinearGroup.exists_elementary_unit_pivot_of_stableRangeCondition_one"
+      file: "StableRange/ElementaryGeneration.lean"
+      note: >-
+        Bass S_1 over a commutative ring yields an elementary left factor with
+        a unit leading entry for every invertible successor-rank matrix,
+        including rank one and the zero ring; locality is not required.
+    - declaration: "Matrix.GeneralLinearGroup.exists_elementary_diagonalization_of_stableRangeCondition_one"
+      file: "StableRange/ElementaryGeneration.lean"
+      note: >-
+        Two-sided elementary factors diagonalize every invertible Fin n matrix
+        into units under commutative S_1, including the empty matrix. The
+        generic all-rank unit-pivot induction comes from general-linear-groups.
+    - declaration: "Matrix.GeneralLinearGroup.exists_elementary_diagonalization_finite_of_stableRangeCondition_one"
+      file: "StableRange/ElementaryGeneration.lean"
+      note: >-
+        The same diagonalization transports along a finite equivalence to any
+        finite decidable index type, without a chosen order or Nontrivial.
 
 automation:
   methods:
