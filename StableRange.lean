@@ -9,6 +9,7 @@ public import StableRange.Quotient
 public import StableRange.Local
 public import StableRange.Semilocal
 public import StableRange.Regular
+public import StableRange.Matrix
 public import StableRange.Opposite
 public import StableRange.Product
 public import StableRange.Semisimple
@@ -30,6 +31,8 @@ Reusable definitions and results about finite right-unimodular rows, Bass
 stable-range conditions, quotient invariance, local rings, direct finiteness,
 regular rings, and finite matrix rings over division rings. Every commutative
 ring with finite maximal spectrum satisfies `(S₁)`.
+Finite square matrix rings over arbitrary rings satisfying `(S₁)` also satisfy
+`(S₁)`, including empty index types.
 Dependent products preserve stable-range conditions, and semisimple rings and
 rings with semisimple Jacobson-radical quotients satisfy `(S₁)`.
 The library also proves free-summand cancellation for modules whose

@@ -5,6 +5,7 @@ Authors: Formal Frontier Agents
 module
 
 import StableRangeTests.PublicAPIClient
+import StableRangeTests.MatrixClient
 import StableRangeTests.ElementaryGenerationClient
 import StableRangeTests.SemilocalClient
 import StableRangeTests.SemisimpleClient

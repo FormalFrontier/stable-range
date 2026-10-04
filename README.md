@@ -31,6 +31,8 @@ commutative rings; see [Scope and conventions](#scope-and-conventions).
 index sets and row lengths. [Semisimple rings](StableRange/Semisimple.lean)
 satisfy `(S_1)`, as do rings with a semisimple quotient by the Jacobson radical;
 nilpotence of the radical is not required.
+For any ring satisfying `(S₁)`, [finite square matrix rings](StableRange/Matrix.lean#L454)
+also satisfy `(S₁)`, including empty indices and the zero ring.
 
 The [commutative semilocal `(S₁)` theorem](StableRange/Semilocal.lean)
 uses `[Finite (MaximalSpectrum R)]`, with no nontriviality, locality,
@@ -157,6 +159,7 @@ by the root and add no public library declarations.
 | `Local` | `stableRangeCondition_one_of_isLocalRing`, `stableRange_one_of_isLocalRing` |
 | `Semilocal` | commutative finite-maximal-spectrum `(S₁)` via Chinese remaindering |
 | `Regular` | unit-valued pair shortening, `IsVonNeumannRegular`, `IsUnitRegular`, complementary principal right ideals and shift counterexample |
+| `Matrix` | finite square-matrix preservation of `(S₁)` over arbitrary rings |
 | `Opposite` | `stableRangeCondition_one_opposite`, `stableRangeCondition_one_opposite_iff` |
 | `DivisionRing` | `LinearMap.exists_innerInverse`, `exists_linearEquiv_innerInverse`, matrix unit-regularity |
 | `Product` | dependent-product preservation of `(Sₙ)` |
