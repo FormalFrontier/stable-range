@@ -52,7 +52,7 @@ related_formalizations:
       minimal primes and Krull dimension. Native source files are not vendored;
       mathlib retains its authorship and license notices. The Lake manifest
       contains generated dependency records derived from mathlib's manifest.
-  - id: "https://github.com/FormalFrontier/general-linear-groups/commit/b1ae6c3bf18cf31acad0568969617c8a312f68fd"
+  - id: "https://github.com/FormalFrontier/general-linear-groups/commit/2683f75e2c5774ddd1295c46062035cb6afabb8a"
     relationship: "builds-on"
     note: >-
       The declared project dependency supplies quasiregular two-sided ideals,

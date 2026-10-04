@@ -31,8 +31,11 @@ commutative rings; see [Scope and conventions](#scope-and-conventions).
 index sets and row lengths. [Semisimple rings](StableRange/Semisimple.lean)
 satisfy `(S_1)`, as do rings with a semisimple quotient by the Jacobson radical;
 nilpotence of the radical is not required.
-For any ring satisfying `(S₁)`, [finite square matrix rings](StableRange/Matrix.lean#L454)
-also satisfy `(S₁)`, including empty indices and the zero ring.
+For any ring satisfying `(S₁)`, [finite square matrix rings](StableRange/Matrix.lean)
+also satisfy `(S₁)`, including empty indices and the zero ring. For nonempty finite
+indices, the matrix ring satisfies `(S₁)` **if and only if** its coefficient ring
+does, for arbitrary possibly noncommutative rings; empty indices need not reflect
+`(S₁)`.
 For any idempotent `e` in such a ring, [its corner `eRe`](StableRange/Corner.lean#L27)
 also satisfies `(S₁)`, with identity `e`. This needs neither centrality nor
 fullness and includes `e = 0`, `e = 1` and zero rings.
@@ -277,7 +280,7 @@ radical, and cancellation through opposite rings.
 
 The exact environment is Lean `leanprover/lean4:v4.34.0-rc2`, Mathlib
 `83abb3e776bdefcbc447a1e44d0debe4010039e5`, and `general-linear-groups`
-`b1ae6c3bf18cf31acad0568969617c8a312f68fd`. `lake-manifest.json` pins the full
+`2683f75e2c5774ddd1295c46062035cb6afabb8a`. `lake-manifest.json` pins the full
 resolved graph. The official GLG GitHub repository is private and requires
 authorized access; no credentials belong in this repository or its documentation.
 

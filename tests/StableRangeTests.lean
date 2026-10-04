@@ -10,5 +10,6 @@ import StableRangeTests.CornerClient
 import StableRangeTests.ElementaryGenerationClient
 import StableRangeTests.SemilocalClient
 import StableRangeTests.SemisimpleClient
+import StableRangeTests.MatrixReflectionClient
 
 /-! Public-import regression clients for stable range. -/

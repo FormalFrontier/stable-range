@@ -110,6 +110,18 @@ private theorem integer_fails_stable_range_one :
   exact ⟨t 0, witness 0,
     by simpa only [Bass.IsRightUnimodular, Fin.sum_univ_one] using hwitness⟩
 
+example : Bass.StableRangeCondition (Matrix (Fin 0) (Fin 0) ℤ) 1 ∧
+    ¬ Bass.StableRangeCondition ℤ 1 := by
+  refine ⟨?_, integer_fails_stable_range_one⟩
+  intro _ _ _
+  refine ⟨fun _ ↦ 0, fun _ ↦ 0, ?_⟩
+  exact Subsingleton.elim _ _
+
+example : ¬ Bass.StableRangeCondition (Matrix (Fin 1) (Fin 1) ℤ) 1 := by
+  intro matrixCondition
+  exact integer_fails_stable_range_one
+    (matrixCondition.map_equiv Matrix.uniqueRingEquiv)
+
 private theorem semilocal_stable_quotient_determinant
     (first second : StableGL Coefficients ⧸ stableElementarySubgroup Coefficients)
     (hdet : StableGL.quotientDet Coefficients first =

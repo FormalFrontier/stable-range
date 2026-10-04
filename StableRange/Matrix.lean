@@ -5,7 +5,9 @@ Authors: Formal Frontier Agents
 module
 
 public import StableRange.Regular
+public import StableRange.Corner
 public import Mathlib.Data.Matrix.Basic
+public import GeneralLinearGroups.MatrixCorner
 public import GeneralLinearGroups.RectangularBlockUnits
 public import GeneralLinearGroups.UnitPivotDiagonalization
 
@@ -13,7 +15,9 @@ public import GeneralLinearGroups.UnitPivotDiagonalization
 # Stable range one for finite matrix rings
 
 Bass's stable-range-one condition passes from any ring to its finite square
-matrix rings, including matrices indexed by the empty type.
+matrix rings, including matrices indexed by the empty type. For nonempty finite
+indices, the matrix ring satisfies stable range one exactly when the coefficient
+ring does.
 -/
 
 @[expose] public section
@@ -464,5 +468,18 @@ theorem stableRangeCondition_one_matrix
     simpa only [mul_neg, sub_neg_eq_add] using hT
   exact (hFin (Fintype.card ι)).map_equiv
     (Matrix.reindexRingEquiv R (Fintype.equivFin ι)).symm
+
+/-- For nonempty finite indices, the matrix ring satisfies `(S₁)` if and only if
+its coefficient ring does. -/
+theorem stableRangeCondition_one_matrix_iff
+    {R : Type u} [Ring R] {ι : Type v} [Fintype ι] [DecidableEq ι] [Nonempty ι] :
+    StableRangeCondition (Matrix ι ι R) 1 ↔ StableRangeCondition R 1 := by
+  constructor
+  · intro h
+    obtain ⟨i⟩ := ‹Nonempty ι›
+    exact (stableRangeCondition_one_corner
+      (Matrix.isIdempotentElem_single_one (R := R) i) h).map_equiv
+        (Matrix.singleCornerRingEquiv i)
+  · exact stableRangeCondition_one_matrix
 
 end Bass
