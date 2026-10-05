@@ -12,10 +12,11 @@ public import Mathlib.LinearAlgebra.Pi
 /-!
 # Coefficient rows and their kernels
 
-This file relates finite right-unimodular rows to surjective linear maps on
-finite free modules. It gives the explicit two-shear passage from Bass stable
-range to freeness of sufficiently long row kernels. It also identifies the
-kernel of a row in an explicitly invertible matrix with the free module on the
+This file identifies right-unimodular rows over arbitrary rings with surjective
+right-linear coefficient maps and with split kernels retaining the original row
+projection. In the commutative case it gives the explicit two-shear passage
+from Bass stable range to freeness of sufficiently long row kernels. It also
+identifies the kernel of a row in an explicitly invertible matrix with the free module on the
 complementary column indices.
 
 ## References
@@ -26,7 +27,8 @@ complementary column indices.
   distinct constructions; the latter does not assume stable range.
 * Mathlib, `LinearAlgebra.Basis.Prod` and `LinearAlgebra.Matrix.ToLin`
   (split kernels, finite free modules and row-vector maps), including
-  `LinearMap.iInfKerProjEquiv` for the inverse-matrix row construction.
+  `LinearMap.iInfKerProjEquiv` for the inverse-matrix row construction and
+  `dotProductBilin` for right-linear coefficient maps.
 -/
 
 set_option warningAsError true
@@ -406,3 +408,273 @@ theorem free_ker_coefficientRowLinearMap_of_stableRangeCondition
         R m (stableRangeCondition_mono hsm hstable) a ha
 
 end Bass
+
+namespace LinearMap
+
+universe u
+
+/-- A right-linear section candidate specified by a column of right coefficients.
+Its `i`th entry at `y` is `b i * y`. -/
+def rightCoefficientSection (R : Type u) [Ring R] {n : ℕ} (b : Fin n → R) :
+    R →ₗ[Rᵐᵒᵖ] (Fin n → R) where
+  toFun y := fun i ↦ b i * y
+  map_add' x y := by ext i; exact mul_add (b i) x y
+  map_smul' c y := by
+    ext i
+    change b i * (y * c.unop) = (b i * y) * c.unop
+    exact (mul_assoc (b i) y c.unop).symm
+
+@[simp]
+theorem rightCoefficientSection_apply (R : Type u) [Ring R] {n : ℕ}
+    (b : Fin n → R) (y : R) (i : Fin n) :
+    rightCoefficientSection R b y i = b i * y := by
+  rfl
+
+/-- A right-unimodular row followed by its witness-dependent section is the identity. -/
+theorem rightCoefficientRow_comp_section (R : Type u) [Ring R] {n : ℕ}
+    (a b : Fin n → R) (hb : dotProductBilin R Rᵐᵒᵖ a b = 1) :
+    (dotProductBilin R Rᵐᵒᵖ a).comp (rightCoefficientSection R b) =
+      LinearMap.id := by
+  apply LinearMap.ext
+  intro y
+  change (∑ i, a i * (b i * y)) = y
+  simp_rw [← mul_assoc]
+  rw [← Finset.sum_mul]
+  change dotProductBilin R Rᵐᵒᵖ a b * y = y
+  rw [hb, one_mul]
+
+end LinearMap
+
+namespace LinearEquiv
+
+universe u
+
+/-- The split kernel of a right coefficient row, with a specified right-inverse
+column. The second inverse coordinate is the original row functional. -/
+noncomputable def rightCoefficientKernelProd (R : Type u) [Ring R] {n : ℕ}
+    (a b : Fin n → R) (hb : dotProductBilin R Rᵐᵒᵖ a b = 1) :
+    (LinearMap.ker (dotProductBilin R Rᵐᵒᵖ a) × R) ≃ₗ[Rᵐᵒᵖ]
+      (Fin n → R) :=
+  Bass.kernelProdEquivOfRightInverse
+    (dotProductBilin R Rᵐᵒᵖ a) (LinearMap.rightCoefficientSection R b)
+    (LinearMap.rightCoefficientRow_comp_section R a b hb)
+
+@[simp]
+theorem rightCoefficientKernelProd_apply (R : Type u) [Ring R] {n : ℕ}
+    (a b : Fin n → R) (hb : dotProductBilin R Rᵐᵒᵖ a b = 1)
+    (p : LinearMap.ker (dotProductBilin R Rᵐᵒᵖ a) × R) :
+    rightCoefficientKernelProd R a b hb p =
+      p.1.1 + fun i ↦ b i * p.2 := by
+  exact Bass.kernelProdEquivOfRightInverse_apply _ _ _ _
+
+@[simp]
+theorem rightCoefficientKernelProd_symm_fst (R : Type u) [Ring R] {n : ℕ}
+    (a b : Fin n → R) (hb : dotProductBilin R Rᵐᵒᵖ a b = 1)
+    (x : Fin n → R) :
+    ((rightCoefficientKernelProd R a b hb).symm x).1.1 =
+      x - LinearMap.rightCoefficientSection R b (dotProductBilin R Rᵐᵒᵖ a x) := by
+  have hs : ((rightCoefficientKernelProd R a b hb).symm x).2 =
+      dotProductBilin R Rᵐᵒᵖ a x :=
+    Bass.kernelProdEquivOfRightInverse_symm_snd _ _ _ x
+  have h := (rightCoefficientKernelProd R a b hb).apply_symm_apply x
+  rw [rightCoefficientKernelProd_apply] at h
+  change ((rightCoefficientKernelProd R a b hb).symm x).1.1 +
+    LinearMap.rightCoefficientSection R b
+      ((rightCoefficientKernelProd R a b hb).symm x).2 = x at h
+  rw [hs] at h
+  calc
+    _ = (((rightCoefficientKernelProd R a b hb).symm x).1.1 +
+        LinearMap.rightCoefficientSection R b (dotProductBilin R Rᵐᵒᵖ a x)) -
+        LinearMap.rightCoefficientSection R b (dotProductBilin R Rᵐᵒᵖ a x) :=
+      (add_sub_cancel_right _ _).symm
+    _ = _ := congrArg (· - LinearMap.rightCoefficientSection R b
+      (dotProductBilin R Rᵐᵒᵖ a x)) h
+
+@[simp]
+theorem rightCoefficientKernelProd_symm_snd (R : Type u) [Ring R] {n : ℕ}
+    (a b : Fin n → R) (hb : dotProductBilin R Rᵐᵒᵖ a b = 1)
+    (x : Fin n → R) :
+    ((rightCoefficientKernelProd R a b hb).symm x).2 =
+      dotProductBilin R Rᵐᵒᵖ a x :=
+  Bass.kernelProdEquivOfRightInverse_symm_snd _ _ _ _
+
+end LinearEquiv
+
+namespace LinearMap
+
+universe u
+
+/-- Right-unimodularity of a finite row is surjectivity of its right-linear
+coefficient functional, also for the empty row and the zero ring. -/
+theorem isRightUnimodular_iff_surjective_dotProductBilin
+    (R : Type u) [Ring R] {n : ℕ} (a : Fin n → R) :
+    Bass.IsRightUnimodular a ↔ Function.Surjective (dotProductBilin R Rᵐᵒᵖ a) := by
+  constructor
+  · rintro ⟨b, hb⟩ y
+    refine ⟨rightCoefficientSection R b y, ?_⟩
+    exact LinearMap.congr_fun (rightCoefficientRow_comp_section R a b hb) y
+  · intro h
+    obtain ⟨b, hb⟩ := h 1
+    exact ⟨b, hb⟩
+
+/-- A right-unimodular row is precisely one whose functional splits by a
+right-linear section. -/
+theorem isRightUnimodular_iff_exists_rightCoefficientSection
+    (R : Type u) [Ring R] {n : ℕ} (a : Fin n → R) :
+    Bass.IsRightUnimodular a ↔
+      ∃ s : R →ₗ[Rᵐᵒᵖ] (Fin n → R),
+        (dotProductBilin R Rᵐᵒᵖ a).comp s = LinearMap.id := by
+  constructor
+  · rintro ⟨b, hb⟩
+    exact ⟨rightCoefficientSection R b, rightCoefficientRow_comp_section R a b hb⟩
+  · rintro ⟨s, hs⟩
+    refine ⟨s 1, ?_⟩
+    exact LinearMap.congr_fun hs 1
+
+end LinearMap
+
+namespace Submodule
+
+universe u
+
+/-- Right coefficients generate the unit precisely when the row is
+right-unimodular. -/
+theorem isRightUnimodular_iff_one_mem_right_span
+    (R : Type u) [Ring R] {n : ℕ} (a : Fin n → R) :
+    Bass.IsRightUnimodular a ↔
+      (1 : R) ∈ Submodule.span Rᵐᵒᵖ (Set.range a) := by
+  rw [Submodule.mem_span_range_iff_exists_fun]
+  constructor
+  · rintro ⟨b, hb⟩
+    refine ⟨fun i ↦ MulOpposite.op (b i), ?_⟩
+    simpa only [op_smul_eq_mul] using hb
+  · rintro ⟨c, hc⟩
+    refine ⟨fun i ↦ (c i).unop, ?_⟩
+    change (∑ i, a i * (c i).unop) = 1 at hc
+    exact hc
+
+/-- The right span of a finite row is the whole right module precisely when
+the row is right-unimodular. -/
+theorem isRightUnimodular_iff_right_span_eq_top
+    (R : Type u) [Ring R] {n : ℕ} (a : Fin n → R) :
+    Bass.IsRightUnimodular a ↔
+      Submodule.span Rᵐᵒᵖ (Set.range a) = ⊤ := by
+  rw [isRightUnimodular_iff_one_mem_right_span]
+  constructor
+  · intro hone
+    apply Submodule.eq_top_iff'.mpr
+    intro x
+    have h := (Submodule.span Rᵐᵒᵖ (Set.range a)).smul_mem
+      (MulOpposite.op x) hone
+    simpa only [op_smul_eq_mul, one_mul] using h
+  · intro htop
+    rw [htop]
+    trivial
+
+end Submodule
+
+namespace LinearEquiv
+
+universe u
+
+/-- A row admits a kernel-product splitting retaining the original row as its
+second projection precisely when it is right-unimodular. -/
+theorem isRightUnimodular_iff_exists_kernelProdEquiv
+    (R : Type u) [Ring R] {n : ℕ} (a : Fin n → R) :
+    Bass.IsRightUnimodular a ↔
+      ∃ e : (LinearMap.ker (dotProductBilin R Rᵐᵒᵖ a) × R) ≃ₗ[Rᵐᵒᵖ]
+          (Fin n → R),
+        ∀ x, (e.symm x).2 = dotProductBilin R Rᵐᵒᵖ a x := by
+  constructor
+  · rintro ⟨b, hb⟩
+    exact ⟨rightCoefficientKernelProd R a b hb,
+      rightCoefficientKernelProd_symm_snd R a b hb⟩
+  · rintro ⟨e, he⟩
+    let b := e (0, 1)
+    refine ⟨b, ?_⟩
+    have hb := he b
+    rw [e.symm_apply_apply] at hb
+    exact hb.symm
+
+end LinearEquiv
+
+namespace LinearMap
+
+universe u
+
+/-- For commutative rings, the existing scalar coefficient map has the same
+underlying function as the right-linear dot-product map. -/
+theorem coefficientRowScalarMap_eq_dotProductBilin
+    (R : Type u) [CommRing R] {n : ℕ} (a x : Fin n → R) :
+    Bass.coefficientRowScalarMap R n a x = dotProductBilin R Rᵐᵒᵖ a x := by
+  rfl
+
+/-- The commutative kernel and the right-linear kernel have exactly the
+same elements, even though they are submodules over different scalar rings. -/
+theorem mem_ker_coefficientRowScalarMap_iff_mem_ker_dotProductBilin
+    (R : Type u) [CommRing R] {n : ℕ} (a x : Fin n → R) :
+    x ∈ LinearMap.ker (Bass.coefficientRowScalarMap R n a) ↔
+      x ∈ LinearMap.ker (dotProductBilin R Rᵐᵒᵖ a) := by
+  simp only [LinearMap.mem_ker, coefficientRowScalarMap_eq_dotProductBilin]
+
+/-- Transport between the commutative kernel and the kernel over the
+opposite scalar ring. This is an additive equivalence because the source and
+target use different scalar rings. -/
+def coefficientRowKernelAddEquiv (R : Type u) [CommRing R] {n : ℕ}
+    (a : Fin n → R) :
+    LinearMap.ker (Bass.coefficientRowScalarMap R n a) ≃+
+      LinearMap.ker (dotProductBilin R Rᵐᵒᵖ a) where
+  toFun x := ⟨x.1, (mem_ker_coefficientRowScalarMap_iff_mem_ker_dotProductBilin
+    R a x.1).mp x.2⟩
+  invFun x := ⟨x.1, (mem_ker_coefficientRowScalarMap_iff_mem_ker_dotProductBilin
+    R a x.1).mpr x.2⟩
+  left_inv x := by ext; rfl
+  right_inv x := by ext; rfl
+  map_add' x y := by ext; rfl
+
+@[simp]
+theorem coefficientRowKernelAddEquiv_apply (R : Type u) [CommRing R] {n : ℕ}
+    (a : Fin n → R) (x : LinearMap.ker (Bass.coefficientRowScalarMap R n a)) :
+    (coefficientRowKernelAddEquiv R a x).1 = x.1 := rfl
+
+@[simp]
+theorem coefficientRowKernelAddEquiv_symm_apply (R : Type u) [CommRing R] {n : ℕ}
+    (a : Fin n → R) (x : LinearMap.ker (dotProductBilin R Rᵐᵒᵖ a)) :
+    ((coefficientRowKernelAddEquiv R a).symm x).1 = x.1 := rfl
+
+/-- Transport identifies ordinary scalar multiplication with multiplication
+by the corresponding opposite-ring scalar. -/
+theorem coefficientRowKernelAddEquiv_smul (R : Type u) [CommRing R] {n : ℕ}
+    (a : Fin n → R) (r : R)
+    (x : LinearMap.ker (Bass.coefficientRowScalarMap R n a)) :
+    coefficientRowKernelAddEquiv R a (r • x) =
+      MulOpposite.op r • coefficientRowKernelAddEquiv R a x := by
+  ext i
+  simp
+
+end LinearMap
+
+namespace LinearEquiv
+
+universe u
+
+/-- With the *same* chosen witness, the commutative splitting and the
+right-linear splitting agree after transporting the kernel element by the
+underlying equality of their row maps. -/
+theorem kernelProdEquivOfIsRightUnimodular_eq_rightCoefficientKernelProd
+    (R : Type u) [CommRing R] {n : ℕ} (a : Fin n → R)
+    (ha : Bass.IsRightUnimodular a)
+    (p : LinearMap.ker (Bass.coefficientRowScalarMap R n a) × R) :
+    Bass.kernelProdEquivOfIsRightUnimodular R n a ha p =
+      LinearEquiv.rightCoefficientKernelProd R a (Classical.choose ha)
+        (by change (∑ i, a i * Classical.choose ha i) = 1
+            exact Classical.choose_spec ha)
+        (LinearMap.coefficientRowKernelAddEquiv R a p.1, p.2) := by
+  unfold Bass.kernelProdEquivOfIsRightUnimodular
+  rw [Bass.kernelProdEquivOfRightInverse_apply, rightCoefficientKernelProd_apply]
+  funext i
+  change p.1.1 i + p.2 * Classical.choose ha i =
+    p.1.1 i + Classical.choose ha i * p.2
+  rw [mul_comm]
+
+end LinearEquiv

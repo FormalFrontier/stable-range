@@ -13,6 +13,7 @@ import StableRangeTests.SemisimpleClient
 import StableRangeTests.MatrixReflectionClient
 import StableRangeTests.FiniteFreeClient
 import StableRangeTests.RowCompletionClient
+import StableRangeTests.RightCoefficientClient
 
 /-!
 # Public-import regression clients for stable range

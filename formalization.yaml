@@ -9,8 +9,9 @@ project:
     Bass stable-range conditions for finite right-unimodular rows, quotient
     and local-ring consequences, regular and unit-regular rings, cancellation,
     division-ring matrix row rank and repeated blocks, commutative dimension
-    bounds, explicit coefficient-row kernel equivalences, exact-size finite-free
-    cancellation and first-row completion, and elementary
+    bounds, arbitrary-ring right-coefficient row splittings, commutative
+    free coefficient-row kernels, exact-size finite-free cancellation and
+    first-row completion, and elementary
     diagonalization over commutative rings satisfying Bass S_1, with
     determinant-one generation and the stable elementary quotient. A
     commutative ring with finite maximal spectrum satisfies S_1.
@@ -72,11 +73,16 @@ status:
     finite determinant-one generation, the stable determinant kernel theorem
     and the quotient-to-units equivalence under S_1. It also imports S_1
     inheritance for the corner of any idempotent, without centrality or
-    nontriviality. A separate test root imports PublicAPIClient,
-    FiniteFreeClient, RowCompletionClient, ElementaryGenerationClient,
-    SemilocalClient and CornerClient, with
-    test-only zero-ring, rank-one and noncentral matrix-corner fixtures and a
-    nonlocal product-of-fields example. The commutative finite-maximal-spectrum
+    nontriviality. The aggregate root also re-exports RowKernel's arbitrary-ring
+    right-coefficient row section and kernel-product splitting, without a
+    free-kernel or matrix-completion conclusion. A separate test root imports
+    PublicAPIClient, FiniteFreeClient, RowCompletionClient,
+    ElementaryGenerationClient, SemilocalClient, CornerClient and
+    RightCoefficientClient. The latter imports test-only
+    RightCoefficientFixtures for integer and matrix rows and zero/empty-row
+    boundaries; other test-only fixtures include zero-ring, rank-one and
+    noncentral matrix corners and a nonlocal product of fields.
+    The commutative finite-maximal-spectrum
     S_1 theorem supplies shortening and stable quotient determinant clients.
     Bass S_1 need not mean least stable index one: the zero ring also has S_0.
     The remaining principal results below summarize proved mathematics rather
@@ -201,6 +207,32 @@ status:
         A commutative noetherian ring of Krull dimension at most d satisfies
         S_(d+1). No reducedness, nontriviality or infinite-residue-field
         assumption is imposed; the proof uses finite-prime avoidance and height.
+    - declaration: "LinearMap.isRightUnimodular_iff_surjective_dotProductBilin"
+      file: "StableRange/RowKernel.lean"
+      note: >-
+        For any ring R and finite row a, the right-linear map over Rᵐᵒᵖ
+        evaluates to sum a_i*x_i. Right-unimodularity is equivalent to its
+        surjectivity; companion section and right-span criteria include the
+        empty row and the zero ring.
+    - declaration: "LinearEquiv.rightCoefficientKernelProd"
+      file: "StableRange/RowKernel.lean"
+      note: >-
+        A right-inverse column b gives the section y ↦ (b_i*y) and an explicit
+        right-linear equivalence ker(σ) × R ≃ R^n whose inverse second
+        coordinate is the original row σ. No free kernel or matrix completion
+        follows from this arbitrary-ring splitting.
+    - declaration: "LinearEquiv.isRightUnimodular_iff_exists_kernelProdEquiv"
+      file: "StableRange/RowKernel.lean"
+      note: >-
+        A finite row is right-unimodular exactly when it has a kernel-product
+        equivalence over the opposite ring with inverse second coordinate
+        equal to the original row, not just an abstract product equivalence.
+    - declaration: "LinearEquiv.kernelProdEquivOfIsRightUnimodular_eq_rightCoefficientKernelProd"
+      file: "StableRange/RowKernel.lean"
+      note: >-
+        For commutative rings, kernel transport compares the scalar and
+        right-linear splittings using the same chosen witness in both;
+        the comparison does not identify that witness with a test fixture.
     - declaration: "Bass.coefficientRowKernelEquivSuccOfStableRangeCondition"
       file: "StableRange/RowKernel.lean"
       note: >-

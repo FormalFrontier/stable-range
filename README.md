@@ -112,14 +112,29 @@ More generally, a commutative Noetherian ring with `Ring.KrullDimLE d`
 prime avoidance and minimal-prime height induction, without an infinite-residue-
 fields premise.
 
-### Free kernels of coefficient rows
+### Coefficient-row splittings and free kernels
+
+For any ring `R`, a finite row `a : Fin n → R` defines a right-linear map over
+`Rᵐᵒᵖ` by `σ(x) = ∑ i, a i * x i`. [Right-unimodularity](StableRange/RowKernel.lean#L509)
+is equivalent to surjectivity; equivalently, the map admits a section and the
+entries' [right span](StableRange/RowKernel.lean#L558) is the whole module. A
+witness column `b` with `∑ i, a i * b i = 1` gives the
+[section](StableRange/RowKernel.lean#L418) `y ↦ (fun i => b i * y)` and an
+[explicit kernel-product equivalence](StableRange/RowKernel.lean#L454)
+`ker σ × R ≃ₗ[Rᵐᵒᵖ] (Fin n → R)`. Its inverse second coordinate is `σ`, and the
+[converse](StableRange/RowKernel.lean#L582) requires this original-row identity,
+not merely an abstract equivalence. Empty rows and the zero ring are included,
+without stable-range or commutativity hypotheses. For commutative rings,
+[kernel transport](StableRange/RowKernel.lean#L623) and the
+[comparison](StableRange/RowKernel.lean#L664) use the same chosen witness in
+both splittings.
 
 Over a commutative ring satisfying `(S_s)`, a right-unimodular coefficient
 row of length at least `s + 1`
-[has a free kernel](StableRange/RowKernel.lean#L359), by explicit two-shear
+[has a free kernel](StableRange/RowKernel.lean#L361), by explicit two-shear
 reduction. Independently of stable range, a *chosen row* of a square matrix
 with an actual two-sided inverse has
-[an explicit free-kernel equivalence](StableRange/RowKernel.lean#L169) with the
+[an explicit free-kernel equivalence](StableRange/RowKernel.lean#L171) with the
 function module on complementary column indices. Both inverse identities
 and an actual row index are required, not a merely proposed inverse.
 
@@ -195,7 +210,7 @@ by the root and add no public library declarations.
 | `CommutativeStableRange` | zero-dimensional stable range; commutative regular implies unit-regular |
 | `BassDimension` | finite-prime avoidance, prefix-ideal height bounds, `stableRangeCondition_succ_of_krullDimLE` |
 | `Cancellation` | `exists_linearEquiv_of_prod_of_end_stableRangeCondition_one` and finite-power consequences |
-| `RowKernel` | coefficient functionals, `kernelEquivOfLinearEquiv`, split kernels and explicit free-kernel equivalences |
+| `RowKernel` | `kernelEquivOfLinearEquiv`, arbitrary-ring right-linear coefficient rows and split kernels; commutative free-kernel equivalences |
 | `FiniteFree` | explicit finite-free summand cancellation and exact-size freeness under `(S_s)` or a noetherian dimension bound |
 | `RowCompletion` | first-coordinate equivalence, completed matrix and two-sided inverse under `(S_s)` or a noetherian dimension bound |
 | `ElementaryGeneration` | commutative `(S₁)` elementary unit pivots, diagonalization of `Fin n` matrices and finite reindexing |
@@ -289,9 +304,11 @@ radical, and cancellation through opposite rings.
   division by the cardinality: it gives zero in the empty case. Normalized
   identity-one and the advertised positive-size bounds use nonempty indices.
   An empty repeated-block family is not claimed to give an injective map.
-- Coefficient-row kernel results here use commutative rings. The invertible-row
-  construction takes an actual row index and a specified two-sided matrix
-  inverse; it does not manufacture an index for an empty matrix.
+- Right-coefficient kernel-product splitting works over arbitrary rings,
+  including empty rows and the zero ring; it does not imply a free kernel or
+  matrix completion. Free-kernel results require commutative rings and either
+  a stable-range bound or an actual row index with a specified two-sided matrix
+  inverse; the latter does not manufacture an index for an empty matrix.
 - Finite-free cancellation uses an explicit presentation and a stable-range
   bound; no preliminary freeness or nontriviality hypothesis is needed.
   First-row completion preserves the original row, not only its equivalence
