@@ -490,6 +490,29 @@ theorem rightCoefficientKernelProd_symm_fst (R : Type u) [Ring R] {n : ℕ}
     _ = _ := congrArg (· - LinearMap.rightCoefficientSection R b
       (dotProductBilin R Rᵐᵒᵖ a x)) h
 
+/-- The section-dependent projection belongs to the right coefficient kernel. -/
+theorem rightCoefficientKernelProd_symm_fst_mem (R : Type u) [Ring R] {n : ℕ}
+    (a b : Fin n → R) (hb : dotProductBilin R Rᵐᵒᵖ a b = 1)
+    (x : Fin n → R) :
+    x - (fun i ↦ b i * dotProductBilin R Rᵐᵒᵖ a x) ∈
+      LinearMap.ker (dotProductBilin R Rᵐᵒᵖ a) := by
+  change x - LinearMap.rightCoefficientSection R b
+    (dotProductBilin R Rᵐᵒᵖ a x) ∈ _
+  rw [← rightCoefficientKernelProd_symm_fst R a b hb x]
+  exact ((rightCoefficientKernelProd R a b hb).symm x).1.2
+
+/-- The inverse split's first coordinate is the original section-dependent
+projection as an element of the kernel, not merely as an underlying column. -/
+@[simp]
+theorem rightCoefficientKernelProd_symm_fst_subtype (R : Type u) [Ring R] {n : ℕ}
+    (a b : Fin n → R) (hb : dotProductBilin R Rᵐᵒᵖ a b = 1)
+    (x : Fin n → R) :
+    ((rightCoefficientKernelProd R a b hb).symm x).1 =
+      ⟨x - (fun i ↦ b i * dotProductBilin R Rᵐᵒᵖ a x),
+        rightCoefficientKernelProd_symm_fst_mem R a b hb x⟩ := by
+  apply Subtype.ext
+  exact rightCoefficientKernelProd_symm_fst R a b hb x
+
 @[simp]
 theorem rightCoefficientKernelProd_symm_snd (R : Type u) [Ring R] {n : ℕ}
     (a b : Fin n → R) (hb : dotProductBilin R Rᵐᵒᵖ a b = 1)

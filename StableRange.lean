@@ -22,6 +22,7 @@ public import StableRange.RepeatedBlock
 public import StableRange.DivisionRingRank
 public import StableRange.Cancellation
 public import StableRange.RowKernel
+public import StableRange.RightRowCompletion
 public import StableRange.FiniteFree
 public import StableRange.RowCompletion
 public import StableRange.RowCompletionTwo

@@ -16,6 +16,8 @@ import StableRangeTests.RowCompletionClient
 import StableRangeTests.RowCompletionTwoFixtures
 import StableRangeTests.RowCompletionTwoClient
 import StableRangeTests.RightCoefficientClient
+import StableRangeTests.RightRowCompletionFixtures
+import StableRangeTests.RightRowCompletionClient
 
 /-!
 # Public-import regression clients for stable range

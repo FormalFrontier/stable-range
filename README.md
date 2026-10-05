@@ -129,6 +129,21 @@ without stable-range or commutativity hypotheses. For commutative rings,
 [comparison](StableRange/RowKernel.lean#L664) use the same chosen witness in
 both splittings.
 
+For a right-unimodular row, the splitting makes its kernel finitely generated;
+[right-unimodularity together with kernel freeness](StableRange/RightRowCompletion.lean)
+is equivalent to the existence of two-sided rectangular inverse matrices
+`A : Matrix (Fin (m + 1)) (Fin n) R` and
+`B : Matrix (Fin n) (Fin (m + 1)) R` with first row `A 0 = a`.
+A supplied witness `b` and supplied kernel coordinates construct these matrices
+with first column of `B` equal to `b`: forward coordinates are `σ(x)` followed
+by the selected coordinates of `x - (fun i => b i * σ(x))`, and inverse
+coordinates reconstruct `b i * y 0` plus the kernel column. Conversely, the
+matrix pair gives the explicit kernel coordinates `k ↦ Fin.tail (A *ᵥ k)`
+with inverse `t ↦ B *ᵥ Fin.cons 0 t`, without assuming freeness. These are
+right-linear **column** actions for arbitrary rings; neither square size nor
+invariant basis number is assumed. An independent `M₂(ℤ)` client checks a
+nonzero kernel column and a noncentral multiplication order.
+
 Over a commutative ring satisfying `(S_s)`, a right-unimodular coefficient
 row of length at least `s + 1`
 [has a free kernel](StableRange/RowKernel.lean#L361), by explicit two-shear
@@ -221,6 +236,7 @@ by the root and add no public library declarations.
 | `BassDimension` | finite-prime avoidance, prefix-ideal height bounds, `stableRangeCondition_succ_of_krullDimLE` |
 | `Cancellation` | `exists_linearEquiv_of_prod_of_end_stableRangeCondition_one` and finite-power consequences |
 | `RowKernel` | `kernelEquivOfLinearEquiv`, arbitrary-ring right-linear coefficient rows and split kernels; commutative free-kernel equivalences |
+| `RightRowCompletion` | supplied right-linear kernel coordinates and two-sided rectangular inverse matrices; converse kernel equivalence and free-kernel criterion |
 | `RowCompletionTwo` | supplied-witness `SL(2, R)` row completion, scalar kernel coordinates and supplied-product cancellation over commutative rings |
 | `FiniteFree` | explicit finite-free summand cancellation and exact-size freeness under `(S_s)` or a noetherian dimension bound |
 | `RowCompletion` | first-coordinate equivalence, completed matrix and two-sided inverse under `(S_s)` or a noetherian dimension bound |
@@ -316,9 +332,11 @@ radical, and cancellation through opposite rings.
   identity-one and the advertised positive-size bounds use nonempty indices.
   An empty repeated-block family is not claimed to give an injective map.
 - Right-coefficient kernel-product splitting works over arbitrary rings,
-  including empty rows and the zero ring; it does not imply a free kernel or
-  matrix completion. Free-kernel results require commutative rings and either
-  a stable-range bound or an actual row index with a specified two-sided matrix
+  including empty rows and the zero ring; splitting alone does not imply a
+  free kernel. With a free right kernel, rectangular completion is equivalent
+  to right-unimodularity, without stable range, commutativity, nontriviality or
+  a specified matrix size. The commutative free-kernel results separately use
+  either a stable-range bound or a chosen row of a specified two-sided square
   inverse; the latter does not manufacture an index for an empty matrix.
 - Finite-free cancellation uses an explicit presentation and a stable-range
   bound; no preliminary freeness or nontriviality hypothesis is needed.

@@ -9,8 +9,9 @@ project:
     Bass stable-range conditions for finite right-unimodular rows, quotient
     and local-ring consequences, regular and unit-regular rings, cancellation,
     division-ring matrix row rank and repeated blocks, commutative dimension
-    bounds, arbitrary-ring right-coefficient row splittings, commutative
-    free coefficient-row kernels, explicit two-element row completion and
+    bounds, arbitrary-ring right-coefficient row splittings and rectangular
+    completion from free right kernels, commutative free coefficient-row
+    kernels, explicit two-element row completion and
     supplied-product cancellation, exact-size finite-free cancellation and
     first-row completion, and elementary diagonalization over commutative
     rings satisfying Bass S_1, with
@@ -76,14 +77,18 @@ status:
     and the quotient-to-units equivalence under S_1. It also imports S_1
     inheritance for the corner of any idempotent, without centrality or
     nontriviality. The aggregate root also re-exports RowKernel's arbitrary-ring
-    right-coefficient row section and kernel-product splitting, without a
-    free-kernel or matrix-completion conclusion. Separately, its explicit
+    right-coefficient row section and kernel-product splitting, and
+    RightRowCompletion's rectangular two-sided inverse criterion when that
+    kernel is free. Splitting alone makes no freeness claim. Separately, its explicit
     two-element commutative supplied-witness completion gives scalar kernel
     coordinates and cancellation from a supplied rank-two product equivalence.
     A separate test root imports
     PublicAPIClient, FiniteFreeClient, RowCompletionClient,
     ElementaryGenerationClient, SemilocalClient, CornerClient,
-    RightCoefficientClient and RowCompletionTwoClient. RowCompletionTwoClient
+    RightCoefficientClient, RowCompletionTwoClient and RightRowCompletionClient.
+    RightRowCompletionClient uses independent two-by-two integer-matrix
+    fixtures, including a nonzero kernel column and noncentral multiplication.
+    RowCompletionTwoClient
     uses independently checked integer fixtures, a nonidentity product
     equivalence and the zero ring; RightCoefficientClient imports integer
     and matrix right-coefficient fixtures with zero/empty-row boundaries.
@@ -228,6 +233,34 @@ status:
         right-linear equivalence ker(σ) × R ≃ R^n whose inverse second
         coordinate is the original row σ. No free kernel or matrix completion
         follows from this arbitrary-ring splitting.
+    - declaration: "LinearEquiv.rightCoefficientRowCoordinates"
+      file: "StableRange/RightRowCompletion.lean"
+      note: >-
+        A chosen right-inverse column and finite coordinates of the right
+        kernel give a right-linear equivalence whose first coordinate is
+        the original row and whose tail is the chosen coordinate of its
+        witness-dependent kernel projection.
+    - declaration: "Matrix.rightRowCompletion"
+      file: "StableRange/RightRowCompletion.lean"
+      note: >-
+        The supplied witness and kernel coordinates yield a rectangular
+        matrix with first row equal to the original row, paired with an
+        explicit two-sided inverse that retains the supplied witness as
+        its first column. Matrix actions agree with the coordinate maps.
+    - declaration: "LinearEquiv.rightCoefficientKernelEquivOfMatrixInverse"
+      file: "StableRange/RightRowCompletion.lean"
+      note: >-
+        A two-sided rectangular inverse with specified first row gives
+        actual right-kernel coordinates by tail(A *ᵥ k), reconstructed by
+        B *ᵥ Fin.cons 0 t; no prior freeness assumption is required.
+    - declaration: "Matrix.isRightUnimodular_and_free_kernel_iff_exists_rectangular_inverse"
+      file: "StableRange/RightRowCompletion.lean"
+      note: >-
+        Over any ring, right-unimodularity with a free right kernel is
+        equivalent to some finite rectangular two-sided inverse pair
+        retaining the row. Splitting derives finite generation of the
+        kernel; no commutativity, stable-range or invariant-basis-number
+        condition is imposed.
     - declaration: "LinearEquiv.isRightUnimodular_iff_exists_kernelProdEquiv"
       file: "StableRange/RowKernel.lean"
       note: >-
