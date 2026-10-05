@@ -9,6 +9,7 @@ public import StableRange.Quotient
 public import StableRange.Local
 public import StableRange.Semilocal
 public import StableRange.Regular
+public import StableRange.CountableEndomorphism
 public import StableRange.Corner
 public import StableRange.Matrix
 public import StableRange.Opposite
@@ -23,6 +24,8 @@ public import StableRange.DivisionRingRank
 public import StableRange.Cancellation
 public import StableRange.RowKernel
 public import StableRange.RightRowCompletion
+public import StableRange.SquareRightRowCompletion
+public import StableRange.SquareRightRowCompletionCriterion
 public import StableRange.FiniteFree
 public import StableRange.RowCompletion
 public import StableRange.RowCompletionTwo
@@ -56,6 +59,9 @@ Over commutative rings, sufficiently long right-unimodular coefficient rows
 have free kernels under the corresponding stable-range condition. Independently
 of stable range, a row in a matrix with a specified two-sided inverse has kernel
 equivalent to the function module on the complementary column indices.
+Over an arbitrary IBN ring, a right-unimodular successor-length row has a free
+right coefficient kernel exactly when it extends to a square matrix unit;
+a specified section column can be preserved in that unit's inverse.
 An explicit finite stable presentation cancels a finite free summand when the
 remaining coordinate count meets the stable-range bound, retaining the exact
 coordinate count even over the zero ring. Under the same bound, a right-unimodular

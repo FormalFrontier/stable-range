@@ -369,6 +369,39 @@ theorem finite_rightCoefficientKernel (R : Type u) [Ring R]
 
 end LinearMap
 
+namespace LinearEquiv
+
+universe u
+
+/-- Choose finite right-linear coordinates on a free kernel of a right-unimodular
+coefficient row. Finite generation follows from the specified splitting. -/
+noncomputable def rightCoefficientFreeKernelCoordinates (R : Type u) [Ring R]
+    {n : ℕ} (a : Fin n → R) (ha : Bass.IsRightUnimodular a)
+    (hfree : Module.Free Rᵐᵒᵖ (LinearMap.ker (dotProductBilin R Rᵐᵒᵖ a))) :
+    Σ m : ℕ, LinearMap.ker (dotProductBilin R Rᵐᵒᵖ a) ≃ₗ[Rᵐᵒᵖ] (Fin m → R) := by
+  classical
+  letI : Module.Free Rᵐᵒᵖ
+      (LinearMap.ker (dotProductBilin R Rᵐᵒᵖ a)) := hfree
+  letI : Module.Finite Rᵐᵒᵖ
+      (LinearMap.ker (dotProductBilin R Rᵐᵒᵖ a)) :=
+    LinearMap.finite_rightCoefficientKernel R a ha
+  letI : Module.Free Rᵐᵒᵖ R :=
+    Module.Free.of_equiv (MulOpposite.opLinearEquiv Rᵐᵒᵖ (M := R)).symm
+  let ι := Module.Free.ChooseBasisIndex Rᵐᵒᵖ
+    (LinearMap.ker (dotProductBilin R Rᵐᵒᵖ a))
+  letI : Fintype ι := Module.Free.ChooseBasisIndex.fintype Rᵐᵒᵖ
+    (LinearMap.ker (dotProductBilin R Rᵐᵒᵖ a))
+  let m := Fintype.card ι
+  exact ⟨m,
+    ((Module.Free.chooseBasis Rᵐᵒᵖ _).repr).trans
+      ((Finsupp.linearEquivFunOnFinite Rᵐᵒᵖ Rᵐᵒᵖ ι).trans
+        ((LinearEquiv.piCongrRight
+          (fun _ : ι ↦ (MulOpposite.opLinearEquiv Rᵐᵒᵖ (M := R)).symm)).trans
+          (LinearEquiv.piCongrLeft Rᵐᵒᵖ (fun _ : Fin m ↦ R)
+            (Fintype.equivFin ι))))⟩
+
+end LinearEquiv
+
 namespace Matrix
 
 universe u
@@ -389,26 +422,8 @@ theorem isRightUnimodular_and_free_kernel_iff_exists_rectangular_inverse
         A 0 = a ∧ A * B = 1 ∧ B * A = 1 := by
   constructor
   · rintro ⟨⟨b, hb⟩, hfree⟩
-    have : Module.Free Rᵐᵒᵖ
-        (LinearMap.ker (dotProductBilin R Rᵐᵒᵖ a)) := hfree
-    have : Module.Finite Rᵐᵒᵖ
-        (LinearMap.ker (dotProductBilin R Rᵐᵒᵖ a)) :=
-      LinearMap.finite_rightCoefficientKernel R a ⟨b, hb⟩
-    have : Module.Free Rᵐᵒᵖ R :=
-      Module.Free.of_equiv (MulOpposite.opLinearEquiv Rᵐᵒᵖ (M := R)).symm
-    let ι := Module.Free.ChooseBasisIndex Rᵐᵒᵖ
-      (LinearMap.ker (dotProductBilin R Rᵐᵒᵖ a))
-    have : Fintype ι := Module.Free.ChooseBasisIndex.fintype Rᵐᵒᵖ
-      (LinearMap.ker (dotProductBilin R Rᵐᵒᵖ a))
-    let m := Fintype.card ι
-    let e : LinearMap.ker (dotProductBilin R Rᵐᵒᵖ a) ≃ₗ[Rᵐᵒᵖ]
-        (Fin m → R) :=
-      ((Module.Free.chooseBasis Rᵐᵒᵖ _).repr).trans
-        ((Finsupp.linearEquivFunOnFinite Rᵐᵒᵖ Rᵐᵒᵖ ι).trans
-          ((LinearEquiv.piCongrRight
-            (fun _ : ι ↦ (MulOpposite.opLinearEquiv Rᵐᵒᵖ (M := R)).symm)).trans
-            (LinearEquiv.piCongrLeft Rᵐᵒᵖ (fun _ : Fin m ↦ R)
-              (Fintype.equivFin ι))))
+    obtain ⟨m, e⟩ := LinearEquiv.rightCoefficientFreeKernelCoordinates
+      R a ⟨b, hb⟩ hfree
     refine ⟨m, rightRowCompletion R a b hb e, rightRowCompletionInv R a b hb e,
       rightRowCompletion_zero R a b hb e, ?_, ?_⟩
     · exact rightRowCompletion_mul_inv R a b hb e

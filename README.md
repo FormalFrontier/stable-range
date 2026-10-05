@@ -144,6 +144,26 @@ right-linear **column** actions for arbitrary rings; neither square size nor
 invariant basis number is assumed. An independent `M₂(ℤ)` client checks a
 nonzero kernel column and a noncentral multiplication order.
 
+For a successor-length right-unimodular row over an
+[invariant-basis-number ring](StableRange/SquareRightRowCompletionCriterion.lean), a
+genuinely free right coefficient kernel is equivalent to a square `GL`
+completion. Given a section column `b`, the constructed unit has the original
+first row and its inverse has first column `b`; its forward and inverse
+right-linear column actions are explicit. Supplied kernel coordinates of the
+matching size already yield a square unit without IBN, while the converse
+completion-to-free-kernel implication also needs no IBN. The dimension count
+from arbitrary free coordinates uses Mathlib's rectangular-matrix IBN theorem;
+no assertion is made about dimension-unspecified completion without IBN.
+
+The [countable endomorphism example](StableRange/CountableEndomorphism.lean)
+works for any semiring `S` and `S`-module `M` with additive inverses. In
+`E = End_S(ℕ →₀ M)`, even and odd coordinate maps give two-sided rectangular
+inverses of sizes two and one, so `E` fails invariant basis number even when
+`M` is zero. The original unary even-extraction row has a specified right
+inverse and a free right `Eᵐᵒᵖ`-coefficient kernel of rank one. If `M` is
+nontrivial, that kernel is nonzero and no square `GL₁(E)` matrix has the row
+as its first row, regardless of its inverse column.
+
 Over a commutative ring satisfying `(S_s)`, a right-unimodular coefficient
 row of length at least `s + 1`
 [has a free kernel](StableRange/RowKernel.lean#L361), by explicit two-shear
@@ -237,6 +257,9 @@ by the root and add no public library declarations.
 | `Cancellation` | `exists_linearEquiv_of_prod_of_end_stableRangeCondition_one` and finite-power consequences |
 | `RowKernel` | `kernelEquivOfLinearEquiv`, arbitrary-ring right-linear coefficient rows and split kernels; commutative free-kernel equivalences |
 | `RightRowCompletion` | supplied right-linear kernel coordinates and two-sided rectangular inverse matrices; converse kernel equivalence and free-kernel criterion |
+| `CountableEndomorphism` | even/odd coordinate splitting; non-IBN endomorphism ring and right-unimodular unary row with free nonzero kernel but no square completion |
+| `SquareRightRowCompletion` | square `GL` construction preserving a supplied inverse column, with explicit actions and reverse free-kernel implication |
+| `SquareRightRowCompletionCriterion` | free right-kernel iff square completion over IBN rings |
 | `RowCompletionTwo` | supplied-witness `SL(2, R)` row completion, scalar kernel coordinates and supplied-product cancellation over commutative rings |
 | `FiniteFree` | explicit finite-free summand cancellation and exact-size freeness under `(S_s)` or a noetherian dimension bound |
 | `RowCompletion` | first-coordinate equivalence, completed matrix and two-sided inverse under `(S_s)` or a noetherian dimension bound |
@@ -335,7 +358,9 @@ radical, and cancellation through opposite rings.
   including empty rows and the zero ring; splitting alone does not imply a
   free kernel. With a free right kernel, rectangular completion is equivalent
   to right-unimodularity, without stable range, commutativity, nontriviality or
-  a specified matrix size. The commutative free-kernel results separately use
+  a specified matrix size. The square criterion needs IBN only to determine
+  the size of a genuinely free kernel; a specified square completion gives
+  freeness without IBN. The commutative free-kernel results separately use
   either a stable-range bound or a chosen row of a specified two-sided square
   inverse; the latter does not manufacture an index for an empty matrix.
 - Finite-free cancellation uses an explicit presentation and a stable-range
