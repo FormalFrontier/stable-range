@@ -138,6 +138,16 @@ with an actual two-sided inverse has
 function module on complementary column indices. Both inverse identities
 and an actual row index are required, not a merely proposed inverse.
 
+For a commutative ring and a specified two-element Bézout witness
+`a₀b₀ + a₁b₁ = 1`, [explicit completion](StableRange/RowCompletionTwo.lean)
+has matrix rows `(a₀,a₁)` and `(-b₁,b₀)`, with an explicit inverse and
+original first-coordinate functional. The resulting kernel coordinate is
+`-b₁x₀ + b₀x₁`, whose inverse sends `t` to `(-a₁t,a₀t)`. A supplied
+`(Fin 2 → R) ≃ₗ[R] (R × P)` therefore gives `P ≃ₗ[R] R` through its
+original first projection, without a stable-range or freeness hypothesis on
+`P`. This commutative left-linear construction includes the zero ring; it
+does not assert arbitrary-rank or noncommutative row completion.
+
 ### Finite-free cancellation and first-row completion
 
 Over a commutative ring satisfying `(S_s)`, an explicit presentation
@@ -211,6 +221,7 @@ by the root and add no public library declarations.
 | `BassDimension` | finite-prime avoidance, prefix-ideal height bounds, `stableRangeCondition_succ_of_krullDimLE` |
 | `Cancellation` | `exists_linearEquiv_of_prod_of_end_stableRangeCondition_one` and finite-power consequences |
 | `RowKernel` | `kernelEquivOfLinearEquiv`, arbitrary-ring right-linear coefficient rows and split kernels; commutative free-kernel equivalences |
+| `RowCompletionTwo` | supplied-witness `SL(2, R)` row completion, scalar kernel coordinates and supplied-product cancellation over commutative rings |
 | `FiniteFree` | explicit finite-free summand cancellation and exact-size freeness under `(S_s)` or a noetherian dimension bound |
 | `RowCompletion` | first-coordinate equivalence, completed matrix and two-sided inverse under `(S_s)` or a noetherian dimension bound |
 | `ElementaryGeneration` | commutative `(S₁)` elementary unit pivots, diagonalization of `Fin n` matrices and finite reindexing |

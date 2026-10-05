@@ -13,6 +13,8 @@ import StableRangeTests.SemisimpleClient
 import StableRangeTests.MatrixReflectionClient
 import StableRangeTests.FiniteFreeClient
 import StableRangeTests.RowCompletionClient
+import StableRangeTests.RowCompletionTwoFixtures
+import StableRangeTests.RowCompletionTwoClient
 import StableRangeTests.RightCoefficientClient
 
 /-!

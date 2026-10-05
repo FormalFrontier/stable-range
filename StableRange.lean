@@ -24,6 +24,7 @@ public import StableRange.Cancellation
 public import StableRange.RowKernel
 public import StableRange.FiniteFree
 public import StableRange.RowCompletion
+public import StableRange.RowCompletionTwo
 public import StableRange.ElementaryGeneration
 public import StableRange.DeterminantGeneration
 

@@ -10,9 +10,10 @@ project:
     and local-ring consequences, regular and unit-regular rings, cancellation,
     division-ring matrix row rank and repeated blocks, commutative dimension
     bounds, arbitrary-ring right-coefficient row splittings, commutative
-    free coefficient-row kernels, exact-size finite-free cancellation and
-    first-row completion, and elementary
-    diagonalization over commutative rings satisfying Bass S_1, with
+    free coefficient-row kernels, explicit two-element row completion and
+    supplied-product cancellation, exact-size finite-free cancellation and
+    first-row completion, and elementary diagonalization over commutative
+    rings satisfying Bass S_1, with
     determinant-one generation and the stable elementary quotient. A
     commutative ring with finite maximal spectrum satisfies S_1.
     Idempotent corners of arbitrary rings satisfying S_1 also satisfy S_1.
@@ -32,7 +33,8 @@ sources:
     type: "book"
     location: >-
       Complete-book build dated 2013-08-29: Chapter I stable-range and
-      module-theoretic material, including Exercises I.1.12(v) and I.1.13.
+      module-theoretic material, including I.1.2.1 and Exercises I.1.12(v)
+      and I.1.13.
     relationship: "adapts"
     author_endorsement: "not-contacted"
     note: >-
@@ -75,13 +77,18 @@ status:
     inheritance for the corner of any idempotent, without centrality or
     nontriviality. The aggregate root also re-exports RowKernel's arbitrary-ring
     right-coefficient row section and kernel-product splitting, without a
-    free-kernel or matrix-completion conclusion. A separate test root imports
+    free-kernel or matrix-completion conclusion. Separately, its explicit
+    two-element commutative supplied-witness completion gives scalar kernel
+    coordinates and cancellation from a supplied rank-two product equivalence.
+    A separate test root imports
     PublicAPIClient, FiniteFreeClient, RowCompletionClient,
-    ElementaryGenerationClient, SemilocalClient, CornerClient and
-    RightCoefficientClient. The latter imports test-only
-    RightCoefficientFixtures for integer and matrix rows and zero/empty-row
-    boundaries; other test-only fixtures include zero-ring, rank-one and
-    noncentral matrix corners and a nonlocal product of fields.
+    ElementaryGenerationClient, SemilocalClient, CornerClient,
+    RightCoefficientClient and RowCompletionTwoClient. RowCompletionTwoClient
+    uses independently checked integer fixtures, a nonidentity product
+    equivalence and the zero ring; RightCoefficientClient imports integer
+    and matrix right-coefficient fixtures with zero/empty-row boundaries.
+    Other test-only fixtures include zero-ring, rank-one and noncentral
+    matrix corners and a nonlocal product of fields.
     The commutative finite-maximal-spectrum
     S_1 theorem supplies shortening and stable quotient determinant clients.
     Bass S_1 need not mean least stable index one: the zero ring also has S_0.
@@ -247,6 +254,24 @@ status:
         two-sided inverse has kernel equivalent to functions on the other
         indices. No stable-range assumption is used; i : Fin n supplies
         nonemptiness and n=1 gives the empty complementary index type.
+    - declaration: "Matrix.coefficientRowCompletionTwo"
+      file: "StableRange/RowCompletionTwo.lean"
+      note: >-
+        Over any commutative ring, a specified witness a₀b₀+a₁b₁=1 completes
+        the row (a₀,a₁) to a determinant-one matrix with second row (-b₁,b₀).
+        Its inverse has rows (b₀,-a₁) and (b₁,a₀).
+    - declaration: "Bass.coefficientRowKernelEquivTwo"
+      file: "StableRange/RowCompletionTwo.lean"
+      note: >-
+        The supplied completion identifies the kernel of the original
+        two-element coefficient functional with R, with coordinate
+        -b₁x₀+b₀x₁ and inverse generator (-a₁t,a₀t).
+    - declaration: "LinearEquiv.coefficientProductCancellationTwo"
+      file: "StableRange/RowCompletionTwo.lean"
+      note: >-
+        Any supplied (Fin 2 → R) ≃ₗ[R] (R × P) over a commutative ring
+        identifies P ≃ₗ[R] R via its original first projection and kernel;
+        no stable-range, freeness or nontriviality hypothesis is required.
     - declaration: "Module.finLinearEquivOfStableRangeCondition"
       file: "StableRange/FiniteFree.lean"
       note: >-
