@@ -32,16 +32,30 @@ exactly of its nonunits.
 * `Bass.stableRange_one_of_isLocalRing`: least Bass stable range one for local rings.
 * `IsLocalRing.mem_ringJacobson_iff`: the Jacobson radical consists of the nonunits
   in a possibly noncommutative local ring.
+* `IsLocalRing.isMaximal_ringJacobson`: the canonical radical is a maximal left ideal.
+* `IsLocalRing.eq_ringJacobson`: every maximal left ideal is the canonical radical.
+* `IsLocalRing.isMaximal_iff_eq_ringJacobson`: classification of all maximal left ideals.
 
 ## Implementation notes
 
 The division-semiring results use only the semiring operations and multiplicative
 inverses; the stable-range and Jacobson-radical results require additive inverses.
-The maximal ideal is used only under `CommSemiring`, whereas the additive submonoid
-of nonunits also applies to noncommutative semirings. Mathlib's existing field-locality
-instance and `IsLocalRing.maximalIdeal_eq_bot` remain available. The additive-view
-lemma lets field clients compare the same maximal-ideal object with the submonoid
-of nonunits, without comparing instance proofs or constructing a new ideal.
+Mathlib's `IsLocalRing.maximalIdeal` is used only under `CommSemiring`, whereas the
+additive submonoid of nonunits also applies to noncommutative semirings. Mathlib's
+existing field-locality instance and `IsLocalRing.maximalIdeal_eq_bot` remain available.
+The additive-view lemma lets field clients compare the same maximal-ideal object
+with the submonoid of nonunits, without comparing instance proofs or constructing
+another ideal. This commutative semiring API does not require additive inverses.
+
+The radical classification uses `Ideal R`, hence all left ideals, without a
+premise that the ideal is two-sided. The ring assumptions come from `Ring.jacobson`;
+no commutativity, finiteness or direct-finiteness hypothesis is added. This extends
+Mathlib's commutative classification to possibly noncommutative rings. Under
+`CommRing`, the existing `IsLocalRing.ringJacobson_eq_maximalIdeal` identifies the
+same radical with Mathlib's maximal ideal. Rewriting by that equality gives
+exactly the propositions of `IsLocalRing.maximalIdeal.isMaximal`,
+`IsLocalRing.eq_maximalIdeal` and `IsLocalRing.isMaximal_iff`. No new ideal or
+locality class is introduced.
 
 The interface uses Mathlib's `IsLocalRing` and `Ring.jacobson`, rather than a
 separate local-ring class or ideal construction. The existing local unit
@@ -263,5 +277,36 @@ theorem mem_ringJacobson_iff (r : R) :
     refine ⟨(↑(u⁻¹) : R), ?_⟩
     rw [Ideal.mem_bot, sub_eq_zero, mul_assoc, ← mul_add_one, ← hu]
     exact Units.inv_mul u
+
+private theorem le_ringJacobson {I : Ideal R} (hI : I ≠ ⊤) :
+    I ≤ Ring.jacobson R :=
+  fun r hr ↦ (mem_ringJacobson_iff r).mpr (coe_subset_nonunits hI hr)
+
+/-- The Jacobson radical of a possibly noncommutative local ring is a maximal
+left ideal; compare Weibel, *The K-book*, the local-ring discussion preceding
+Lemma I.2.2. Locality includes nontriviality. -/
+theorem isMaximal_ringJacobson (R : Type u) [Ring R] [IsLocalRing R] :
+    (Ring.jacobson R).IsMaximal := by
+  apply Ideal.isMaximal_def.mpr
+  refine isCoatom_iff_ge_of_le.mpr ⟨(Ring.jacobson_lt_top R).ne, ?_⟩
+  intro I hI _
+  exact le_ringJacobson hI
+
+/-- Every maximal left ideal of a possibly noncommutative local ring is its
+Jacobson radical; compare Weibel, *The K-book*, the local-ring discussion preceding
+Lemma I.2.2. The ideal need not be assumed two-sided. -/
+theorem eq_ringJacobson {I : Ideal R} (hI : I.IsMaximal) :
+    I = Ring.jacobson R := by
+  exact hI.eq_of_le (Ring.jacobson_lt_top R).ne (le_ringJacobson hI.ne_top)
+
+/-- A left ideal of a possibly noncommutative local ring is maximal exactly when
+it is the Jacobson radical; compare Weibel, *The K-book*, the local-ring discussion
+preceding Lemma I.2.2. The quantifier ranges over all left ideals. -/
+theorem isMaximal_iff_eq_ringJacobson {I : Ideal R} :
+    I.IsMaximal ↔ I = Ring.jacobson R := by
+  constructor
+  · exact eq_ringJacobson
+  · rintro rfl
+    exact isMaximal_ringJacobson R
 
 end IsLocalRing

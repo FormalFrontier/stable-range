@@ -20,7 +20,8 @@ project:
     Idempotent corners of arbitrary rings satisfying S_1 also satisfy S_1.
     Division semirings are local and have zero nonunits additive submonoid.
     In a commutative local semiring, the additive view of the maximal ideal
-    is the submonoid of nonunits.
+    is the submonoid of nonunits. In a possibly noncommutative local ring,
+    the Jacobson radical is the unique maximal left ideal.
     General rings need not be commutative; commutative and division-ring
     results retain their separate hypotheses.
   authors:
@@ -88,11 +89,14 @@ status:
     The local-semiring interface supplies division-semiring locality and the
     zero nonunits additive submonoid without commutativity or additive inverses,
     and identifies the additive view of the existing maximal ideal with nonunits
-    for commutative local semirings.
+    for commutative local semirings. For possibly noncommutative local rings,
+    the Jacobson radical is the unique maximal left ideal; the classification
+    ranges over all left ideals, not only two-sided ones.
     A separate test root imports
     PublicAPIClient, FiniteFreeClient, RowCompletionClient,
     ElementaryGenerationClient, SemilocalClient, CornerClient,
-    RightCoefficientClient, RowCompletionTwoClient and RightRowCompletionClient.
+    RightCoefficientClient, RowCompletionTwoClient, RightRowCompletionClient,
+    LocalIdealCommRingClient and ProductMaximalIdealClient.
     RightRowCompletionClient uses independent two-by-two integer-matrix
     fixtures, including a nonzero kernel column and noncentral multiplication.
     RowCompletionTwoClient
@@ -141,6 +145,13 @@ status:
       note: >-
         A native possibly noncommutative local ring has least stable range
         one. The native local-ring hypotheses exclude the zero ring.
+    - declaration: "IsLocalRing.isMaximal_iff_eq_ringJacobson"
+      file: "StableRange/Local.lean"
+      note: >-
+        In any possibly noncommutative local ring, a left ideal is maximal
+        exactly when it is the Jacobson radical. The radical is maximal,
+        and every maximal left ideal is identified with this same ideal;
+        no two-sidedness hypothesis is imposed. Locality includes nontriviality.
     - declaration: "Bass.stableRangeCondition_one_isDedekindFinite"
       file: "StableRange/Regular.lean"
       note: "S_1 makes every one-sided inverse two-sided."

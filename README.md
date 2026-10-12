@@ -37,8 +37,12 @@ The same [local-ring interface](StableRange/Local.lean) includes
 nonunit. Locality already excludes the zero ring; neither commutativity nor
 an extra direct-finiteness hypothesis is imposed. This uses Mathlib's canonical
 locality and radical notions, alongside the existing local right-inverse unit
-support. The local radical description is also used in Weibel's local-ring
-discussion and the proof of Lemma I.2.2.
+support. The same interface proves `IsLocalRing.isMaximal_ringJacobson`,
+`IsLocalRing.eq_ringJacobson` and `IsLocalRing.isMaximal_iff_eq_ringJacobson`:
+the radical is a maximal left ideal, and a left ideal is maximal exactly when
+it is this radical. The quantifier ranges over all left ideals, with no
+two-sidedness assumption. The local radical description and unique maximal
+left ideal are also used in Weibel's local-ring discussion preceding Lemma I.2.2.
 The zero ring can satisfy `(S_0)`; this is not a least-index-one assertion.
 Witnesses multiply on the right, and reduction order matters outside
 commutative rings; see [Scope and conventions](#scope-and-conventions).
