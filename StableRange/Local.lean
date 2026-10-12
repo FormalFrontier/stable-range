@@ -11,9 +11,10 @@ public import Mathlib.RingTheory.Jacobson.Radical
 
 import Mathlib.Algebra.Group.Units.Opposite
 import Mathlib.RingTheory.Jacobson.Ideal
+import GeneralLinearGroups.QuasiregularIdeal
 
 /-!
-# Stable range and Jacobson radicals of local rings
+# Stable range and canonical Jacobson criteria for local rings
 
 This file treats local semirings in Mathlib's unit-theoretic sense, without a
 commutativity assumption. Division semirings are local, and their additive
@@ -23,6 +24,8 @@ Every local ring has Bass stable range one, and its Jacobson radical consists
 exactly of its nonunits. Every proper left ideal lies in this radical.
 For an element `r` of a proper left ideal and any `y`, the left multiple `y * r`
 is a nonunit, so locality makes `1 - y * r` a unit.
+Conversely, a ring is local exactly when its canonical Jacobson radical is a
+maximal left ideal, with no separate nontriviality or commutativity assumption.
 
 ## Main declarations
 
@@ -38,6 +41,8 @@ is a nonunit, so locality makes `1 - y * r` a unit.
 * `IsLocalRing.isMaximal_ringJacobson`: the canonical radical is a maximal left ideal.
 * `IsLocalRing.eq_ringJacobson`: every maximal left ideal is the canonical radical.
 * `IsLocalRing.isMaximal_iff_eq_ringJacobson`: classification of all maximal left ideals.
+* `IsLocalRing.of_ringJacobson_isMaximal`: locality from maximality of the canonical radical.
+* `IsLocalRing.iff_ringJacobson_isMaximal`: the canonical radical criterion for locality.
 
 ## Implementation notes
 
@@ -66,6 +71,13 @@ separate local-ring class or ideal construction. The existing local unit
 support `Bass.isUnit_of_mul_eq_one_right` derives invertibility from a right
 inverse without a separate direct-finiteness hypothesis.
 
+For the converse criterion, properness of the radical supplies nontriviality.
+Maximality supplies a left inverse modulo the radical, and GeneralLinearGroups'
+unconditional quasiregularity theorem turns this into a left inverse in the ring.
+The radical is already two-sided, so that inverse also lies outside the radical.
+Applying the same argument to it gives both inverse orders before locality is
+constructed; no direct-finiteness assumption is needed.
+
 ## References
 
 * C. A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
@@ -73,6 +85,8 @@ inverse without a separate direct-finiteness hypothesis.
   proof here instead uses Mathlib's `IsLocalRing` API.
 * C. A. Weibel, *The K-book*, the local-ring discussion preceding Lemma I.2.2
   and the proof of that lemma (the local ideal is the Jacobson radical).
+  The maximal-left-ideal criterion here is a canonical recognition reformulation
+  of this background, not the statement of Lemma I.2.2.
 * Mathlib, `RingTheory.LocalRing.Basic` (local-ring unit criterion, the additive
   submonoid of nonunits, and the field-locality instance in namespace `Field`,
   generalized here to division semirings), `RingTheory.LocalRing.MaximalIdeal.Defs` and
@@ -82,6 +96,8 @@ inverse without a separate direct-finiteness hypothesis.
   `RingTheory.Jacobson.Radical` and `RingTheory.Jacobson.Ideal` (the canonical
   Jacobson radical, its properness and membership criterion), and
   `Algebra.Group.Units.Opposite` (units in the opposite ring).
+* GeneralLinearGroups, `QuasiregularIdeal` (unconditional quasiregularity of the
+  canonical Jacobson radical and its characterization by units `1 + x`).
 -/
 
 set_option warningAsError true
@@ -319,5 +335,72 @@ theorem isMaximal_iff_eq_ringJacobson {I : Ideal R} :
   · exact eq_ringJacobson
   · rintro rfl
     exact isMaximal_ringJacobson R
+
+end IsLocalRing
+
+namespace IsLocalRing
+
+universe u
+
+/-- Maximality of the canonical radical gives a left inverse to every element
+outside it, using the radical's unconditional quasiregularity. -/
+private theorem exists_left_inv_of_notMem_ringJacobson {R : Type u} [Ring R]
+    (hJ : (Ring.jacobson R).IsMaximal) {x : R} (hx : x ∉ Ring.jacobson R) :
+    ∃ a : R, a * x = 1 := by
+  obtain ⟨y, i, hi, hyi⟩ := hJ.exists_inv hx
+  have hyx : y * x = 1 - i := eq_sub_iff_add_eq.mpr hyi
+  have hunit : IsUnit (y * x) := by
+    rw [hyx, sub_eq_add_neg]
+    exact (TwoSidedIdeal.isQuasiregular_iff_forall_isUnit_one_add _).mp
+      TwoSidedIdeal.ringJacobson_isQuasiregular (-i)
+      (Ideal.mem_toTwoSided.mpr ((Ring.jacobson R).neg_mem hi))
+  obtain ⟨z, hz⟩ := hunit.exists_left_inv
+  exact ⟨z * y, by rw [mul_assoc]; exact hz⟩
+
+/-- A ring whose canonical Jacobson radical is a maximal left ideal is local in
+Mathlib's unit-theoretic sense; compare Weibel, *The K-book*, the local-ring
+discussion preceding Lemma I.2.2.
+
+Maximality is among all left ideals and includes properness. No separate
+nontriviality or commutativity assumption is required. -/
+theorem of_ringJacobson_isMaximal {R : Type u} [Ring R]
+    (hJ : (Ring.jacobson R).IsMaximal) : IsLocalRing R := by
+  let : Nontrivial R :=
+    nontrivial_of_ne (0 : R) 1 (Ideal.zero_ne_one_of_proper hJ.ne_top)
+  have h1 : (1 : R) ∉ Ring.jacobson R :=
+    (Ring.jacobson R).ne_top_iff_one.mp hJ.ne_top
+  have hunit : ∀ x : R, x ∉ Ring.jacobson R → IsUnit x := by
+    intro x hx
+    obtain ⟨a, hax⟩ := exists_left_inv_of_notMem_ringJacobson hJ hx
+    have ha : a ∉ Ring.jacobson R := by
+      intro ha
+      exact h1 (hax ▸ (Ring.jacobson R).mul_mem_right x ha)
+    obtain ⟨b, hba⟩ := exists_left_inv_of_notMem_ringJacobson hJ ha
+    have hbx : b = x := left_inv_eq_right_inv hba hax
+    have hxa : x * a = 1 := by
+      rw [← hbx]
+      exact hba
+    exact isUnit_iff_exists_and_exists.mpr ⟨⟨a, hxa⟩, ⟨a, hax⟩⟩
+  apply of_isUnit_or_isUnit_one_sub_self
+  intro x
+  by_cases hx : x ∈ Ring.jacobson R
+  · right
+    apply hunit
+    intro hsub
+    exact h1 (by simpa only [sub_add_cancel] using
+      (Ring.jacobson R).add_mem hsub hx)
+  · exact Or.inl (hunit x hx)
+
+/-- A ring is local exactly when its canonical Jacobson radical is a maximal
+left ideal; compare Weibel, *The K-book*, the local-ring discussion preceding
+Lemma I.2.2. The criterion uses Mathlib's `IsLocalRing` and ranges over possibly
+noncommutative rings. -/
+theorem iff_ringJacobson_isMaximal (R : Type u) [Ring R] :
+    IsLocalRing R ↔ (Ring.jacobson R).IsMaximal := by
+  constructor
+  · intro h
+    let := h
+    exact isMaximal_ringJacobson R
+  · exact of_ringJacobson_isMaximal
 
 end IsLocalRing

@@ -67,3 +67,16 @@ example {I : Ideal K} : I.IsMaximal ↔ I = ⊥ := by
     (IsLocalRing.isMaximal_iff_eq_ringJacobson (R := K) (I := I))
 
 end Field
+
+section UniqueMaximalCommRing
+
+-- The commutative unique-maximal-ideal route uses the same canonical radical.
+example (R : Type u) [CommRing R] (huniq : ∃! I : Ideal R, I.IsMaximal) :
+    Bass.StableRangeCondition R 1 := by
+  have hJ : (Ring.jacobson R).IsMaximal := by
+    let : IsLocalRing R := IsLocalRing.of_unique_max_ideal huniq
+    exact IsLocalRing.isMaximal_ringJacobson R
+  let : IsLocalRing R := (IsLocalRing.iff_ringJacobson_isMaximal R).mpr hJ
+  exact Bass.stableRangeCondition_one_of_isLocalRing
+
+end UniqueMaximalCommRing

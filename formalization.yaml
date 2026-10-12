@@ -22,7 +22,9 @@ project:
     In a commutative local semiring, the additive view of the maximal ideal
     is the submonoid of nonunits. In a possibly noncommutative local ring,
     every proper left ideal lies in the Jacobson radical, which is the unique
-    maximal left ideal.
+    maximal left ideal. Conversely, a ring is local exactly when its canonical
+    Jacobson radical is maximal among all left ideals; properness supplies
+    nontriviality.
     General rings need not be commutative; commutative and division-ring
     results retain their separate hypotheses.
   authors:
@@ -92,7 +94,9 @@ status:
     and identifies the additive view of the existing maximal ideal with nonunits
     for commutative local semirings. For possibly noncommutative local rings,
     the Jacobson radical is the unique maximal left ideal; the classification
-    ranges over all left ideals, not only two-sided ones.
+    ranges over all left ideals, not only two-sided ones. Conversely, maximality
+    of the canonical radical among all left ideals recognizes unit-theoretic
+    locality in any ring, without a locality or separate nontriviality premise.
     A separate test root imports
     PublicAPIClient, FiniteFreeClient, RowCompletionClient,
     ElementaryGenerationClient, SemilocalClient, CornerClient,
@@ -159,6 +163,19 @@ status:
         exactly when it is the Jacobson radical. The radical is maximal,
         and every maximal left ideal is identified with this same ideal;
         no two-sidedness hypothesis is imposed. Locality includes nontriviality.
+    - declaration: "IsLocalRing.of_ringJacobson_isMaximal"
+      file: "StableRange/Local.lean"
+      note: >-
+        For any possibly noncommutative ring, maximality of its canonical
+        Jacobson radical among all left ideals supplies unit-theoretic locality.
+        No locality or separate nontriviality premise is required; maximality
+        includes properness.
+    - declaration: "IsLocalRing.iff_ringJacobson_isMaximal"
+      file: "StableRange/Local.lean"
+      note: >-
+        A ring is local exactly when its canonical Jacobson radical is maximal
+        among all left ideals, not only two-sided ideals. This ring criterion
+        does not subsume Mathlib's commutative-semiring unique-maximal-ideal provider.
     - declaration: "Bass.stableRangeCondition_one_isDedekindFinite"
       file: "StableRange/Regular.lean"
       note: "S_1 makes every one-sided inverse two-sided."

@@ -112,4 +112,17 @@ example : ¬ IsLocalRing (ℍ[ℝ] × ℍ[ℝ]) ∧
   ⟨IsLocalRing.not_isLocalRing_of_prod_of_nontrivial ℍ[ℝ] ℍ[ℝ],
     quaternion_product_noncommutative⟩
 
+-- Two distinct maximal projection kernels rule out maximality of their common radical bound.
+example (D : Type u) (E : Type v) [DivisionRing D] [DivisionRing E] :
+    ¬ (Ring.jacobson (D × E)).IsMaximal := by
+  obtain ⟨hfst, hsnd, hfst_ne, hsnd_ne, hne⟩ := product_projection_kernels D E
+  let : (RingHom.ker (RingHom.fst D E)).IsMaximal := hfst
+  let : (RingHom.ker (RingHom.snd D E)).IsMaximal := hsnd
+  intro hJ
+  have hJfst : Ring.jacobson (D × E) = RingHom.ker (RingHom.fst D E) :=
+    hJ.eq_of_le hfst_ne (Ring.jacobson_le_of_isMaximal _)
+  have hJsnd : Ring.jacobson (D × E) = RingHom.ker (RingHom.snd D E) :=
+    hJ.eq_of_le hsnd_ne (Ring.jacobson_le_of_isMaximal _)
+  exact hne (hJfst.symm.trans hJsnd)
+
 end StableRangeTests.ProductMaximalIdealClient

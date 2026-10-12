@@ -219,4 +219,23 @@ example : ¬ IsUnit ((1, 0) : ℚ × ℚ) ∧
     exact not_isUnit_zero (M₀ := ℚ)
       (by simpa using hunit.map (RingHom.fst ℚ ℚ))
 
+-- Canonical radical maximality supplies the missing locality class for Bass's condition.
+example {R : Type u} [Ring R] (hJ : (Ring.jacobson R).IsMaximal) :
+    Bass.StableRangeCondition R 1 := by
+  let : IsLocalRing R := IsLocalRing.of_ringJacobson_isMaximal hJ
+  exact Bass.stableRangeCondition_one_of_isLocalRing
+
+-- Maximality here comes from the independent dual-number locality instance and the forward API.
+example : Bass.StableRangeCondition ℍ[ℝ][ε] 1 := by
+  have hJ : (Ring.jacobson ℍ[ℝ][ε]).IsMaximal :=
+    IsLocalRing.isMaximal_ringJacobson ℍ[ℝ][ε]
+  let : IsLocalRing ℍ[ℝ][ε] := IsLocalRing.of_ringJacobson_isMaximal hJ
+  exact Bass.stableRangeCondition_one_of_isLocalRing
+
+-- A singleton ideal lattice has no proper coatom, independently of locality recognition.
+example (R : Type u) [Ring R] [Subsingleton R] :
+    Ring.jacobson R = ⊤ ∧ ¬ (Ring.jacobson R).IsMaximal := by
+  have htop : Ring.jacobson R = ⊤ := Subsingleton.elim _ _
+  exact ⟨htop, fun hJ ↦ hJ.ne_top htop⟩
+
 end StableRangeTests.LocalJacobsonClient

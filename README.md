@@ -43,8 +43,20 @@ in the radical, with no two-sidedness assumption. The same interface proves
 `IsLocalRing.eq_ringJacobson` and `IsLocalRing.isMaximal_iff_eq_ringJacobson`:
 the radical is a maximal left ideal, and a left ideal is maximal exactly when
 it is this radical. The quantifier ranges over all left ideals, with no
-two-sidedness assumption. The local radical description and unique maximal
-left ideal are also used in Weibel's local-ring discussion preceding Lemma I.2.2.
+two-sidedness assumption.
+The [canonical locality criterion](StableRange/Local.lean) also recognizes
+locality for any possibly noncommutative ring `R`:
+`IsLocalRing.of_ringJacobson_isMaximal` derives `IsLocalRing R` from
+`(Ring.jacobson R).IsMaximal`, and
+`IsLocalRing.iff_ringJacobson_isMaximal` states their equivalence.
+Maximality is among all left ideals, not only two-sided ones. No locality or
+separate nontriviality premise is required; properness of the radical supplies
+nontriviality. This ring criterion does not subsume Mathlib's commutative-semiring
+unique-maximal-ideal provider. On common `CommRing` ground, the existing
+`IsLocalRing.ringJacobson_eq_maximalIdeal` compares the same radical with Mathlib's
+maximal ideal once locality is supplied. Compare Weibel's local-ring discussion
+preceding Lemma I.2.2, which uses a unique maximal two-sided ideal with unit
+complement; the canonical left-ideal criterion is a reformulation of that discussion.
 The zero ring can satisfy `(S_0)`; this is not a least-index-one assertion.
 Witnesses multiply on the right, and reduction order matters outside
 commutative rings; see [Scope and conventions](#scope-and-conventions).
@@ -278,7 +290,7 @@ by the root and add no public library declarations.
 | --- | --- |
 | `Basic` | `Bass.IsRightUnimodular`, `StableRangeCondition`, `IsStableRange`; monotonicity and equivalence |
 | `Quotient` | `stableRangeCondition_of_surjective`, `stableRangeCondition_quotient_iff` |
-| `Local` | `DivisionSemiring.isLocalRing`, `IsLocalRing.nonunitsAddSubmonoid_eq_bot`, `IsLocalRing.maximalIdeal_toAddSubmonoid`; `stableRangeCondition_one_of_isLocalRing`, `stableRange_one_of_isLocalRing`, `IsLocalRing.mem_ringJacobson_iff`, `IsLocalRing.le_ringJacobson` |
+| `Local` | `DivisionSemiring.isLocalRing`, `IsLocalRing.nonunitsAddSubmonoid_eq_bot`, `IsLocalRing.maximalIdeal_toAddSubmonoid`; `stableRangeCondition_one_of_isLocalRing`, `stableRange_one_of_isLocalRing`, `IsLocalRing.mem_ringJacobson_iff`, `IsLocalRing.le_ringJacobson`, `IsLocalRing.of_ringJacobson_isMaximal`, `IsLocalRing.iff_ringJacobson_isMaximal` |
 | `Semilocal` | commutative finite-maximal-spectrum `(S₁)` via Chinese remaindering |
 | `Regular` | unit-valued pair shortening, `IsVonNeumannRegular`, `IsUnitRegular`, complementary principal right ideals and shift counterexample |
 | `Matrix` | finite square-matrix preservation of `(S₁)` over arbitrary rings |
