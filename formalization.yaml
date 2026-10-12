@@ -21,7 +21,8 @@ project:
     Division semirings are local and have zero nonunits additive submonoid.
     In a commutative local semiring, the additive view of the maximal ideal
     is the submonoid of nonunits. In a possibly noncommutative local ring,
-    the Jacobson radical is the unique maximal left ideal.
+    every proper left ideal lies in the Jacobson radical, which is the unique
+    maximal left ideal.
     General rings need not be commutative; commutative and division-ring
     results retain their separate hypotheses.
   authors:
@@ -145,6 +146,12 @@ status:
       note: >-
         A native possibly noncommutative local ring has least stable range
         one. The native local-ring hypotheses exclude the zero ring.
+    - declaration: "IsLocalRing.le_ringJacobson"
+      file: "StableRange/Local.lean"
+      note: >-
+        Every proper left ideal of a possibly noncommutative local ring lies
+        in its Jacobson radical, without a two-sidedness hypothesis.
+        Locality includes nontriviality.
     - declaration: "IsLocalRing.isMaximal_iff_eq_ringJacobson"
       file: "StableRange/Local.lean"
       note: >-

@@ -20,7 +20,9 @@ commutativity assumption. Division semirings are local, and their additive
 submonoid of nonunits is zero. For commutative local semirings, the additive
 submonoid underlying the maximal ideal is the submonoid of nonunits.
 Every local ring has Bass stable range one, and its Jacobson radical consists
-exactly of its nonunits.
+exactly of its nonunits. Every proper left ideal lies in this radical.
+For an element `r` of a proper left ideal and any `y`, the left multiple `y * r`
+is a nonunit, so locality makes `1 - y * r` a unit.
 
 ## Main declarations
 
@@ -32,6 +34,7 @@ exactly of its nonunits.
 * `Bass.stableRange_one_of_isLocalRing`: least Bass stable range one for local rings.
 * `IsLocalRing.mem_ringJacobson_iff`: the Jacobson radical consists of the nonunits
   in a possibly noncommutative local ring.
+* `IsLocalRing.le_ringJacobson`: every proper left ideal lies in the radical.
 * `IsLocalRing.isMaximal_ringJacobson`: the canonical radical is a maximal left ideal.
 * `IsLocalRing.eq_ringJacobson`: every maximal left ideal is the canonical radical.
 * `IsLocalRing.isMaximal_iff_eq_ringJacobson`: classification of all maximal left ideals.
@@ -54,7 +57,8 @@ Mathlib's commutative classification to possibly noncommutative rings. Under
 `CommRing`, the existing `IsLocalRing.ringJacobson_eq_maximalIdeal` identifies the
 same radical with Mathlib's maximal ideal. Rewriting by that equality gives
 exactly the propositions of `IsLocalRing.maximalIdeal.isMaximal`,
-`IsLocalRing.eq_maximalIdeal` and `IsLocalRing.isMaximal_iff`. No new ideal or
+`IsLocalRing.eq_maximalIdeal` and `IsLocalRing.isMaximal_iff`. The proper-left-ideal
+bound similarly becomes Mathlib's `IsLocalRing.le_maximalIdeal`. No new ideal or
 locality class is introduced.
 
 The interface uses Mathlib's `IsLocalRing` and `Ring.jacobson`, rather than a
@@ -74,6 +78,7 @@ inverse without a separate direct-finiteness hypothesis.
   generalized here to division semirings), `RingTheory.LocalRing.MaximalIdeal.Defs` and
   `RingTheory.LocalRing.MaximalIdeal.Basic` (the existing maximal ideal and its
   identification with the zero ideal over fields),
+  `RingTheory.Ideal.Nonunits` (elements of proper left ideals are nonunits),
   `RingTheory.Jacobson.Radical` and `RingTheory.Jacobson.Ideal` (the canonical
   Jacobson radical, its properness and membership criterion), and
   `Algebra.Group.Units.Opposite` (units in the opposite ring).
@@ -278,7 +283,13 @@ theorem mem_ringJacobson_iff (r : R) :
     rw [Ideal.mem_bot, sub_eq_zero, mul_assoc, ← mul_add_one, ← hu]
     exact Units.inv_mul u
 
-private theorem le_ringJacobson {I : Ideal R} (hI : I ≠ ⊤) :
+/-- Every proper left ideal of a possibly noncommutative local ring is contained
+in its Jacobson radical; compare Weibel, *The K-book*, the local-ring discussion
+preceding Lemma I.2.2 and the proof of that lemma.
+
+The proof uses Mathlib's criterion that elements of a proper left ideal are
+nonunits. Locality includes nontriviality; no two-sidedness premise is needed. -/
+theorem le_ringJacobson {I : Ideal R} (hI : I ≠ ⊤) :
     I ≤ Ring.jacobson R :=
   fun r hr ↦ (mem_ringJacobson_iff r).mpr (coe_subset_nonunits hI hr)
 
