@@ -6,19 +6,34 @@ module
 
 public import StableRange.Basic
 public import Mathlib.RingTheory.LocalRing.Basic
+public import Mathlib.RingTheory.Jacobson.Radical
+
+import Mathlib.Algebra.Group.Units.Opposite
+import Mathlib.RingTheory.Jacobson.Ideal
 
 /-!
-# Stable range of local rings
+# Stable range and Jacobson radicals of local rings
 
-This file proves that every noncommutative local ring in mathlib's sense has
-Bass stable range one.
+This file treats local rings in Mathlib's unit-theoretic sense, without a
+commutativity assumption. Every such ring has Bass stable range one, and its
+Jacobson radical consists exactly of its nonunits.
+
+The interface uses Mathlib's `IsLocalRing` and `Ring.jacobson`, rather than a
+separate local-ring class or ideal construction. The existing local unit
+support `Bass.isUnit_of_mul_eq_one_right` derives invertibility from a right
+inverse without a separate direct-finiteness hypothesis.
 
 ## References
 
 * C. A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
   Exercise I.1.12(v) (the local stable-range-one consequence); the direct
   proof here instead uses Mathlib's `IsLocalRing` API.
-* Mathlib, `RingTheory.LocalRing.Basic` (local-ring unit criterion).
+* C. A. Weibel, *The K-book*, the local-ring discussion preceding Lemma I.2.2
+  and the proof of that lemma (the local ideal is the Jacobson radical).
+* Mathlib, `RingTheory.LocalRing.Basic` (local-ring unit criterion),
+  `RingTheory.Jacobson.Radical` and `RingTheory.Jacobson.Ideal` (the canonical
+  Jacobson radical, its properness and membership criterion), and
+  `Algebra.Group.Units.Opposite` (units in the opposite ring).
 -/
 
 set_option warningAsError true
@@ -138,3 +153,45 @@ theorem stableRange_one_of_isLocalRing [IsLocalRing R] :
   | succ n => exact Nat.succ_le_succ (Nat.zero_le n)
 
 end Bass
+
+namespace IsLocalRing
+
+universe u
+
+variable {R : Type u} [Ring R] [IsLocalRing R]
+
+/-- The Jacobson radical of a possibly noncommutative local ring consists exactly
+of its nonunits; compare Weibel, *The K-book*, the local-ring discussion preceding
+Lemma I.2.2 and the proof of that lemma.
+
+Here locality is Mathlib's `IsLocalRing`, which includes nontriviality. Neither
+commutativity nor a separate direct-finiteness hypothesis is required. -/
+theorem mem_ringJacobson_iff (r : R) :
+    r ∈ Ring.jacobson R ↔ ¬ IsUnit r := by
+  constructor
+  · intro hr
+    exact coe_subset_nonunits (Ring.jacobson_lt_top R).ne hr
+  · intro hr
+    rw [← Ideal.jacobson_bot]
+    apply Ideal.mem_jacobson_iff.mpr
+    intro y
+    -- A unit left multiple would give r a left inverse; use the opposite ring.
+    have hneg : ¬ IsUnit ((-y) * r) := by
+      intro h
+      obtain ⟨u, hu⟩ := h
+      have hleft : (↑(u⁻¹) : R) * (-y) * r = 1 := by
+        rw [mul_assoc, ← hu]
+        exact Units.inv_mul u
+      have hright : MulOpposite.op r * MulOpposite.op ((↑(u⁻¹) : R) * (-y)) = 1 := by
+        rw [← MulOpposite.op_mul, hleft, MulOpposite.op_one]
+      exact hr (Bass.isUnit_of_mul_eq_one_right hright).unop
+    -- Locality makes 1 + y * r a unit, supplying the Jacobson membership witness.
+    have hsum : IsUnit (y * r + 1) := by
+      simpa only [neg_mul, sub_neg_eq_add, add_comm] using
+        isUnit_one_sub_self_of_mem_nonunits ((-y) * r) hneg
+    obtain ⟨u, hu⟩ := hsum
+    refine ⟨(↑(u⁻¹) : R), ?_⟩
+    rw [Ideal.mem_bot, sub_eq_zero, mul_assoc, ← mul_add_one, ← hu]
+    exact Units.inv_mul u
+
+end IsLocalRing

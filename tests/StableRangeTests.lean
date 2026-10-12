@@ -9,6 +9,7 @@ import StableRangeTests.MatrixClient
 import StableRangeTests.CornerClient
 import StableRangeTests.ElementaryGenerationClient
 import StableRangeTests.SemilocalClient
+import StableRangeTests.LocalJacobsonClient
 import StableRangeTests.SemisimpleClient
 import StableRangeTests.MatrixReflectionClient
 import StableRangeTests.FiniteFreeClient
@@ -32,6 +33,8 @@ and first-row completion clients exercise fields, integers, independent module
 universes, an empty stabilizer and the zero ring.
 Square right-row clients exercise a supplied inverse column over the integers
 and noncommutative integer matrices, including empty and unary boundaries.
+Local Jacobson-radical clients exercise division rings, noncommutative quaternion
+dual numbers, commutative maximal-ideal agreement and nonlocal product boundaries.
 
 ## References
 

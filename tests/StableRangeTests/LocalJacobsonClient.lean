@@ -1,0 +1,151 @@
+/-
+SPDX-License-Identifier: Apache-2.0
+Authors: Formal Frontier Agents
+-/
+module
+
+public import Mathlib.Algebra.DualNumber
+public import Mathlib.Algebra.Quaternion
+public import Mathlib.Basic.Real.Basic
+
+import StableRange
+import Mathlib.Data.ZMod.Basic
+import Mathlib.RingTheory.DualNumber
+import Mathlib.RingTheory.LocalRing.NonLocalRing
+import Mathlib.Tactic.NormNum
+
+/-!
+# Local Jacobson-radical clients
+
+These examples use the ordinary library root to characterize the radical over
+division rings and over dual numbers with real quaternion coefficients. The
+latter ring is local, has a nonzero nonunit, and contains noncommuting elements.
+The zero ring is excluded by locality, while a product of two fields has a
+nonunit outside its Jacobson radical.
+
+The commutative comparison uses Mathlib's existing maximal-ideal identification.
+Two-sided conversion and properness use the existing ideal APIs. The concrete
+locality, nonzero, nonunit and noncommutativity witnesses do not use the
+Jacobson/nonunit characteristic theorem.
+
+## References
+
+* Mathlib, `Algebra.Quaternion`, `RingTheory.DualNumber`,
+  `Algebra.TrivSqZeroExt.Basic`, `RingTheory.LocalRing.Basic`,
+  `RingTheory.LocalRing.MaximalIdeal.Basic`, `RingTheory.LocalRing.NonLocalRing`,
+  `RingTheory.Jacobson.Ideal` and `RingTheory.TwoSidedIdeal.Operations`
+  (coefficient rings, local instances, unit and ideal criteria).
+* `StableRange.Local`, for the local one-sided-inverse unit criterion and the
+  local Jacobson-radical characteristic theorem.
+-/
+
+set_option warningAsError true
+
+namespace StableRangeTests.LocalJacobsonClient
+
+open scoped DualNumber Quaternion
+
+universe u
+
+-- Mathlib's field-locality argument also gives this division-ring witness.
+example (K : Type u) [DivisionRing K] (r : K) :
+    r ∈ Ring.jacobson K ↔ r = 0 := by
+  let localRing : IsLocalRing K := IsLocalRing.of_isUnit_or_isUnit_one_sub_self fun a ↦ by
+    rcases eq_or_ne a 0 with h | h
+    · exact Or.inr (by simpa only [h, sub_zero] using (isUnit_one : IsUnit (1 : K)))
+    · exact Or.inl (IsUnit.mk0 a h)
+  simpa only [isUnit_iff_ne_zero, not_not] using IsLocalRing.mem_ringJacobson_iff r
+
+example (R : Type u) [Ring R] [IsLocalRing R] :
+    (Ring.jacobson R).toTwoSided ≠ ⊤ := by
+  intro h
+  apply (Ring.jacobson_lt_top R).ne
+  simpa only [Ideal.asIdeal_toTwoSided, TwoSidedIdeal.top_asIdeal] using
+    congrArg (fun I : TwoSidedIdeal R ↦ I.asIdeal) h
+
+example (R : Type u) [Ring R] [IsLocalRing R] (r : R)
+    (hr : r ∉ (Ring.jacobson R).toTwoSided) : IsUnit r := by
+  by_contra h
+  exact hr (Ideal.mem_toTwoSided.mpr ((IsLocalRing.mem_ringJacobson_iff r).mpr h))
+
+example (R : Type u) [CommRing R] [IsLocalRing R] :
+    (Ring.jacobson R).toTwoSided.asIdeal = IsLocalRing.maximalIdeal R := by
+  rw [Ideal.asIdeal_toTwoSided]
+  exact IsLocalRing.ringJacobson_eq_maximalIdeal R
+
+private theorem eps_nonzero (K : Type u) [Semiring K] [Nontrivial K] :
+    (ε : K[ε]) ≠ 0 := by
+  intro h
+  have hs := congrArg TrivSqZeroExt.snd h
+  exact one_ne_zero (by simpa only [DualNumber.snd_eps, TrivSqZeroExt.snd_zero] using hs)
+
+private theorem eps_nonunit (K : Type u) [Ring K] [Nontrivial K] :
+    ¬ IsUnit (ε : K[ε]) := by
+  rw [TrivSqZeroExt.isUnit_iff_isUnit_fst, DualNumber.fst_eps]
+  exact not_isUnit_zero
+
+private def quaternionI : ℍ[ℝ] := ⟨0, 1, 0, 0⟩
+
+private def quaternionJ : ℍ[ℝ] := ⟨0, 0, 1, 0⟩
+
+private theorem quaternion_noncommuting :
+    quaternionI * quaternionJ ≠ quaternionJ * quaternionI := by
+  intro h
+  have hk := congrArg QuaternionAlgebra.imK h
+  norm_num [quaternionI, quaternionJ, Quaternion.imK_mul] at hk
+
+private theorem dual_noncommuting :
+    (TrivSqZeroExt.inl quaternionI : ℍ[ℝ][ε]) * TrivSqZeroExt.inl quaternionJ ≠
+      TrivSqZeroExt.inl quaternionJ * TrivSqZeroExt.inl quaternionI := by
+  intro h
+  apply quaternion_noncommuting
+  simpa only [TrivSqZeroExt.fst_mul, TrivSqZeroExt.fst_inl] using
+    congrArg TrivSqZeroExt.fst h
+
+noncomputable example : DivisionRing ℍ[ℝ] := inferInstance
+
+example : IsLocalRing ℍ[ℝ][ε] := inferInstance
+
+example : (ε : ℍ[ℝ][ε]) ≠ 0 ∧ ¬ IsUnit (ε : ℍ[ℝ][ε]) :=
+  ⟨eps_nonzero ℍ[ℝ], eps_nonunit ℍ[ℝ]⟩
+
+example : ¬ IsField ℍ[ℝ][ε] := by
+  intro h
+  obtain ⟨_, hb⟩ := h.mul_inv_cancel (eps_nonzero ℍ[ℝ])
+  exact eps_nonunit ℍ[ℝ] (Bass.isUnit_of_mul_eq_one_right hb)
+
+/-- Dual numbers over the real quaternions contain noncommuting elements,
+namely the embedded quaternion generators `i` and `j`. -/
+public theorem quaternion_dual_noncommutative : ∃ x y : ℍ[ℝ][ε], x * y ≠ y * x :=
+  ⟨TrivSqZeroExt.inl quaternionI, TrivSqZeroExt.inl quaternionJ, dual_noncommuting⟩
+
+example : ∃ x : ℍ[ℝ][ε], x ≠ 0 ∧ x ∈ Ring.jacobson ℍ[ℝ][ε] := by
+  refine ⟨ε, eps_nonzero ℍ[ℝ], ?_⟩
+  exact (IsLocalRing.mem_ringJacobson_iff ε).mpr (eps_nonunit ℍ[ℝ])
+
+example : (1 : ℍ[ℝ][ε]) ∉ Ring.jacobson ℍ[ℝ][ε] := by
+  intro h
+  exact (IsLocalRing.mem_ringJacobson_iff 1).mp h isUnit_one
+
+example : ¬ IsLocalRing (ZMod 1) := by
+  intro h
+  let localRing : IsLocalRing (ZMod 1) := h
+  exact zero_ne_one (Subsingleton.elim (0 : ZMod 1) 1)
+
+example : ¬ IsLocalRing (ℚ × ℚ) :=
+  IsLocalRing.not_isLocalRing_of_prod_of_nontrivial ℚ ℚ
+
+example : ¬ IsUnit ((1, 0) : ℚ × ℚ) ∧
+    ((1, 0) : ℚ × ℚ) ∉ Ring.jacobson (ℚ × ℚ) := by
+  constructor
+  · intro h
+    exact not_isUnit_zero (M₀ := ℚ)
+      (by simpa using h.map (RingHom.snd ℚ ℚ))
+  · intro h
+    have hbot : ((1, 0) : ℚ × ℚ) ∈ (⊥ : Ideal (ℚ × ℚ)).jacobson := by
+      simpa only [Ideal.jacobson_bot] using h
+    have hunit := (Ideal.mem_jacobson_bot.mp hbot) ((-1, 0) : ℚ × ℚ)
+    exact not_isUnit_zero (M₀ := ℚ)
+      (by simpa using hunit.map (RingHom.fst ℚ ℚ))
+
+end StableRangeTests.LocalJacobsonClient

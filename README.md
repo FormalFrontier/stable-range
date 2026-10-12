@@ -22,7 +22,15 @@ For arbitrary possibly noncommutative rings, the library defines finite
 [monotonicity](StableRange/Basic.lean#L150), invariance under ring equivalence,
 [descent along surjective homomorphisms](StableRange/Quotient.lean#L62), and
 [equivalence under quotients by quasiregular two-sided ideals](StableRange/Quotient.lean#L135).
-[Nontrivial local rings have least stable range one](StableRange/Local.lean#L132).
+[Nontrivial local rings have least stable range one](StableRange/Local.lean).
+The same [local-ring interface](StableRange/Local.lean) includes
+`IsLocalRing.mem_ringJacobson_iff`: for any possibly noncommutative ring with
+`IsLocalRing R`, membership in `Ring.jacobson R` is equivalent to being a
+nonunit. Locality already excludes the zero ring; neither commutativity nor
+an extra direct-finiteness hypothesis is imposed. This uses Mathlib's canonical
+locality and radical notions, alongside the existing local right-inverse unit
+support. The local radical description is also used in Weibel's local-ring
+discussion and the proof of Lemma I.2.2.
 The zero ring can satisfy `(S_0)`; this is not a least-index-one assertion.
 Witnesses multiply on the right, and reduction order matters outside
 commutative rings; see [Scope and conventions](#scope-and-conventions).
@@ -232,6 +240,22 @@ hypothesis. In particular, no general-ring determinant-one generation is claimed
 
 ## Public interface and use
 
+Add the library to your `lakefile.toml`:
+
+```toml
+[[require]]
+name = "stable-range"
+git = "https://github.com/FormalFrontier/stable-range.git"
+rev = "main"
+```
+
+GitHub `main` contains reviewed releases. Lake resolves the latest release when
+this dependency is first added or updated; `lake-manifest.json` locks the resolved
+commit until the next update. To pin a particular release, replace `main` with a
+full commit from that history. Libraries used together must share a compatible
+Mathlib revision and toolchain; see [reproducible build](#reproducible-build) for
+this checkout's pinned environment.
+
 Use ordinary `import StableRange` for the complete interface, or import a leaf
 below. The root publicly re-exports the listed leaves. The tests are not imported
 by the root and add no public library declarations.
@@ -240,7 +264,7 @@ by the root and add no public library declarations.
 | --- | --- |
 | `Basic` | `Bass.IsRightUnimodular`, `StableRangeCondition`, `IsStableRange`; monotonicity and equivalence |
 | `Quotient` | `stableRangeCondition_of_surjective`, `stableRangeCondition_quotient_iff` |
-| `Local` | `stableRangeCondition_one_of_isLocalRing`, `stableRange_one_of_isLocalRing` |
+| `Local` | `stableRangeCondition_one_of_isLocalRing`, `stableRange_one_of_isLocalRing`; `IsLocalRing.mem_ringJacobson_iff` |
 | `Semilocal` | commutative finite-maximal-spectrum `(S₁)` via Chinese remaindering |
 | `Regular` | unit-valued pair shortening, `IsVonNeumannRegular`, `IsUnitRegular`, complementary principal right ideals and shift counterexample |
 | `Matrix` | finite square-matrix preservation of `(S₁)` over arbitrary rings |
@@ -267,7 +291,8 @@ by the root and add no public library declarations.
 | `DeterminantGeneration` | finite determinant-one membership, stable determinant kernel and quotient-to-units equivalence under commutative `(S₁)` |
 
 Names without an explicit namespace in the table are in `Bass`, except the
-division-ring and matrix entries as indicated. The [historical generated API](docs/API.md)
+division-ring and matrix entries as indicated. The local radical characteristic
+is in `IsLocalRing`. The [historical generated API](docs/API.md)
 shows all 121 native mathematical-leaf display sites, their complete visible
 signatures and 23 labeled authored notes for missing source docstrings.
 The [generation guide](docs/README.md) explains its scope and exact snapshot;
@@ -321,6 +346,15 @@ criterion. Its zero-ring and local-ring specializations use the same theorem.
 No positive-dimensional product-of-local-rings example is
 compiled here. The integer pair `(5, 2)` shows that `(S₁)` fails without the
 finite-maximal-spectrum hypothesis.
+
+The [local Jacobson client](tests/StableRangeTests/LocalJacobsonClient.lean)
+compares the division-ring radical with zero and exhibits a nonzero nonunit and
+noncommuting elements in dual numbers over the real quaternions. The client theorem
+`StableRangeTests.LocalJacobsonClient.quaternion_dual_noncommutative`
+exhibits the embedded quaternion generators `i` and `j` as a noncommuting pair.
+The client uses Mathlib's existing dual-number locality instance and commutative
+maximal-ideal identification. The zero ring and the product of two fields provide boundaries;
+the latter has a nonunit outside its Jacobson radical.
 
 The [corner client](tests/StableRangeTests/CornerClient.lean) instantiates the
 theorem over `M₃(ZMod 4)` and `M₃(ℕ → ZMod 4)`, using a shared
@@ -376,8 +410,8 @@ radical, and cancellation through opposite rings.
 The exact environment is Lean `leanprover/lean4:v4.34.0-rc2`, Mathlib
 `83abb3e776bdefcbc447a1e44d0debe4010039e5`, and `general-linear-groups`
 `2683f75e2c5774ddd1295c46062035cb6afabb8a`. `lake-manifest.json` pins the full
-resolved graph. The official GLG GitHub repository is private and requires
-authorized access; no credentials belong in this repository or its documentation.
+resolved graph. The pinned dependency is available from
+the [General Linear Groups GitHub repository](https://github.com/FormalFrontier/general-linear-groups).
 
 Install the pinned `lean-toolchain` with elan and, from the repository root,
 successfully fetch the matching Mathlib cache **before** building. The default
@@ -409,15 +443,17 @@ API documentation.
 ## References
 
 - Charles A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
-  August 29, 2013 complete-book build, Chapter I, §1: unimodular rows,
+  August 29, 2013 complete-book build, Chapter I, §§1–2: unimodular rows,
   the stable-range dimension bound, Theorem I.1.3 and Exercises I.1.5,
-  I.1.12(v), I.1.13(a)–(f). These supply mathematical statements and
+  I.1.12(v), I.1.13(a)–(f), and the local-ring discussion and radical
+  identification used in Lemma I.2.2. These supply mathematical statements and
   context, not copied prose or an attribution of the library's independent
   proofs to the book.
 - [Mathlib](https://github.com/leanprover-community/mathlib4) (pinned
   revision in `lakefile.toml`): prior formalizations of rings, ideals,
-  local and semisimple rings, Krull dimension, flatness, modules, linear
-  equivalences, matrix blocks, idempotent corners, and rank. The proofs
+  local and semisimple rings, Jacobson radicals, dual numbers, quaternions,
+  Krull dimension, flatness, modules, linear equivalences, matrix blocks,
+  idempotent corners, and rank. The proofs
   use these definitions, theorems and constructions.
 - `general-linear-groups` (pinned revision in `lakefile.toml`): prior
   formalizations of quasiregular two-sided ideals and their radical
