@@ -18,6 +18,9 @@ project:
     determinant-one generation and the stable elementary quotient. A
     commutative ring with finite maximal spectrum satisfies S_1.
     Idempotent corners of arbitrary rings satisfying S_1 also satisfy S_1.
+    Division semirings are local and have zero nonunits additive submonoid.
+    In a commutative local semiring, the additive view of the maximal ideal
+    is the submonoid of nonunits.
     General rings need not be commutative; commutative and division-ring
     results retain their separate hypotheses.
   authors:
@@ -82,6 +85,10 @@ status:
     kernel is free. Splitting alone makes no freeness claim. Separately, its explicit
     two-element commutative supplied-witness completion gives scalar kernel
     coordinates and cancellation from a supplied rank-two product equivalence.
+    The local-semiring interface supplies division-semiring locality and the
+    zero nonunits additive submonoid without commutativity or additive inverses,
+    and identifies the additive view of the existing maximal ideal with nonunits
+    for commutative local semirings.
     A separate test root imports
     PublicAPIClient, FiniteFreeClient, RowCompletionClient,
     ElementaryGenerationClient, SemilocalClient, CornerClient,

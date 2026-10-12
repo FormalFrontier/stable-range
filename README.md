@@ -23,6 +23,14 @@ For arbitrary possibly noncommutative rings, the library defines finite
 [descent along surjective homomorphisms](StableRange/Quotient.lean#L62), and
 [equivalence under quotients by quasiregular two-sided ideals](StableRange/Quotient.lean#L135).
 [Nontrivial local rings have least stable range one](StableRange/Local.lean).
+The [local-semiring interface](StableRange/Local.lean) also supplies
+`DivisionSemiring.isLocalRing` and `IsLocalRing.nonunitsAddSubmonoid_eq_bot`:
+every division semiring is local and its additive submonoid of nonunits is zero,
+without commutativity or additive inverses. For any commutative local semiring,
+`IsLocalRing.maximalIdeal_toAddSubmonoid` identifies the additive view of
+Mathlib's existing maximal ideal with the submonoid of nonunits. This bridges
+the general unit-theoretic interface to the commutative ideal object; it does not
+construct a second ideal or replace Mathlib's field-locality instance.
 The same [local-ring interface](StableRange/Local.lean) includes
 `IsLocalRing.mem_ringJacobson_iff`: for any possibly noncommutative ring with
 `IsLocalRing R`, membership in `Ring.jacobson R` is equivalent to being a
@@ -264,7 +272,7 @@ by the root and add no public library declarations.
 | --- | --- |
 | `Basic` | `Bass.IsRightUnimodular`, `StableRangeCondition`, `IsStableRange`; monotonicity and equivalence |
 | `Quotient` | `stableRangeCondition_of_surjective`, `stableRangeCondition_quotient_iff` |
-| `Local` | `stableRangeCondition_one_of_isLocalRing`, `stableRange_one_of_isLocalRing`; `IsLocalRing.mem_ringJacobson_iff` |
+| `Local` | `DivisionSemiring.isLocalRing`, `IsLocalRing.nonunitsAddSubmonoid_eq_bot`, `IsLocalRing.maximalIdeal_toAddSubmonoid`; `stableRangeCondition_one_of_isLocalRing`, `stableRange_one_of_isLocalRing`, `IsLocalRing.mem_ringJacobson_iff` |
 | `Semilocal` | commutative finite-maximal-spectrum `(S₁)` via Chinese remaindering |
 | `Regular` | unit-valued pair shortening, `IsVonNeumannRegular`, `IsUnitRegular`, complementary principal right ideals and shift counterexample |
 | `Matrix` | finite square-matrix preservation of `(S₁)` over arbitrary rings |
@@ -292,7 +300,8 @@ by the root and add no public library declarations.
 
 Names without an explicit namespace in the table are in `Bass`, except the
 division-ring and matrix entries as indicated. The local radical characteristic
-is in `IsLocalRing`. The [historical generated API](docs/API.md)
+and additive-object comparisons are in `IsLocalRing`; division-semiring locality
+is in `DivisionSemiring`. The [historical generated API](docs/API.md)
 shows all 121 native mathematical-leaf display sites, their complete visible
 signatures and 23 labeled authored notes for missing source docstrings.
 The [generation guide](docs/README.md) explains its scope and exact snapshot;
@@ -347,6 +356,29 @@ No positive-dimensional product-of-local-rings example is
 compiled here. The integer pair `(5, 2)` shows that `(S₁)` fails without the
 finite-maximal-spectrum hypothesis.
 
+For the local-semiring API, use `DivisionSemiring.isLocalRing K` directly or let
+instance search supply locality under `[DivisionSemiring K]`. The simplification
+lemma `IsLocalRing.nonunitsAddSubmonoid_eq_bot K` makes membership in that
+submonoid equivalent to equality with zero. Under `[CommSemiring R] [IsLocalRing R]`,
+rewrite by `IsLocalRing.maximalIdeal_toAddSubmonoid R` to consume the maximal ideal
+through its additive view. A `[Semifield K]` supplies both commutativity and division,
+so the two additive comparisons give `(IsLocalRing.maximalIdeal K).toAddSubmonoid = ⊥`.
+For fields, Mathlib's existing `IsLocalRing.maximalIdeal_eq_bot` and
+`Submodule.bot_toAddSubmonoid` give the same object comparison; neither an equality
+of locality proofs nor a specialized replacement instance is needed.
+
+The [division-semiring client](tests/StableRangeTests/DivisionSemiringClient.lean)
+uses the root import, explicitly installs the division-semiring locality instance
+inside generic field and semifield proofs, and consumes Mathlib's field unit criteria
+and maximal-ideal equality. The canonical nonnegative-real semifield supplies a
+semiring example without an additive inverse of one: two halves sum to one, but
+`1 + b ≠ 0` for every nonnegative real `b`. This concerns the canonical semiring
+operations, not arbitrary ring structures on the same carrier. Mathlib's `IsField`
+property is a semiring property and holds for this semifield; it is not an
+additive-inverse requirement. The real quaternion division ring supplies a
+noncommutative example. Its independent noncommutativity fixture and the
+nonnegative-real arithmetic witnesses do not assume the new conclusions.
+
 The [local Jacobson client](tests/StableRangeTests/LocalJacobsonClient.lean)
 compares the division-ring radical with zero and exhibits a nonzero nonunit and
 noncommuting elements in dual numbers over the real quaternions. The client theorem
@@ -377,6 +409,10 @@ radical, and cancellation through opposite rings.
 - Unimodularity uses right coefficients: `∑ i, r i * s i = 1`. Stable reduction
   uses `r i - r₀ * t i`. The row-vector matrix map is **left-linear**, acting by
   multiplication by the matrix on the right; no commutativity is silently added.
+- Division-semiring locality and the zero nonunits submonoid need neither
+  commutativity nor additive inverses. The maximal-ideal additive comparison
+  requires a commutative local semiring; stable-range and local Jacobson results
+  require a ring. No noncommutative maximal-ideal object comparison is asserted.
 - `(S_n)` is a property at an index, not a least-index assertion. `IsStableRange`
   records a supplied least index. The zero ring satisfies `(S_0)`; assertions of
   least index one require the stated nontrivial/local hypotheses. Zero-dimensional
@@ -453,8 +489,11 @@ API documentation.
   revision in `lakefile.toml`): prior formalizations of rings, ideals,
   local and semisimple rings, Jacobson radicals, dual numbers, quaternions,
   Krull dimension, flatness, modules, linear equivalences, matrix blocks,
-  idempotent corners, and rank. The proofs
-  use these definitions, theorems and constructions.
+  idempotent corners, and rank. The local-semiring results generalize Mathlib's
+  field-locality instance using its local-semiring constructor and the
+  group-with-zero unit criterion. The additive comparisons use its nonunits,
+  submonoid, submodule and maximal-ideal interfaces. The proofs use these
+  definitions, theorems and constructions.
 - `general-linear-groups` (pinned revision in `lakefile.toml`): prior
   formalizations of quasiregular two-sided ideals and their radical
   criterion, matrix corners and ordered block units, elementary subgroups,

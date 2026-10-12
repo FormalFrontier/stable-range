@@ -10,6 +10,7 @@ import StableRangeTests.CornerClient
 import StableRangeTests.ElementaryGenerationClient
 import StableRangeTests.SemilocalClient
 import StableRangeTests.LocalJacobsonClient
+import StableRangeTests.DivisionSemiringClient
 import StableRangeTests.SemisimpleClient
 import StableRangeTests.MatrixReflectionClient
 import StableRangeTests.FiniteFreeClient
@@ -35,6 +36,8 @@ Square right-row clients exercise a supplied inverse column over the integers
 and noncommutative integer matrices, including empty and unary boundaries.
 Local Jacobson-radical clients exercise division rings, noncommutative quaternion
 dual numbers, commutative maximal-ideal agreement and nonlocal product boundaries.
+Division-semiring clients exercise the nonnegative reals, noncommutative real
+quaternions, and the additive views of nonunits and maximal ideals.
 
 ## References
 

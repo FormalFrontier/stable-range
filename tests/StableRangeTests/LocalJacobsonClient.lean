@@ -47,13 +47,10 @@ open scoped DualNumber Quaternion
 
 universe u
 
--- Mathlib's field-locality argument also gives this division-ring witness.
+-- In a division ring, the local Jacobson criterion reduces to equality with zero.
 example (K : Type u) [DivisionRing K] (r : K) :
     r ∈ Ring.jacobson K ↔ r = 0 := by
-  let localRing : IsLocalRing K := IsLocalRing.of_isUnit_or_isUnit_one_sub_self fun a ↦ by
-    rcases eq_or_ne a 0 with h | h
-    · exact Or.inr (by simpa only [h, sub_zero] using (isUnit_one : IsUnit (1 : K)))
-    · exact Or.inl (IsUnit.mk0 a h)
+  let : IsLocalRing K := DivisionSemiring.isLocalRing K
   simpa only [isUnit_iff_ne_zero, not_not] using IsLocalRing.mem_ringJacobson_iff r
 
 example (R : Type u) [Ring R] [IsLocalRing R] :

@@ -6,6 +6,7 @@ module
 
 public import StableRange.Basic
 public import Mathlib.RingTheory.LocalRing.Basic
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
 public import Mathlib.RingTheory.Jacobson.Radical
 
 import Mathlib.Algebra.Group.Units.Opposite
@@ -14,9 +15,33 @@ import Mathlib.RingTheory.Jacobson.Ideal
 /-!
 # Stable range and Jacobson radicals of local rings
 
-This file treats local rings in Mathlib's unit-theoretic sense, without a
-commutativity assumption. Every such ring has Bass stable range one, and its
-Jacobson radical consists exactly of its nonunits.
+This file treats local semirings in Mathlib's unit-theoretic sense, without a
+commutativity assumption. Division semirings are local, and their additive
+submonoid of nonunits is zero. For commutative local semirings, the additive
+submonoid underlying the maximal ideal is the submonoid of nonunits.
+Every local ring has Bass stable range one, and its Jacobson radical consists
+exactly of its nonunits.
+
+## Main declarations
+
+* `DivisionSemiring.isLocalRing`: locality without commutativity or additive inverses.
+* `IsLocalRing.nonunitsAddSubmonoid_eq_bot`: the nonunits form the zero additive
+  submonoid in a division semiring.
+* `IsLocalRing.maximalIdeal_toAddSubmonoid`: the additive view of Mathlib's
+  maximal ideal in a commutative local semiring.
+* `Bass.stableRange_one_of_isLocalRing`: least Bass stable range one for local rings.
+* `IsLocalRing.mem_ringJacobson_iff`: the Jacobson radical consists of the nonunits
+  in a possibly noncommutative local ring.
+
+## Implementation notes
+
+The division-semiring results use only the semiring operations and multiplicative
+inverses; the stable-range and Jacobson-radical results require additive inverses.
+The maximal ideal is used only under `CommSemiring`, whereas the additive submonoid
+of nonunits also applies to noncommutative semirings. Mathlib's existing field-locality
+instance and `IsLocalRing.maximalIdeal_eq_bot` remain available. The additive-view
+lemma lets field clients compare the same maximal-ideal object with the submonoid
+of nonunits, without comparing instance proofs or constructing a new ideal.
 
 The interface uses Mathlib's `IsLocalRing` and `Ring.jacobson`, rather than a
 separate local-ring class or ideal construction. The existing local unit
@@ -30,7 +55,11 @@ inverse without a separate direct-finiteness hypothesis.
   proof here instead uses Mathlib's `IsLocalRing` API.
 * C. A. Weibel, *The K-book*, the local-ring discussion preceding Lemma I.2.2
   and the proof of that lemma (the local ideal is the Jacobson radical).
-* Mathlib, `RingTheory.LocalRing.Basic` (local-ring unit criterion),
+* Mathlib, `RingTheory.LocalRing.Basic` (local-ring unit criterion, the additive
+  submonoid of nonunits, and the field-locality instance in namespace `Field`,
+  generalized here to division semirings), `RingTheory.LocalRing.MaximalIdeal.Defs` and
+  `RingTheory.LocalRing.MaximalIdeal.Basic` (the existing maximal ideal and its
+  identification with the zero ideal over fields),
   `RingTheory.Jacobson.Radical` and `RingTheory.Jacobson.Ideal` (the canonical
   Jacobson radical, its properness and membership criterion), and
   `Algebra.Group.Units.Opposite` (units in the opposite ring).
@@ -41,6 +70,47 @@ set_option warningAsError true
 @[expose] public section
 
 open scoped BigOperators
+
+namespace DivisionSemiring
+
+universe u
+
+/-- Every division semiring is local in the unit-theoretic sense, generalizing
+Mathlib's field-locality instance in `RingTheory.LocalRing.Basic`. -/
+instance (priority := 100) isLocalRing (K : Type u) [DivisionSemiring K] : IsLocalRing K := by
+  apply IsLocalRing.of_isUnit_or_isUnit_of_isUnit_add
+  intro a b hab
+  by_cases ha : a = 0
+  · exact Or.inr (by simpa only [ha, zero_add] using hab)
+  · exact Or.inl (isUnit_iff_ne_zero.mpr ha)
+
+end DivisionSemiring
+
+namespace IsLocalRing
+
+universe u
+
+/-- The additive submonoid of nonunits in a division semiring is zero. -/
+@[simp]
+theorem nonunitsAddSubmonoid_eq_bot (K : Type u) [DivisionSemiring K] :
+    nonunitsAddSubmonoid K = ⊥ := by
+  apply AddSubmonoid.ext
+  intro x
+  change x ∈ nonunits K ↔ x ∈ (⊥ : AddSubmonoid K)
+  simpa only [AddSubmonoid.mem_bot, isUnit_iff_ne_zero, not_not] using
+    (mem_nonunits_iff (α := K) (a := x))
+
+/-- The additive submonoid underlying the maximal ideal of a commutative local
+semiring is the additive submonoid of nonunits. -/
+@[simp]
+theorem maximalIdeal_toAddSubmonoid (R : Type u) [CommSemiring R] [IsLocalRing R] :
+    (maximalIdeal R).toAddSubmonoid = nonunitsAddSubmonoid R := by
+  apply AddSubmonoid.ext
+  intro x
+  rw [Submodule.mem_toAddSubmonoid]
+  exact mem_maximalIdeal x
+
+end IsLocalRing
 
 namespace Bass
 
