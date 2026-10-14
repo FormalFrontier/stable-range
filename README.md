@@ -146,21 +146,40 @@ More generally, a commutative Noetherian ring with `Ring.KrullDimLE d`
 prime avoidance and minimal-prime height induction, without an infinite-residue-
 fields premise.
 
+### Kernel decompositions with specified sections
+
+For a semiring `R`, an additive commutative group `M` and an additive
+commutative monoid `N`, linear maps `f : M →ₗ[R] N` and `s : N →ₗ[R] M`
+with `f.comp s = LinearMap.id` give the
+[kernel-product equivalence](StableRange/Module/SplitSurjective.lean)
+`LinearMap.kerProdEquivOfRightInverse f s h : (ker f × N) ≃ₗ[R] M`.
+Its forward map is `(k, n) ↦ k + s n`; its inverse has underlying
+coordinates `x - s (f x)` and `f x`. The scalar and both carrier universes
+are independent. Neither a ring of scalars nor finiteness, freeness or
+projectivity is required. The kernel coordinate retains the specified section.
+
+The same module compares this construction with Mathlib's right-split-exact
+sequence equivalence for an arbitrary injective first map whose range is the
+kernel, using the same section. The former `Bass.kernelProdEquivOfRightInverse`
+and its two characteristic lemmas remain deprecated compatibility names with
+their original ring and additive-group parameters. Use the `LinearMap` names
+for the semiring interface.
+
 ### Coefficient-row splittings and free kernels
 
 For any ring `R`, a finite row `a : Fin n → R` defines a right-linear map over
-`Rᵐᵒᵖ` by `σ(x) = ∑ i, a i * x i`. [Right-unimodularity](StableRange/RowKernel.lean#L509)
+`Rᵐᵒᵖ` by `σ(x) = ∑ i, a i * x i`. [Right-unimodularity](StableRange/RowKernel.lean)
 is equivalent to surjectivity; equivalently, the map admits a section and the
-entries' [right span](StableRange/RowKernel.lean#L558) is the whole module. A
+entries' [right span](StableRange/RowKernel.lean) is the whole module. A
 witness column `b` with `∑ i, a i * b i = 1` gives the
-[section](StableRange/RowKernel.lean#L418) `y ↦ (fun i => b i * y)` and an
-[explicit kernel-product equivalence](StableRange/RowKernel.lean#L454)
+[section](StableRange/RowKernel.lean) `y ↦ (fun i => b i * y)` and an
+[explicit kernel-product equivalence](StableRange/RowKernel.lean)
 `ker σ × R ≃ₗ[Rᵐᵒᵖ] (Fin n → R)`. Its inverse second coordinate is `σ`, and the
-[converse](StableRange/RowKernel.lean#L582) requires this original-row identity,
+[converse](StableRange/RowKernel.lean) requires this original-row identity,
 not merely an abstract equivalence. Empty rows and the zero ring are included,
 without stable-range or commutativity hypotheses. For commutative rings,
-[kernel transport](StableRange/RowKernel.lean#L623) and the
-[comparison](StableRange/RowKernel.lean#L664) use the same chosen witness in
+[kernel transport](StableRange/RowKernel.lean) and the
+[comparison](StableRange/RowKernel.lean) use the same chosen witness in
 both splittings.
 
 For a right-unimodular row, the splitting makes its kernel finitely generated;
@@ -200,10 +219,10 @@ as its first row, regardless of its inverse column.
 
 Over a commutative ring satisfying `(S_s)`, a right-unimodular coefficient
 row of length at least `s + 1`
-[has a free kernel](StableRange/RowKernel.lean#L361), by explicit two-shear
+[has a free kernel](StableRange/RowKernel.lean), by explicit two-shear
 reduction. Independently of stable range, a *chosen row* of a square matrix
 with an actual two-sided inverse has
-[an explicit free-kernel equivalence](StableRange/RowKernel.lean#L171) with the
+[an explicit free-kernel equivalence](StableRange/RowKernel.lean) with the
 function module on complementary column indices. Both inverse identities
 and an actual row index are required, not a merely proposed inverse.
 
@@ -305,6 +324,7 @@ by the root and add no public library declarations.
 | `CommutativeStableRange` | zero-dimensional stable range; commutative regular implies unit-regular |
 | `BassDimension` | finite-prime avoidance, prefix-ideal height bounds, `stableRangeCondition_succ_of_krullDimLE` |
 | `Cancellation` | `exists_linearEquiv_of_prod_of_end_stableRangeCondition_one` and finite-power consequences |
+| `Module.SplitSurjective` | `LinearMap.kerProdEquivOfRightInverse`, forward and inverse coordinates over semirings, and right-split-exact comparison |
 | `RowKernel` | `kernelEquivOfLinearEquiv`, arbitrary-ring right-linear coefficient rows and split kernels; commutative free-kernel equivalences |
 | `RightRowCompletion` | supplied right-linear kernel coordinates and two-sided rectangular inverse matrices; converse kernel equivalence and free-kernel criterion |
 | `CountableEndomorphism` | even/odd coordinate splitting; non-IBN endomorphism ring and right-unimodular unary row with free nonzero kernel but no square completion |

@@ -5,6 +5,7 @@ Authors: Formal Frontier Agents
 module
 
 public import StableRange.Basic
+public import StableRange.Module.SplitSurjective
 public import Mathlib.LinearAlgebra.Basis.Prod
 public import Mathlib.LinearAlgebra.Matrix.ToLin
 public import Mathlib.LinearAlgebra.Pi
@@ -204,51 +205,122 @@ theorem free_ker_coefficientRowLinearMap_of_matrix_inverse
 
 /-- The usual split-kernel equivalence for a map with a specified right
 inverse. -/
-noncomputable def kernelProdEquivOfRightInverse
+noncomputable abbrev kernelProdEquivOfRightInverse
     {R A B : Type*} [Ring R]
     [AddCommGroup A] [Module R A] [AddCommGroup B] [Module R B]
     (f : A →ₗ[R] B) (g : B →ₗ[R] A)
     (hfg : f.comp g = LinearMap.id) :
-    (LinearMap.ker f × B) ≃ₗ[R] A := by
-  let φ : (LinearMap.ker f × B) →ₗ[R] A :=
-    (LinearMap.ker f).subtype.coprod g
-  have hfg' (b : B) : f (g b) = b := by
-    have h := LinearMap.congr_fun hfg b
-    simpa using h
-  let kproj : A →ₗ[R] LinearMap.ker f :=
-    LinearMap.codRestrict (LinearMap.ker f) (LinearMap.id - g.comp f) fun a ↦ by
-      simp [LinearMap.mem_ker, hfg']
-  let ψ : A →ₗ[R] (LinearMap.ker f × B) := kproj.prod f
-  exact LinearEquiv.ofLinearMap φ ψ
-    (by ext a; simp [φ, ψ, kproj])
-    (by ext p <;> simp [φ, ψ, kproj, hfg'])
+    (LinearMap.ker f × B) ≃ₗ[R] A :=
+  LinearMap.kerProdEquivOfRightInverse f g hfg
 
-@[simp]
+@[simp, deprecated LinearMap.kerProdEquivOfRightInverse_apply (since := "2026-10-14")]
 theorem kernelProdEquivOfRightInverse_apply
     {R A B : Type*} [Ring R]
     [AddCommGroup A] [Module R A] [AddCommGroup B] [Module R B]
     (f : A →ₗ[R] B) (g : B →ₗ[R] A)
     (hfg : f.comp g = LinearMap.id) (p : LinearMap.ker f × B) :
-    kernelProdEquivOfRightInverse f g hfg p = p.1.1 + g p.2 := by
-  rfl
+    kernelProdEquivOfRightInverse f g hfg p = p.1.1 + g p.2 :=
+  LinearMap.kerProdEquivOfRightInverse_apply f g hfg p
 
 /-- The second component of the inverse splitting is the original map. -/
-@[simp]
+@[simp, deprecated LinearMap.kerProdEquivOfRightInverse_symm_snd (since := "2026-10-14")]
 theorem kernelProdEquivOfRightInverse_symm_snd
     {R A B : Type*} [Ring R]
     [AddCommGroup A] [Module R A] [AddCommGroup B] [Module R B]
     (f : A →ₗ[R] B) (g : B →ₗ[R] A)
     (hfg : f.comp g = LinearMap.id) (a : A) :
-    ((kernelProdEquivOfRightInverse f g hfg).symm a).2 = f a := by
-  have hfg' (b : B) : f (g b) = b := by
-    have h := LinearMap.congr_fun hfg b
-    simpa using h
-  have hsplit (p : LinearMap.ker f × B) :
-      f (kernelProdEquivOfRightInverse f g hfg p) = p.2 := by
-    rw [kernelProdEquivOfRightInverse_apply, map_add, LinearMap.mem_ker.mp p.1.2,
-      zero_add, hfg']
-  simpa only [LinearEquiv.apply_symm_apply] using
-    (hsplit ((kernelProdEquivOfRightInverse f g hfg).symm a)).symm
+    ((kernelProdEquivOfRightInverse f g hfg).symm a).2 = f a :=
+  LinearMap.kerProdEquivOfRightInverse_symm_snd f g hfg a
+
+section
+
+-- These formerly generated public names are now fixed deprecated interfaces,
+-- rather than dependencies on new unstable auxiliary declarations.
+set_option linter.auxLemma false
+
+/-- The section-dependent projection lies in the kernel. Compatibility spelling
+for the inverse-coordinate API of `LinearMap.kerProdEquivOfRightInverse`. -/
+theorem kernelProdEquivOfRightInverse._proof_2.{uA, uR, uB}
+    {R : Type uR} {A : Type uA} {B : Type uB} [Ring R]
+    [AddCommGroup A] [Module R A] [AddCommGroup B] [Module R B]
+    (f : A →ₗ[R] B) (g : B →ₗ[R] A) :
+    (∀ b, f (g b) = b) →
+      ∀ a, ((LinearMap.id : A →ₗ[R] A) - g.comp f) a ∈ f.ker := by
+  intro hfg a
+  have hcomp : f.comp g = LinearMap.id := LinearMap.ext hfg
+  simpa only [LinearMap.kerProdEquivOfRightInverse_symm_fst, LinearMap.sub_apply,
+    LinearMap.id_apply, LinearMap.comp_apply] using
+    ((LinearMap.kerProdEquivOfRightInverse f g hcomp).symm a).1.2
+
+/-- Compatibility form of the forward-after-inverse identity for the kernel-product
+splitting. Prefer `LinearEquiv.apply_symm_apply` for
+`LinearMap.kerProdEquivOfRightInverse`. -/
+theorem kernelProdEquivOfRightInverse._proof_3.{uA, uR, uB}
+    {R : Type uR} {A : Type uA} {B : Type uB} [Ring R]
+    [AddCommGroup A] [Module R A] [AddCommGroup B] [Module R B]
+    (f : A →ₗ[R] B) (g : B →ₗ[R] A) (hfg' : ∀ b, f (g b) = b) :
+    (f.ker.subtype.coprod g).comp
+      ((LinearMap.codRestrict f.ker (LinearMap.id - g.comp f)
+        (fun a ↦ kernelProdEquivOfRightInverse._proof_2 f g hfg' a)).prod f) =
+      LinearMap.id := by
+  have hcomp : f.comp g = LinearMap.id := LinearMap.ext hfg'
+  apply LinearMap.ext
+  intro a
+  change (a - g (f a)) + g (f a) = a
+  simpa only [LinearMap.kerProdEquivOfRightInverse_apply,
+    LinearMap.kerProdEquivOfRightInverse_symm_fst,
+    LinearMap.kerProdEquivOfRightInverse_symm_snd] using
+    (LinearMap.kerProdEquivOfRightInverse f g hcomp).apply_symm_apply a
+
+/-- Compatibility form of the inverse-after-forward identity for the kernel-product
+splitting. Prefer `LinearEquiv.symm_apply_apply` for
+`LinearMap.kerProdEquivOfRightInverse`. -/
+theorem kernelProdEquivOfRightInverse._proof_4.{uA, uB, uR}
+    {R : Type uR} {A : Type uA} {B : Type uB} [Ring R]
+    [AddCommGroup A] [Module R A] [AddCommGroup B] [Module R B]
+    (f : A →ₗ[R] B) (g : B →ₗ[R] A) (hfg' : ∀ b, f (g b) = b) :
+    ((LinearMap.codRestrict f.ker (LinearMap.id - g.comp f)
+      (fun a ↦ kernelProdEquivOfRightInverse._proof_2 f g hfg' a)).prod f).comp
+      (f.ker.subtype.coprod g) = LinearMap.id := by
+  have hcomp : f.comp g = LinearMap.id := LinearMap.ext hfg'
+  apply LinearMap.ext
+  intro p
+  have h := (LinearMap.kerProdEquivOfRightInverse f g hcomp).symm_apply_apply p
+  apply Prod.ext
+  · apply Subtype.ext
+    change (p.1.val + g p.2) - g (f (p.1.val + g p.2)) = p.1.val
+    simpa only [LinearMap.kerProdEquivOfRightInverse_symm_fst,
+      LinearMap.kerProdEquivOfRightInverse_apply] using
+      congrArg (fun q : f.ker × B ↦ q.1.val) h
+  · change f (p.1.val + g p.2) = p.2
+    simpa only [LinearMap.kerProdEquivOfRightInverse_symm_snd,
+      LinearMap.kerProdEquivOfRightInverse_apply] using congrArg Prod.snd h
+
+/-- Compatibility form of evaluating the right-inverse identity. Use
+`LinearMap.congr_fun`. -/
+theorem kernelProdEquivOfRightInverse._proof_5.{uB, uR, uA}
+    {R : Type uR} {A : Type uA} {B : Type uB} [Ring R]
+    [AddCommGroup A] [Module R A] [AddCommGroup B] [Module R B]
+    (f : A →ₗ[R] B) (g : B →ₗ[R] A) :
+    f.comp g = LinearMap.id →
+      ∀ b, (f.comp g) b = (LinearMap.id : B →ₗ[R] B) b :=
+  fun hfg b ↦ LinearMap.congr_fun hfg b
+
+attribute [deprecated LinearMap.kerProdEquivOfRightInverse_symm_fst (since := "2026-10-14")]
+  kernelProdEquivOfRightInverse._proof_2
+attribute [deprecated LinearEquiv.apply_symm_apply (since := "2026-10-14")]
+  kernelProdEquivOfRightInverse._proof_3
+attribute [deprecated LinearEquiv.symm_apply_apply (since := "2026-10-14")]
+  kernelProdEquivOfRightInverse._proof_4
+attribute [deprecated LinearMap.congr_fun (since := "2026-10-14")]
+  kernelProdEquivOfRightInverse._proof_5
+
+end
+
+attribute [deprecated LinearMap.kerProdEquivOfRightInverse (since := "2026-10-14")]
+  kernelProdEquivOfRightInverse.congr_simp
+attribute [deprecated LinearMap.kerProdEquivOfRightInverse (since := "2026-10-14")]
+  kernelProdEquivOfRightInverse
 
 /-- A right-unimodular coefficient row has the standard split presentation of
 its kernel. -/
@@ -268,7 +340,7 @@ noncomputable def kernelProdEquivOfIsRightUnimodular
     have hb : a ⬝ᵥ b = 1 := Classical.choose_spec ha
     rw [hb]
     simp
-  exact kernelProdEquivOfRightInverse (coefficientRowScalarMap R n a) g hfg
+  exact LinearMap.kerProdEquivOfRightInverse (coefficientRowScalarMap R n a) g hfg
 
 /-- The scalar coordinate of the inverse row splitting is the original row. -/
 @[simp]
@@ -277,7 +349,7 @@ theorem kernelProdEquivOfIsRightUnimodular_symm_snd
     (ha : IsRightUnimodular a) (x : Fin n → R) :
     ((kernelProdEquivOfIsRightUnimodular R n a ha).symm x).2 = a ⬝ᵥ x := by
   unfold kernelProdEquivOfIsRightUnimodular
-  exact (kernelProdEquivOfRightInverse_symm_snd _ _ _ x).trans
+  exact (LinearMap.kerProdEquivOfRightInverse_symm_snd _ _ _ x).trans
     (coefficientRowScalarMap_apply R n a x)
 
 /-- The explicit two-shear equivalence from the kernel of a right-unimodular
@@ -455,7 +527,7 @@ noncomputable def rightCoefficientKernelProd (R : Type u) [Ring R] {n : ℕ}
     (a b : Fin n → R) (hb : dotProductBilin R Rᵐᵒᵖ a b = 1) :
     (LinearMap.ker (dotProductBilin R Rᵐᵒᵖ a) × R) ≃ₗ[Rᵐᵒᵖ]
       (Fin n → R) :=
-  Bass.kernelProdEquivOfRightInverse
+  LinearMap.kerProdEquivOfRightInverse
     (dotProductBilin R Rᵐᵒᵖ a) (LinearMap.rightCoefficientSection R b)
     (LinearMap.rightCoefficientRow_comp_section R a b hb)
 
@@ -465,7 +537,7 @@ theorem rightCoefficientKernelProd_apply (R : Type u) [Ring R] {n : ℕ}
     (p : LinearMap.ker (dotProductBilin R Rᵐᵒᵖ a) × R) :
     rightCoefficientKernelProd R a b hb p =
       p.1.1 + fun i ↦ b i * p.2 := by
-  exact Bass.kernelProdEquivOfRightInverse_apply _ _ _ _
+  exact LinearMap.kerProdEquivOfRightInverse_apply _ _ _ _
 
 @[simp]
 theorem rightCoefficientKernelProd_symm_fst (R : Type u) [Ring R] {n : ℕ}
@@ -473,22 +545,9 @@ theorem rightCoefficientKernelProd_symm_fst (R : Type u) [Ring R] {n : ℕ}
     (x : Fin n → R) :
     ((rightCoefficientKernelProd R a b hb).symm x).1.1 =
       x - LinearMap.rightCoefficientSection R b (dotProductBilin R Rᵐᵒᵖ a x) := by
-  have hs : ((rightCoefficientKernelProd R a b hb).symm x).2 =
-      dotProductBilin R Rᵐᵒᵖ a x :=
-    Bass.kernelProdEquivOfRightInverse_symm_snd _ _ _ x
-  have h := (rightCoefficientKernelProd R a b hb).apply_symm_apply x
-  rw [rightCoefficientKernelProd_apply] at h
-  change ((rightCoefficientKernelProd R a b hb).symm x).1.1 +
-    LinearMap.rightCoefficientSection R b
-      ((rightCoefficientKernelProd R a b hb).symm x).2 = x at h
-  rw [hs] at h
-  calc
-    _ = (((rightCoefficientKernelProd R a b hb).symm x).1.1 +
-        LinearMap.rightCoefficientSection R b (dotProductBilin R Rᵐᵒᵖ a x)) -
-        LinearMap.rightCoefficientSection R b (dotProductBilin R Rᵐᵒᵖ a x) :=
-      (add_sub_cancel_right _ _).symm
-    _ = _ := congrArg (· - LinearMap.rightCoefficientSection R b
-      (dotProductBilin R Rᵐᵒᵖ a x)) h
+  exact LinearMap.kerProdEquivOfRightInverse_symm_fst
+    (dotProductBilin R Rᵐᵒᵖ a) (LinearMap.rightCoefficientSection R b)
+    (LinearMap.rightCoefficientRow_comp_section R a b hb) x
 
 /-- The section-dependent projection belongs to the right coefficient kernel. -/
 theorem rightCoefficientKernelProd_symm_fst_mem (R : Type u) [Ring R] {n : ℕ}
@@ -519,7 +578,7 @@ theorem rightCoefficientKernelProd_symm_snd (R : Type u) [Ring R] {n : ℕ}
     (x : Fin n → R) :
     ((rightCoefficientKernelProd R a b hb).symm x).2 =
       dotProductBilin R Rᵐᵒᵖ a x :=
-  Bass.kernelProdEquivOfRightInverse_symm_snd _ _ _ _
+  LinearMap.kerProdEquivOfRightInverse_symm_snd _ _ _ _
 
 end LinearEquiv
 
@@ -694,7 +753,7 @@ theorem kernelProdEquivOfIsRightUnimodular_eq_rightCoefficientKernelProd
             exact Classical.choose_spec ha)
         (LinearMap.coefficientRowKernelAddEquiv R a p.1, p.2) := by
   unfold Bass.kernelProdEquivOfIsRightUnimodular
-  rw [Bass.kernelProdEquivOfRightInverse_apply, rightCoefficientKernelProd_apply]
+  rw [LinearMap.kerProdEquivOfRightInverse_apply, rightCoefficientKernelProd_apply]
   funext i
   change p.1.1 i + p.2 * Classical.choose ha i =
     p.1.1 i + Classical.choose ha i * p.2

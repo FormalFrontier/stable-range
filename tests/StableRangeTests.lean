@@ -26,6 +26,8 @@ import StableRangeTests.SquareRightRowCompletionFixtures
 import StableRangeTests.SquareRightRowCompletionClient
 import StableRangeTests.SquareRightRowCompletionCriterionClient
 import StableRangeTests.CountableEndomorphismClient
+import StableRangeTests.Module.SplitSurjective
+import StableRangeTests.Module.SplitSurjectiveCompatibility
 
 /-!
 # Public-import regression clients for stable range
@@ -43,6 +45,10 @@ maximal ideal and distinguish the two maximal projection kernels of a nonlocal
 product of quaternion division rings.
 Division-semiring clients exercise the nonnegative reals, noncommutative real
 quaternions, and the additive views of nonunits and maximal ideals.
+Natural-scalar split-kernel clients reconstruct integer pairs and distinguish
+horizontal and diagonal sections of the same projection.
+Ring-scalar compatibility clients check kernel/image reconstruction and equal
+specified sections through the deprecated public interfaces.
 
 ## References
 

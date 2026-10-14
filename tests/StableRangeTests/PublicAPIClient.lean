@@ -325,6 +325,12 @@ private theorem trivial_empty_tail :
     (ZMod 1) 0 zero_ring_condition
   exact ⟨1, fun i ↦ Fin.elim0 i, Subsingleton.elim _ _⟩
 
+private theorem split_right_inverse {R : Type u} [Semiring R]
+    {A : Type v} {B : Type w} [AddCommGroup A] [AddCommMonoid B]
+    [Module R A] [Module R B] (f : A →ₗ[R] B) (g : B →ₗ[R] A)
+    (h : f.comp g = LinearMap.id) : Nonempty ((LinearMap.ker f × B) ≃ₗ[R] A) :=
+  ⟨LinearMap.kerProdEquivOfRightInverse f g h⟩
+
 section Cancellation
 
 variable {R : Type u} [Ring R]
@@ -339,10 +345,6 @@ private theorem cancel_product (h : Bass.StableRangeCondition (Module.End R M) 1
 private theorem kernel_transport (f : A →ₗ[R] M) (g : B →ₗ[R] M) (e : A ≃ₗ[R] B)
     (h : ∀ x, g (e x) = f x) : Nonempty (LinearMap.ker f ≃ₗ[R] LinearMap.ker g) :=
   ⟨Bass.kernelEquivOfLinearEquiv f g e h⟩
-
-private theorem split_right_inverse (f : A →ₗ[R] B) (g : B →ₗ[R] A)
-    (h : f.comp g = LinearMap.id) : Nonempty ((LinearMap.ker f × B) ≃ₗ[R] A) :=
-  ⟨Bass.kernelProdEquivOfRightInverse f g h⟩
 
 private theorem zero_power (h : Bass.StableRangeCondition (Module.End R M) 1)
     (e : (Fin 0 → M) ≃ₗ[R] ((Fin 0 → M) × A)) : Subsingleton A :=

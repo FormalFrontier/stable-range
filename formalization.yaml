@@ -9,7 +9,8 @@ project:
     Bass stable-range conditions for finite right-unimodular rows, quotient
     and local-ring consequences, regular and unit-regular rings, cancellation,
     division-ring matrix row rank and repeated blocks, commutative dimension
-    bounds, arbitrary-ring right-coefficient row splittings and rectangular
+    bounds, kernel-product decompositions with specified sections over semirings,
+    arbitrary-ring right-coefficient row splittings and rectangular
     completion from free right kernels, commutative free coefficient-row
     kernels, explicit two-element row completion and
     supplied-product cancellation, exact-size finite-free cancellation and
@@ -83,7 +84,13 @@ status:
     finite determinant-one generation, the stable determinant kernel theorem
     and the quotient-to-units equivalence under S_1. It also imports S_1
     inheritance for the corner of any idempotent, without centrality or
-    nontriviality. The aggregate root also re-exports RowKernel's arbitrary-ring
+    nontriviality. The aggregate root also re-exports kernel-product decompositions
+    with a specified linear section over a semiring, with an additive-group source,
+    additive-monoid target and independent scalar and carrier universes.
+    Forward and inverse coordinates retain that section; splitting alone
+    asserts neither finiteness nor freeness. The full injective-first-map
+    comparison uses Mathlib's right-split-exact equivalence and the same section.
+    The aggregate root also re-exports RowKernel's arbitrary-ring
     right-coefficient row section and kernel-product splitting, and
     RightRowCompletion's rectangular two-sided inverse criterion when that
     kernel is free. Splitting alone makes no freeness claim. Separately, its explicit
@@ -261,6 +268,20 @@ status:
         A commutative noetherian ring of Krull dimension at most d satisfies
         S_(d+1). No reducedness, nontriviality or infinite-residue-field
         assumption is imposed; the proof uses finite-prime avoidance and height.
+    - declaration: "LinearMap.kerProdEquivOfRightInverse"
+      file: "StableRange/Module/SplitSurjective.lean"
+      note: >-
+        Over a semiring, a specified linear right inverse gives ker(f) x N
+        equivalent to the additive-group source M, with additive-monoid
+        target N and independent universes. Forward coordinates add the kernel
+        element to the section image; inverse coordinates are x - s(f(x))
+        and f(x). Neither finiteness, projectivity nor freeness is required.
+    - declaration: "LinearMap.kerProdEquivOfRightInverse_ofInjective"
+      file: "StableRange/Module/SplitSurjective.lean"
+      note: >-
+        Under the ring hypotheses of Mathlib's right-split-exact equivalence,
+        identifying any injective first map with the kernel transports the
+        kernel-product equivalence to that construction using the same section.
     - declaration: "LinearMap.isRightUnimodular_iff_surjective_dotProductBilin"
       file: "StableRange/RowKernel.lean"
       note: >-
@@ -420,7 +441,11 @@ fidelity:
     exact-coordinate cancellation, but does not assert uniqueness of rank among
     different presentations; the zero ring is included. The first-row
     completion preserves the original coefficient functional. Noetherianity
-    belongs only to the dimension-bound specializations.
+    belongs only to the dimension-bound specializations. The section-dependent
+    kernel-product decomposition generalizes the module splitting to semiring
+    scalars and an additive-monoid target while retaining an additive-group
+    source; its ring specialization agrees with the full right-split-exact
+    construction after identifying the injective first map with the kernel.
     No general Morita-invariance theorem, new stable GL construction, factorial colimit,
     arbitrary stably-free cancellation, K-theory or complete source coverage
     follows from this bounded library.
