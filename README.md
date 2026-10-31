@@ -29,9 +29,14 @@ coordinate formulas, compatibility names and client inventories.
   satisfy `(S₁)` assuming only finite maximal spectrum, including the zero ring.
 - **Regularity and cancellation.** [`(S₁)`](StableRange/Regular.lean) implies direct
   finiteness, is equivalent to unit-valued pair shortening, and under von Neumann
-  regularity is equivalent to unit-regularity. [Module cancellation](StableRange/Cancellation.lean)
-  needs `(S₁)` for `End(M)`, not finiteness or projectivity; regular right modules
-  use the opposite ring. [Division-ring vector-space endomorphisms](StableRange/DivisionRing.lean)
+  regularity is equivalent to unit-regularity.
+  [Biproduct cancellation](StableRange/CategoryTheory/Cancellation.lean) in any
+  preadditive category needs `(S₁)` for the canonical `End(X)` and only the two
+  displayed biproducts. The remaining objects are unrestricted; local End is
+  sufficient, and neither global sums nor commutativity is assumed.
+  [Module cancellation](StableRange/Cancellation.lean) is a specialization,
+  with independent carrier universes and no finiteness or projectivity;
+  regular right modules use the opposite ring. [Division-ring vector-space endomorphisms](StableRange/DivisionRing.lean)
   have inner inverses; finite dimension gives automorphic inner inverses and
   unit-regular finite matrix rings, including empty indices.
 - **Ranks and blocks.** [Division-ring row rank](StableRange/DivisionRingRank.lean)
@@ -120,6 +125,7 @@ including the free-kernel application and detailed test-only client inventories.
 | `Commutative` | regular iff reduced and dimension at most zero; arbitrary-module flatness |
 | `CommutativeStableRange` | zero-dimensional stable range; commutative regular implies unit-regular |
 | `BassDimension` | finite-prime avoidance, prefix-ideal height bounds, `stableRangeCondition_succ_of_krullDimLE` |
+| `CategoryTheory.Cancellation` | `CategoryTheory.nonempty_iso_of_biprod_iso_of_end_stableRangeCondition_one` and the local-End corollary, with only the two displayed sums |
 | `Cancellation` | `exists_linearEquiv_of_prod_of_end_stableRangeCondition_one` and finite-power consequences |
 | `Module.SplitSurjective` | `LinearMap.kerProdEquivOfRightInverse`, forward and inverse coordinates over semirings, and right-split-exact comparison |
 | `RowKernel` | `kernelEquivOfLinearEquiv`, arbitrary-ring right-linear coefficient rows and split kernels; commutative free-kernel equivalences |
@@ -134,7 +140,7 @@ including the free-kernel application and detailed test-only client inventories.
 | `DeterminantGeneration` | finite determinant-one membership, stable determinant kernel and quotient-to-units equivalence under commutative `(S₁)` |
 
 Names without an explicit namespace in the table are in `Bass`, except the
-division-ring and matrix entries as indicated. The local radical characteristic
+division-ring, matrix and categorical entries as indicated. The local radical characteristic
 and additive-object comparisons are in `IsLocalRing`; division-semiring locality
 is in `DivisionSemiring`.
 
@@ -190,11 +196,18 @@ retains cache/rebuild details; unqualified `lake clean` removes dependency outpu
   revision in `lakefile.toml`): prior formalizations of rings, ideals,
   local and semisimple rings, Jacobson radicals, dual numbers, quaternions,
   Krull dimension, flatness, modules, linear equivalences, matrix blocks,
-  idempotent corners, and rank. The local-semiring results generalize Mathlib's
+  idempotent corners, rank, preadditive categories, biproducts and additive
+  envelopes. Categorical cancellation reuses Kim Morrison's Gaussian elimination
+  and matrix-category embedding. The local-semiring results generalize Mathlib's
   field-locality instance using its local-semiring constructor and the
   group-with-zero unit criterion. The additive comparisons use its nonunits,
   submonoid, submodule and maximal-ideal interfaces. The proofs use these
   definitions, theorems and constructions.
+- [Homological Algebra](https://github.com/FormalFrontier/homological-algebra),
+  `HomologicalAlgebra.Preadditive.BiproductUniqueness`: the prior formalization
+  approach for additive-envelope transport, canonical End ring comparison and
+  fully faithful isomorphism reflection followed by categorical cancellation.
+  This is credit for a formalization approach, not a package dependency.
 - `general-linear-groups` (pinned revision in `lakefile.toml`): prior
   formalizations of quasiregular two-sided ideals and their radical
   criterion, matrix corners and ordered block units, elementary subgroups,
@@ -209,7 +222,14 @@ Original project contributions are offered under the Apache License 2.0 in
 collective attribution, **not** a claim that an unverified entity owns copyright.
 Prism contributed the principal stable-range, regularity, dimension, rank,
 cancellation and two-shear kernel work, together with the exact-coordinate
-finite-free cancellation and first-row assembly designs. Distinct agents
+finite-free cancellation and first-row assembly designs. The categorical
+cancellation theorem generalizes that module proof using the existing
+unit-shortening theorem and Mathlib's Gaussian elimination and additive envelope.
+Its transport through the envelope, canonical End ring comparison and reflection
+follow the earlier `HomologicalAlgebra.Preadditive.BiproductUniqueness`
+formalization approach, separately from Mathlib's underlying implementations.
+The original module theorem is recovered by universe-preserving specialization.
+Distinct agents
 proved finite-free peeling and the coordinate-first row/matrix completion
 from the existing kernel API; other agents contributed the
 semilocal, product, semisimple, opposite-ring, matrix/corner and elementary

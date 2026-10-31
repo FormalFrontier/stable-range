@@ -7,7 +7,8 @@ project:
   name: "stable-range"
   description: >-
     Bass stable-range conditions for finite right-unimodular rows, quotient
-    and local-ring consequences, regular and unit-regular rings, cancellation,
+    and local-ring consequences, regular and unit-regular rings, categorical
+    biproduct cancellation and module cancellation,
     division-ring matrix row rank and repeated blocks, commutative dimension
     bounds, kernel-product decompositions with specified sections over semirings,
     arbitrary-ring right-coefficient row splittings and rectangular
@@ -62,7 +63,9 @@ related_formalizations:
     note: >-
       Reuses native rings, units, ideals, local rings, modules, linear maps,
       submodule complements, finite matrices, finrank, localization, flatness,
-      minimal primes and Krull dimension. Native source files are not vendored;
+      minimal primes and Krull dimension. Categorical cancellation reuses
+      the Gaussian elimination and fully faithful additive-envelope embedding
+      formalized by Kim Morrison. Native source files are not vendored;
       mathlib retains its authorship and license notices. The Lake manifest
       contains generated dependency records derived from mathlib's manifest.
   - id: "https://github.com/FormalFrontier/general-linear-groups/commit/2683f75e2c5774ddd1295c46062035cb6afabb8a"
@@ -80,7 +83,13 @@ status:
     The aggregate root imports the mathematical leaves, including exact-size
     finite-free cancellation under a stable-range bound and coefficient-row
     completion with the original row in the first matrix position. It includes
-    elementary unit pivots and diagonalization over commutative S_1 rings. It also imports
+    elementary unit pivots and diagonalization over commutative S_1 rings.
+    Biproduct cancellation in a preadditive category assumes S_1 only for the
+    canonical End of the cancelled object and requires only the two displayed
+    biproducts. It imposes no commutativity, global-sum or remainder hypotheses;
+    the local-End corollary uses the existing local-ring producer. Module
+    cancellation specializes this result while retaining independent scalar
+    and carrier universes. It also imports
     finite determinant-one generation, the stable determinant kernel theorem
     and the quotient-to-units equivalence under S_1. It also imports S_1
     inheritance for the corner of any idempotent, without centrality or
@@ -202,11 +211,26 @@ status:
         The endomorphism ring of a countable direct sum of copies of any
         nonzero additive module is not unit-regular. Neither the coefficient
         module nor this direct sum is asserted to be free.
+    - declaration: "CategoryTheory.nonempty_iso_of_biprod_iso_of_end_stableRangeCondition_one"
+      file: "StableRange/CategoryTheory/Cancellation.lean"
+      note: >-
+        In a preadditive category with independent object and Hom universes,
+        S_1 for the canonical End(X) makes X cancel from X biprod Y isomorphic
+        to X biprod Z. Only those two biproducts are required, with no
+        restrictions on Y or Z. The End ring need not be commutative or
+        nontrivial. This generalizes the existing module cancellation proof.
+    - declaration: "CategoryTheory.nonempty_iso_of_biprod_iso_of_isLocalRing_end"
+      file: "StableRange/CategoryTheory/Cancellation.lean"
+      note: >-
+        A possibly noncommutative local endomorphism ring supplies S_1 and
+        hence biproduct cancellation with the same two-sum floor.
     - declaration: "Bass.exists_linearEquiv_of_prod_of_end_stableRangeCondition_one"
       file: "StableRange/Cancellation.lean"
       note: >-
         If End_R(M) satisfies S_1, an equivalence M x A = M x B gives an
         equivalence A = B, with no finiteness or projectivity hypothesis.
+        This is a specialization of categorical cancellation, retaining all
+        independent scalar and carrier universes.
     - declaration: "Bass.IsUnitRegular.subsingleton_of_fin_linearEquiv_fin_prod"
       file: "StableRange/Cancellation.lean"
       note: >-

@@ -4,7 +4,10 @@ Authors: Formal Frontier Agents
 -/
 module
 
+public import StableRange.CategoryTheory.Cancellation
 public import StableRange.Regular
+public import Mathlib.Algebra.Category.ModuleCat.Biproducts
+public import Mathlib.Algebra.Module.ULift
 public import Mathlib.LinearAlgebra.Pi
 public import Mathlib.LinearAlgebra.Prod
 
@@ -12,17 +15,23 @@ public import Mathlib.LinearAlgebra.Prod
 # Free-summand cancellation from stable range one
 
 This file proves that a module can be cancelled from a binary product whenever
-its endomorphism ring satisfies Bass's right stable-range-one condition.  The
-proof is an explicit two-by-two block reduction and imposes no finiteness or
-projectivity hypothesis on any module.
+its endomorphism ring satisfies Bass's right stable-range-one condition.
+It specializes categorical biproduct cancellation, with no finiteness or
+projectivity hypothesis on any module. Internal universe lifts put the
+carriers in a common module category while preserving the original scalar
+ring and the independent universes in the statement.
 
 ## References
 
 * C. A. Weibel, *The K-book: An Introduction to Algebraic K-theory*,
   Exercise I.1.13(c) (unit-regular cancellation), and Exercise I.1.5(b)–(c)
-  (stable-range cancellation context). The block argument here is more general.
-* Mathlib, `LinearAlgebra.Pi` and `LinearAlgebra.Prod` (linear equivalences
-  and binary product maps used in the block reduction).
+  (stable-range cancellation context). The stable-range hypothesis here is
+  more general than unit-regularity.
+* `StableRange.CategoryTheory.Cancellation`, which generalizes this module
+  theorem's original block proof using Mathlib's categorical Gaussian elimination.
+* Mathlib, `LinearAlgebra.Pi`, `LinearAlgebra.Prod`, `Algebra.Module.ULift`,
+  and `Algebra.Category.ModuleCat.Biproducts`, for linear equivalences,
+  universe lifts and the module-category biproduct comparisons.
 -/
 
 set_option warningAsError true
@@ -45,118 +54,23 @@ theorem exists_linearEquiv_of_prod_of_end_stableRangeCondition_one
     (h : StableRangeCondition (Module.End R M) 1)
     (e : (M × A) ≃ₗ[R] (M × B)) :
     Nonempty (A ≃ₗ[R] B) := by
-  let a : Module.End R M :=
-    (LinearMap.fst R M B).comp
-      (e.toLinearMap.comp (LinearMap.inl R M A))
-  let b : A →ₗ[R] M :=
-    (LinearMap.fst R M B).comp
-      (e.toLinearMap.comp (LinearMap.inr R M A))
-  let c : M →ₗ[R] B :=
-    (LinearMap.snd R M B).comp
-      (e.toLinearMap.comp (LinearMap.inl R M A))
-  let d : A →ₗ[R] B :=
-    (LinearMap.snd R M B).comp
-      (e.toLinearMap.comp (LinearMap.inr R M A))
-  let a' : Module.End R M :=
-    (LinearMap.fst R M A).comp
-      (e.symm.toLinearMap.comp (LinearMap.inl R M B))
-  let c' : M →ₗ[R] A :=
-    (LinearMap.snd R M A).comp
-      (e.symm.toLinearMap.comp (LinearMap.inl R M B))
-  have he_apply (m : M) (x : A) :
-      e (m, x) = (a m + b x, c m + d x) := by
-    rw [show (m, x) = (m, 0) + (0, x) by simp, map_add]
-    rfl
-  have he_symm_apply (m : M) (y : B) :
-      e.symm (m, y) = (a' m +
-        ((LinearMap.fst R M A).comp
-          (e.symm.toLinearMap.comp (LinearMap.inr R M B))) y,
-        c' m +
-        ((LinearMap.snd R M A).comp
-          (e.symm.toLinearMap.comp (LinearMap.inr R M B))) y) := by
-    rw [show (m, y) = (m, 0) + (0, y) by simp, map_add]
-    rfl
-  let p : Module.End R M := b.comp c'
-  have hrow : IsRightUnimodularCons p (fun _ : Fin 1 ↦ a) := by
-    refine ⟨1, fun _ ↦ a', ?_⟩
-    rw [Fin.sum_univ_one]
-    ext m
-    change p m + a (a' m) = m
-    have hm := congrArg Prod.fst (e.apply_symm_apply (m, 0))
-    rw [he_symm_apply] at hm
-    simp only [map_zero, add_zero] at hm
-    rw [he_apply] at hm
-    dsimp only [p, LinearMap.comp_apply]
-    rw [add_comm]
-    exact hm
-  obtain ⟨t, w, hw⟩ := h p (fun _ : Fin 1 ↦ a) hrow
-  let u : Module.End R M := a - p * t 0
-  have huw : u * w 0 = 1 := by
-    simpa only [IsRightUnimodular, Fin.sum_univ_one, u] using hw
-  have hwu : w 0 * u = 1 :=
-    (stableRangeCondition_one_isDedekindFinite h).mul_eq_one_symm huw
-  let q : M →ₗ[R] A := c'.comp (t 0)
-  let r : M →ₗ[R] B := c - d.comp q
-  let s : A →ₗ[R] B := d - (r.comp (w 0)).comp b
-  let T₁ : (M × A) ≃ₗ[R] (M × A) :=
-    (LinearEquiv.refl R M).skewProd (LinearEquiv.refl R A) (-q)
-  let T₂ : (M × B) ≃ₗ[R] (M × B) :=
-    (LinearEquiv.refl R M).skewProd (LinearEquiv.refl R B) (-(r.comp (w 0)))
-  let F : (M × A) ≃ₗ[R] (M × B) := T₁.trans (e.trans T₂)
-  have huw_apply (m : M) : u (w 0 m) = m := by
-    have hm := congrArg (fun f : Module.End R M ↦ f m) huw
-    simpa only [Module.End.mul_apply, Module.End.one_apply] using hm
-  have hwu_apply (m : M) : w 0 (u m) = m := by
-    have hm := congrArg (fun f : Module.End R M ↦ f m) hwu
-    simpa only [Module.End.mul_apply, Module.End.one_apply] using hm
-  have hu_apply (m : M) : u m = a m - b (q m) := by
-    rfl
-  have htop (m : M) (x : A) : a m + b (x + -q m) = u m + b x := by
-    rw [map_add, map_neg, hu_apply]
-    abel
-  have hF (m : M) (x : A) : F (m, x) = (u m + b x, s x) := by
-    change T₂ (e (T₁ (m, x))) = (u m + b x, s x)
-    dsimp only [T₁, LinearEquiv.skewProd_apply, LinearEquiv.refl_apply,
-      LinearMap.neg_apply]
-    rw [he_apply]
-    dsimp only [T₂, LinearEquiv.skewProd_apply, LinearEquiv.refl_apply]
-    apply Prod.ext
-    · exact htop m x
-    · rw [htop, map_add, map_neg]
-      simp only [LinearMap.neg_apply, LinearMap.comp_apply]
-      simp only [← sub_eq_add_neg]
-      calc
-        c m + (d x - d (q m)) - r (w 0 (u m + b x)) =
-            r m + d x - r (w 0 (u m) + w 0 (b x)) := by
-              rw [map_add]
-              dsimp only [r, LinearMap.sub_apply, LinearMap.comp_apply]
-              abel
-        _ = r m + d x - (r m + r (w 0 (b x))) := by
-              rw [map_add, hwu_apply]
-        _ = d x - r (w 0 (b x)) := by abel
-        _ = s x := rfl
-  have hs_injective : Function.Injective s := by
-    intro x y hxy
-    let m : M := -(w 0) (b (x - y))
-    have hzero : F (m, x - y) = 0 := by
-      rw [hF]
-      change (u m + b (x - y), s (x - y)) = (0, 0)
-      have hfirst : u m + b (x - y) = 0 := by
-        simp only [m, map_neg, huw_apply]
-        abel
-      have hsecond : s (x - y) = 0 := by
-        rw [map_sub, hxy, sub_self]
-      rw [hfirst, hsecond]
-    have hpair : (m, x - y) = 0 := F.injective (by simpa using hzero)
-    have : x - y = 0 := congrArg Prod.snd hpair
-    exact sub_eq_zero.mp (by simpa using this)
-  have hs_surjective : Function.Surjective s := by
-    intro y
-    obtain ⟨mx, hmx⟩ := F.surjective (0, y)
-    refine ⟨mx.2, ?_⟩
-    rw [hF] at hmx
-    exact congrArg Prod.snd hmx
-  exact ⟨LinearEquiv.ofBijective s ⟨hs_injective, hs_surjective⟩⟩
+  -- Put the carriers in a common universe without changing the scalar ring.
+  let m : ULift.{max v w x} M ≃ₗ[R] M := ULift.moduleEquiv
+  let a : ULift.{max v w x} A ≃ₗ[R] A := ULift.moduleEquiv
+  let b : ULift.{max v w x} B ≃ₗ[R] B := ULift.moduleEquiv
+  let X : ModuleCat.{max v w x} R := ModuleCat.of R (ULift.{max v w x} M)
+  let Y : ModuleCat.{max v w x} R := ModuleCat.of R (ULift.{max v w x} A)
+  let Z : ModuleCat.{max v w x} R := ModuleCat.of R (ULift.{max v w x} B)
+  have hX : StableRangeCondition (CategoryTheory.End X) 1 :=
+    (h.map_equiv m.symm.conjRingEquiv).map_equiv (ModuleCat.endRingEquiv X).symm
+  let e' : (ULift.{max v w x} M × ULift.{max v w x} A) ≃ₗ[R]
+      (ULift.{max v w x} M × ULift.{max v w x} B) :=
+    (m.prodCongr a).trans (e.trans (m.symm.prodCongr b.symm))
+  obtain ⟨i⟩ := CategoryTheory.nonempty_iso_of_biprod_iso_of_end_stableRangeCondition_one
+    X Y Z hX
+    ((ModuleCat.biprodIsoProd X Y).trans
+      (e'.toModuleIso.trans (ModuleCat.biprodIsoProd X Z).symm))
+  exact ⟨a.symm.trans (i.toLinearEquiv.trans b)⟩
 
 /-- If the endomorphism ring of `M` satisfies `(S₁)`, a finite free power of
 `M` cannot absorb a nontrivial complementary module. -/

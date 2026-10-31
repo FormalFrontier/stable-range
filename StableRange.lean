@@ -22,6 +22,7 @@ public import StableRange.DivisionRing
 public import StableRange.RepeatedBlock
 public import StableRange.DivisionRingRank
 public import StableRange.Cancellation
+public import StableRange.CategoryTheory.Cancellation
 public import StableRange.Module.SplitSurjective
 public import StableRange.RowKernel
 public import StableRange.RightRowCompletion
@@ -44,8 +45,11 @@ Finite square matrix rings over arbitrary rings satisfying `(S₁)` also satisfy
 `(S₁)`, including empty index types.
 Dependent products preserve stable-range conditions, and semisimple rings and
 rings with semisimple Jacobson-radical quotients satisfy `(S₁)`.
-The library also proves free-summand cancellation for modules whose
-endomorphism rings satisfy stable range one.
+In any preadditive category, an object whose canonical endomorphism ring
+satisfies stable range one cancels from a binary biproduct, requiring only
+the two displayed sums and no conditions on the remaining objects. A local
+endomorphism ring is sufficient. Module cancellation is a specialization
+with independent scalar and carrier universes.
 Endomorphism rings of arbitrary vector spaces over division rings are von
 Neumann-regular, whereas countable direct sums of copies of nonzero modules
 have non-unit-regular endomorphism rings.
