@@ -167,7 +167,7 @@ theorem quotientDetMulEquivOfStableRangeConditionOne_symm_apply
       quotientRankOneUnits R unit := rfl
 
 /-- The rank-one section recovers every stable elementary class under `(S₁)`. -/
-@[simp]
+@[simp↓]
 theorem quotientRankOneUnits_quotientDet_of_stableRangeCondition_one
     (stable : Bass.StableRangeCondition R 1)
     (quotient : StableGL R ⧸ stableElementarySubgroup R) :

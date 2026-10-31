@@ -32,8 +32,9 @@ variable {R : Type uR} {A : Type uA} {B : Type uB}
 variable [ringR : Ring R] [groupA : AddCommGroup A] [moduleA : Module R A]
   [groupB : AddCommGroup B] [moduleB : Module R B]
 
--- These clients deliberately exercise the fixed deprecated public spellings,
--- rather than depend on implementation-generated names of the new constructor.
+-- Test kernel reconstruction through the retained public `_proof_2`–`_proof_5` spellings.
+-- Retained constructors and fixed `_proof_2`–`_proof_5` spellings test kernel reconstruction.
+set_option linter.deprecated false in
 set_option linter.auxLemma false in
 private theorem kernel_image_reconstruction
     (f : A →ₗ[R] B) (g : B →ₗ[R] A) (hfg : f.comp g = LinearMap.id)
@@ -72,6 +73,9 @@ private theorem kernel_image_reconstruction
   · rw [hconstructor]
     rfl
 
+-- Test explicit kernel reconstruction through retained public `_proof_2`–`_proof_5` spellings.
+-- Explicit dictionaries test the retained constructor and fixed `_proof_2`–`_proof_5` API.
+set_option linter.deprecated false in
 set_option linter.auxLemma false in
 private theorem kernel_image_reconstruction_explicit
     (f : A →ₗ[R] B) (g : B →ₗ[R] A) (hfg : f.comp g = LinearMap.id)
@@ -110,7 +114,8 @@ private theorem kernel_image_reconstruction_explicit
   · rw [hconstructor]
     rfl
 
-set_option linter.auxLemma false in
+-- Identity-composed sections compare retained and modern reconstruction coordinates.
+set_option linter.deprecated false in
 private theorem identity_composite_section_coordinates
     (f : A →ₗ[R] B) (g : B →ₗ[R] A) (hfg : f.comp g = LinearMap.id)
     (p : f.ker × B) (a : A) :
@@ -130,17 +135,15 @@ private theorem identity_composite_section_coordinates
           (R := R) (A := A) (B := B) (f := f)
           (g := (LinearMap.id : A →ₗ[R] A).comp g)
           (hfg := by simpa only [LinearMap.id_comp] using hfg) :=
-    Bass.kernelProdEquivOfRightInverse.congr_simp.{uR, uA, uB}
-      (R := R) (A := A) (B := B) (f := f)
-      g ((LinearMap.id : A →ₗ[R] A).comp g)
-      (e_g := (LinearMap.id_comp g).symm) (hfg := hfg)
+    rfl
   constructor
   · rw [← hsame]
     exact LinearMap.kerProdEquivOfRightInverse_apply f g hfg p
   · rw [← hsame]
     exact LinearMap.kerProdEquivOfRightInverse_symm_fst f g hfg a
 
-set_option linter.auxLemma false in
+-- Explicit dictionaries compare retained and modern coordinates for identity-composed sections.
+set_option linter.deprecated false in
 private theorem identity_composite_section_coordinates_explicit
     (f : A →ₗ[R] B) (g : B →ₗ[R] A) (hfg : f.comp g = LinearMap.id)
     (p : f.ker × B) (a : A) :
@@ -160,9 +163,7 @@ private theorem identity_composite_section_coordinates_explicit
           R A B ringR groupA moduleA groupB moduleB f
           ((LinearMap.id : A →ₗ[R] A).comp g)
           (by simpa only [LinearMap.id_comp] using hfg) :=
-    @Bass.kernelProdEquivOfRightInverse.congr_simp.{uR, uA, uB}
-      R A B ringR groupA moduleA groupB moduleB f g
-      ((LinearMap.id : A →ₗ[R] A).comp g) (LinearMap.id_comp g).symm hfg
+    rfl
   constructor
   · rw [← hsame]
     exact LinearMap.kerProdEquivOfRightInverse_apply f g hfg p

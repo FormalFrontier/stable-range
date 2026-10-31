@@ -1,287 +1,75 @@
 # stable-range
 
 Reusable Lean theory of Bass stable range, unimodular rows, and applications.
-
-The mathematical API is source-independent; interpretation and coverage of
-motivating sources live in their source repositories. Import `StableRange` for
-the complete library, or import individual leaves below.
+The API is source-independent; import `StableRange` or individual leaves below.
 
 ## Headline results
 
-These results build on Mathlib's algebraic APIs. The quasiregular-ideal
-predicate and unit characterization are imported from the pinned
-`general-linear-groups` dependency; the proved stable-range consequences are
-developed here. Each link points to a declaration in this repository.
+These results use Mathlib. The quasiregular-ideal predicate and unit characterization
+come from pinned `general-linear-groups`; the stable-range consequences are proved
+here. The [guide](docs/GUIDE.md#headline-results) retains detailed statements,
+coordinate formulas, compatibility names and client inventories.
 
-### Bass conditions, quotients and local rings
-
-For arbitrary possibly noncommutative rings, the library defines finite
-[right-unimodular rows](StableRange/Basic.lean#L38),
-[Bass's `(S_n)` condition](StableRange/Basic.lean#L62), and
-[relational least stable range](StableRange/Basic.lean#L162). It proves
-[monotonicity](StableRange/Basic.lean#L150), invariance under ring equivalence,
-[descent along surjective homomorphisms](StableRange/Quotient.lean#L62), and
-[equivalence under quotients by quasiregular two-sided ideals](StableRange/Quotient.lean#L135).
-[Nontrivial local rings have least stable range one](StableRange/Local.lean).
-The [local-semiring interface](StableRange/Local.lean) also supplies
-`DivisionSemiring.isLocalRing` and `IsLocalRing.nonunitsAddSubmonoid_eq_bot`:
-every division semiring is local and its additive submonoid of nonunits is zero,
-without commutativity or additive inverses. For any commutative local semiring,
-`IsLocalRing.maximalIdeal_toAddSubmonoid` identifies the additive view of
-Mathlib's existing maximal ideal with the submonoid of nonunits. This bridges
-the general unit-theoretic interface to the commutative ideal object; it does not
-construct a second ideal or replace Mathlib's field-locality instance.
-The same [local-ring interface](StableRange/Local.lean) includes
-`IsLocalRing.mem_ringJacobson_iff`: for any possibly noncommutative ring with
-`IsLocalRing R`, membership in `Ring.jacobson R` is equivalent to being a
-nonunit. Locality already excludes the zero ring; neither commutativity nor
-an extra direct-finiteness hypothesis is imposed. This uses Mathlib's canonical
-locality and radical notions, alongside the existing local right-inverse unit
-support. The bound `IsLocalRing.le_ringJacobson` places every proper left ideal
-in the radical, with no two-sidedness assumption. The same interface proves
-`IsLocalRing.isMaximal_ringJacobson`,
-`IsLocalRing.eq_ringJacobson` and `IsLocalRing.isMaximal_iff_eq_ringJacobson`:
-the radical is a maximal left ideal, and a left ideal is maximal exactly when
-it is this radical. The quantifier ranges over all left ideals, with no
-two-sidedness assumption.
-The [canonical locality criterion](StableRange/Local.lean) also recognizes
-locality for any possibly noncommutative ring `R`:
-`IsLocalRing.of_ringJacobson_isMaximal` derives `IsLocalRing R` from
-`(Ring.jacobson R).IsMaximal`, and
-`IsLocalRing.iff_ringJacobson_isMaximal` states their equivalence.
-Maximality is among all left ideals, not only two-sided ones. No locality or
-separate nontriviality premise is required; properness of the radical supplies
-nontriviality. This ring criterion does not subsume Mathlib's commutative-semiring
-unique-maximal-ideal provider. On common `CommRing` ground, the existing
-`IsLocalRing.ringJacobson_eq_maximalIdeal` compares the same radical with Mathlib's
-maximal ideal once locality is supplied. Compare Weibel's local-ring discussion
-preceding Lemma I.2.2, which uses a unique maximal two-sided ideal with unit
-complement; the canonical left-ideal criterion is a reformulation of that discussion.
-The zero ring can satisfy `(S_0)`; this is not a least-index-one assertion.
-Witnesses multiply on the right, and reduction order matters outside
-commutative rings; see [Scope and conventions](#scope-and-conventions).
-
-[Dependent products](StableRange/Product.lean) preserve `(S_n)` for arbitrary
-index sets and row lengths. [Semisimple rings](StableRange/Semisimple.lean)
-satisfy `(S_1)`, as do rings with a semisimple quotient by the Jacobson radical;
-nilpotence of the radical is not required.
-For any ring satisfying `(S₁)`, [finite square matrix rings](StableRange/Matrix.lean)
-also satisfy `(S₁)`, including empty indices and the zero ring. For nonempty finite
-indices, the matrix ring satisfies `(S₁)` **if and only if** its coefficient ring
-does, for arbitrary possibly noncommutative rings; empty indices need not reflect
-`(S₁)`.
-For any idempotent `e` in such a ring, [its corner `eRe`](StableRange/Corner.lean#L35)
-also satisfies `(S₁)`, with identity `e`. This needs neither centrality nor
-fullness and includes `e = 0`, `e = 1` and zero rings.
-
-The [commutative semilocal `(S₁)` theorem](StableRange/Semilocal.lean)
-uses `[Finite (MaximalSpectrum R)]`, with no nontriviality, locality,
-Noetherianity or dimension bound. Finite Chinese remaindering chooses a
-coefficient that makes the shortened entry avoid every maximal ideal, hence
-a unit. For a distinguished entry `a` and right-unimodular pair `(a, b)`,
-the shortening is `b - a * t`, even when the maximal spectrum is empty.
-
-### Regular rings and module cancellation
-
-`(S_1)` implies [direct finiteness](StableRange/Regular.lean#L46), and
-is [equivalent to unit-valued shortening](StableRange/Regular.lean#L88)
-of every right-unimodular pair. For arbitrary rings, including the zero ring,
-[`(S_1)` is invariant under passage to the opposite ring](StableRange/Opposite.lean).
-It follows that the same condition supports unit-valued left-ordered shortening.
-Under von Neumann regularity it is
-[equivalent to unit-regularity](StableRange/Regular.lean#L365).
-An inner inverse constructs
-[complementary principal right ideals](StableRange/Regular.lean#L185).
-If the endomorphism ring of a module `M` satisfies `(S_1)`, then
-[`M` cancels from binary direct products](StableRange/Cancellation.lean#L44):
-`M × A ≃ M × B` implies `A ≃ B`, without finiteness or projectivity
-assumptions. For the regular right module, the statement uses the **opposite
-ring**. [Finite powers](StableRange/Cancellation.lean#L193) over a unit-regular
-ring cannot absorb a nontrivial complementary module.
-
-### Endomorphisms and matrices over division rings
-
-Endomorphisms of arbitrary vector spaces over division rings have
-[inner inverses](StableRange/DivisionRing.lean#L45), hence von Neumann-regular
-endomorphism rings. In finite dimension the inner inverse can be
-[an automorphism](StableRange/DivisionRing.lean#L87), yielding
-[unit-regular finite square matrix rings](StableRange/DivisionRing.lean#L133),
-including empty indices. By contrast, the endomorphism ring of a countable
-direct sum of copies of [any nonzero additive module](StableRange/Regular.lean#L287)
-is not unit-regular; the sum need not be a free module.
-
-### Row rank and repeated diagonal blocks
-
-For division-ring coefficients, [row rank](StableRange/DivisionRingRank.lean#L49)
-is the finrank of the image of the **left-linear row-vector map given by
-right multiplication**. Rectangular ranks have multiplication bounds,
-orthogonal-idempotent additivity and independent row/column reindexing.
-For square matrices, [normalized rank](StableRange/DivisionRingRank.lean#L338)
-is real row rank divided by index cardinality; identity rank one and positive
-bounds require a nonempty index. Every allowed
-[natural rank](StableRange/DivisionRingRank.lean#L158) and
-[normalized value](StableRange/DivisionRingRank.lean#L343) is realized.
-[Rectangular repeated blocks](StableRange/DivisionRingRank.lean#L327) scale
-rank by the block count; normalized square rank is
-[unchanged](StableRange/DivisionRingRank.lean#L421) for nonempty matrix and
-block indices. Empty square matrices have normalized rank zero.
-
-Separately, over arbitrary potentially nonassociative/noncommutative
-`NonAssocSemiring` coefficients, [`Matrix.repeatBlockHom`](StableRange/RepeatedBlock.lean#L59)
-is a ring homomorphism, [injective](StableRange/RepeatedBlock.lean#L77)
-when the block family is nonempty.
-
-### Commutative regularity and dimension bounds
-
-A commutative ring is von Neumann regular
-[iff it is reduced and has Krull dimension at most zero](StableRange/Commutative.lean#L111).
-[All its modules are flat](StableRange/Commutative.lean#L142), with no finite or
-Noetherian hypothesis. A commutative ring of dimension at most zero
-[satisfies `(S_1)`](StableRange/CommutativeStableRange.lean#L112) even without
-reducedness or nontriviality; *least* stable index one requires `Nontrivial`.
-Every commutative von Neumann-regular ring is unit-regular.
-
-More generally, a commutative Noetherian ring with `Ring.KrullDimLE d`
-[satisfies `(S_(d+1))`](StableRange/BassDimension.lean#L560), proved by finite
-prime avoidance and minimal-prime height induction, without an infinite-residue-
-fields premise.
-
-### Kernel decompositions with specified sections
-
-For a semiring `R`, an additive commutative group `M` and an additive
-commutative monoid `N`, linear maps `f : M →ₗ[R] N` and `s : N →ₗ[R] M`
-with `f.comp s = LinearMap.id` give the
-[kernel-product equivalence](StableRange/Module/SplitSurjective.lean)
-`LinearMap.kerProdEquivOfRightInverse f s h : (ker f × N) ≃ₗ[R] M`.
-Its forward map is `(k, n) ↦ k + s n`; its inverse has underlying
-coordinates `x - s (f x)` and `f x`. The scalar and both carrier universes
-are independent. Neither a ring of scalars nor finiteness, freeness or
-projectivity is required. The kernel coordinate retains the specified section.
-
-The same module compares this construction with Mathlib's right-split-exact
-sequence equivalence for an arbitrary injective first map whose range is the
-kernel, using the same section. The former `Bass.kernelProdEquivOfRightInverse`
-and its two characteristic lemmas remain deprecated compatibility names with
-their original ring and additive-group parameters. Use the `LinearMap` names
-for the semiring interface.
-
-### Coefficient-row splittings and free kernels
-
-For any ring `R`, a finite row `a : Fin n → R` defines a right-linear map over
-`Rᵐᵒᵖ` by `σ(x) = ∑ i, a i * x i`. [Right-unimodularity](StableRange/RowKernel.lean)
-is equivalent to surjectivity; equivalently, the map admits a section and the
-entries' [right span](StableRange/RowKernel.lean) is the whole module. A
-witness column `b` with `∑ i, a i * b i = 1` gives the
-[section](StableRange/RowKernel.lean) `y ↦ (fun i => b i * y)` and an
-[explicit kernel-product equivalence](StableRange/RowKernel.lean)
-`ker σ × R ≃ₗ[Rᵐᵒᵖ] (Fin n → R)`. Its inverse second coordinate is `σ`, and the
-[converse](StableRange/RowKernel.lean) requires this original-row identity,
-not merely an abstract equivalence. Empty rows and the zero ring are included,
-without stable-range or commutativity hypotheses. For commutative rings,
-[kernel transport](StableRange/RowKernel.lean) and the
-[comparison](StableRange/RowKernel.lean) use the same chosen witness in
-both splittings.
-
-For a right-unimodular row, the splitting makes its kernel finitely generated;
-[right-unimodularity together with kernel freeness](StableRange/RightRowCompletion.lean)
-is equivalent to the existence of two-sided rectangular inverse matrices
-`A : Matrix (Fin (m + 1)) (Fin n) R` and
-`B : Matrix (Fin n) (Fin (m + 1)) R` with first row `A 0 = a`.
-A supplied witness `b` and supplied kernel coordinates construct these matrices
-with first column of `B` equal to `b`: forward coordinates are `σ(x)` followed
-by the selected coordinates of `x - (fun i => b i * σ(x))`, and inverse
-coordinates reconstruct `b i * y 0` plus the kernel column. Conversely, the
-matrix pair gives the explicit kernel coordinates `k ↦ Fin.tail (A *ᵥ k)`
-with inverse `t ↦ B *ᵥ Fin.cons 0 t`, without assuming freeness. These are
-right-linear **column** actions for arbitrary rings; neither square size nor
-invariant basis number is assumed. An independent `M₂(ℤ)` client checks a
-nonzero kernel column and a noncentral multiplication order.
-
-For a successor-length right-unimodular row over an
-[invariant-basis-number ring](StableRange/SquareRightRowCompletionCriterion.lean), a
-genuinely free right coefficient kernel is equivalent to a square `GL`
-completion. Given a section column `b`, the constructed unit has the original
-first row and its inverse has first column `b`; its forward and inverse
-right-linear column actions are explicit. Supplied kernel coordinates of the
-matching size already yield a square unit without IBN, while the converse
-completion-to-free-kernel implication also needs no IBN. The dimension count
-from arbitrary free coordinates uses Mathlib's rectangular-matrix IBN theorem;
-no assertion is made about dimension-unspecified completion without IBN.
-
-The [countable endomorphism example](StableRange/CountableEndomorphism.lean)
-works for any semiring `S` and `S`-module `M` with additive inverses. In
-`E = End_S(ℕ →₀ M)`, even and odd coordinate maps give two-sided rectangular
-inverses of sizes two and one, so `E` fails invariant basis number even when
-`M` is zero. The original unary even-extraction row has a specified right
-inverse and a free right `Eᵐᵒᵖ`-coefficient kernel of rank one. If `M` is
-nontrivial, that kernel is nonzero and no square `GL₁(E)` matrix has the row
-as its first row, regardless of its inverse column.
-
-Over a commutative ring satisfying `(S_s)`, a right-unimodular coefficient
-row of length at least `s + 1`
-[has a free kernel](StableRange/RowKernel.lean), by explicit two-shear
-reduction. Independently of stable range, a *chosen row* of a square matrix
-with an actual two-sided inverse has
-[an explicit free-kernel equivalence](StableRange/RowKernel.lean) with the
-function module on complementary column indices. Both inverse identities
-and an actual row index are required, not a merely proposed inverse.
-
-For a commutative ring and a specified two-element Bézout witness
-`a₀b₀ + a₁b₁ = 1`, [explicit completion](StableRange/RowCompletionTwo.lean)
-has matrix rows `(a₀,a₁)` and `(-b₁,b₀)`, with an explicit inverse and
-original first-coordinate functional. The resulting kernel coordinate is
-`-b₁x₀ + b₀x₁`, whose inverse sends `t` to `(-a₁t,a₀t)`. A supplied
-`(Fin 2 → R) ≃ₗ[R] (R × P)` therefore gives `P ≃ₗ[R] R` through its
-original first projection, without a stable-range or freeness hypothesis on
-`P`. This commutative left-linear construction includes the zero ring; it
-does not assert arbitrary-rank or noncommutative row completion.
-
-### Finite-free cancellation and first-row completion
-
-Over a commutative ring satisfying `(S_s)`, an explicit presentation
-`P × (Fin m → R) ≃ₗ[R] (Fin (n + m) → R)` with `s ≤ n`
-[cancels the finite free summand](StableRange/FiniteFree.lean#L47), giving
-`P ≃ₗ[R] (Fin n → R)` and hence `Module.Free R P`. The module `P` may live
-in a different universe from `R`; it need not already be free. Noetherian
-Krull-dimension-upper-bound specializations state their additional hypotheses
-separately. The exact coordinate count applies even to the zero ring; it does
-not claim that different free presentations have a unique rank.
-
-For a right-unimodular row `a : Fin (n + 1) → R` under the same `(S_s)` and
-`s ≤ n` bound, [first-row completion](StableRange/RowCompletion.lean#L44)
-constructs a linear self-equivalence whose zeroth output coordinate on `x`
-equals `a ⬝ᵥ x`. Its matrix has literal first row `a` and an explicit
-[two-sided inverse](StableRange/RowCompletion.lean#L134). Here too the zero
-ring is allowed; the dimension-bound form separately requires Noetherianity.
-
-### Elementary diagonalization under `(S₁)`
-
-For a commutative ring satisfying Bass's `(S₁)`, an elementary left factor
-[makes the leading entry a unit](StableRange/ElementaryGeneration.lean#L40)
-in every invertible successor-rank matrix. The resulting
-[two-sided elementary diagonalization](StableRange/ElementaryGeneration.lean#L93)
-applies to every invertible `Fin n` matrix, including `n = 0`, and
-[transports to arbitrary finite decidable index types](StableRange/ElementaryGeneration.lean#L104).
-The proofs reuse the rectangular elementary shear, its first-column action,
-and the conditional all-rank unit-pivot induction from `general-linear-groups`.
-The condition is `(S₁)`, not a least-index-one assertion: it covers the zero
-ring as well as local and nonlocal examples, without requiring `Nontrivial` or
-locality. The diagonalization also supplies the determinant-one
-characterization below.
-
-### Determinants and elementary quotients under `(S₁)`
-
-[`DeterminantGeneration`](StableRange/DeterminantGeneration.lean) proves that
-an invertible finite matrix is elementary iff its determinant is one, and that
-the stable elementary subgroup is the kernel of the stable determinant, over
-any commutative ring satisfying `(S₁)`. It gives a quotient-to-units equivalence
-whose forward map is the existing quotient determinant and whose inverse is the
-existing rank-one section, with coefficient-map and local-ring comparison laws.
-The finite proof uses elementary two-sided diagonalization and the fact that
-a diagonal of units with product one is elementary. The stable and quotient
-results use finite-stage representatives and the rank-one section.
-The statements impose neither locality nor a nontriviality or positive-rank
-hypothesis. In particular, no general-ring determinant-one generation is claimed.
+- **[Bass conditions](StableRange/Basic.lean).** For arbitrary possibly noncommutative rings: right-unimodular
+  rows, `(S_n)`, least stable index, monotonicity, ring-equivalence invariance and
+  [surjective descent/quasiregular quotients](StableRange/Quotient.lean).
+  [Nontrivial local rings](StableRange/Local.lean) have least stable range one.
+- **Local interfaces.** [Division semirings](StableRange/Local.lean) are local with
+  zero nonunits submonoid; the maximal-ideal additive comparison requires a
+  commutative local semiring.
+  For rings, locality is equivalent to Jacobson-radical maximality among all left
+  ideals. In local rings the radical is the nonunits and contains every proper
+  left ideal; these statements do not assume two-sidedness of the left ideals.
+- **Preservation.** [Products](StableRange/Product.lean) preserve every `(S_n)`.
+  [Semisimple rings and semisimple radical quotients](StableRange/Semisimple.lean)
+  satisfy `(S₁)` without radical nilpotence. [Finite matrix rings](StableRange/Matrix.lean),
+  [idempotent corners](StableRange/Corner.lean) and [opposites](StableRange/Opposite.lean)
+  preserve `(S₁)`; matrix reflection needs nonempty indices, corners neither
+  centrality nor fullness. [Commutative semilocal rings](StableRange/Semilocal.lean)
+  satisfy `(S₁)` assuming only finite maximal spectrum, including the zero ring.
+- **Regularity and cancellation.** [`(S₁)`](StableRange/Regular.lean) implies direct
+  finiteness, is equivalent to unit-valued pair shortening, and under von Neumann
+  regularity is equivalent to unit-regularity. [Module cancellation](StableRange/Cancellation.lean)
+  needs `(S₁)` for `End(M)`, not finiteness or projectivity; regular right modules
+  use the opposite ring. [Division-ring vector-space endomorphisms](StableRange/DivisionRing.lean)
+  have inner inverses; finite dimension gives automorphic inner inverses and
+  unit-regular finite matrix rings, including empty indices.
+- **Ranks and blocks.** [Division-ring row rank](StableRange/DivisionRingRank.lean)
+  has rectangular bounds, reindexing, realization and repeated-block laws;
+  normalized empty square rank is zero. [Repeated-block homomorphisms](StableRange/RepeatedBlock.lean)
+  work over `NonAssocSemiring` coefficients, injectively for nonempty block families.
+- **Commutative dimension bounds.** [Regularity](StableRange/Commutative.lean) is
+  equivalent to reducedness and dimension at most zero; all modules over such
+  regular rings are flat.
+  [Dimension at most zero gives `(S₁)`](StableRange/CommutativeStableRange.lean)
+  without reducedness or nontriviality; commutative regular rings are unit-regular.
+  [Noetherian dimension at most `d` gives `(S_(d+1))`](StableRange/BassDimension.lean),
+  with no infinite-residue-fields premise.
+- **Specified splittings.** [A supplied linear right inverse of a linear map `f`](StableRange/Module/SplitSurjective.lean)
+  gives `ker f × N ≃ₗ[R] M` over a semiring, for an additive commutative group `M`
+  and additive commutative monoid `N`, in independent universes. [Right-unimodular
+  coefficient rows](StableRange/RowKernel.lean) split over `Rᵐᵒᵖ` for any ring, including empty
+  rows and the zero ring. Splitting alone does not give freeness.
+- **Completion and IBN.** [Right-unimodularity and free right kernels](StableRange/RightRowCompletion.lean)
+  characterize two-sided rectangular completion, preserving a supplied inverse
+  column. For successor-length rows, [square completion](StableRange/SquareRightRowCompletionCriterion.lean)
+  needs IBN only to infer kernel size; supplied matching coordinates and the
+  converse need no IBN. The [countable endomorphism example](StableRange/CountableEndomorphism.lean)
+  separates rectangular from square completion for nontrivial underlying modules,
+  even for a unary row.
+- **Commutative cancellation.** Under `(S_s)`, right-unimodular rows of length at
+  least `s + 1` have free kernels. [Finite-free cancellation](StableRange/FiniteFree.lean) uses an
+  explicit `P × R^m ≃ R^(n+m)` and `s ≤ n`, without prior freeness of `P`;
+  [completion](StableRange/RowCompletion.lean) preserves the literal first row.
+  Both allow zero rings; dimension-bound variants require Noetherianity.
+  [Two-entry completion](StableRange/RowCompletionTwo.lean) retains supplied Bézout
+  coefficients over commutative rings, with explicit scalar kernel coordinates.
+- **Elementary matrices and determinants.** For commutative rings satisfying `(S₁)`,
+  [elementary diagonalization](StableRange/ElementaryGeneration.lean) works in all
+  finite ranks, including zero. [Determinant generation](StableRange/DeterminantGeneration.lean)
+  identifies invertible determinant-one matrices with elementary matrices, the stable
+  elementary subgroup with the determinant kernel, and its quotient with units,
+  without locality, nontriviality or positive-rank hypotheses.
 
 ## Public interface and use
 
@@ -294,16 +82,25 @@ git = "https://github.com/FormalFrontier/stable-range.git"
 rev = "main"
 ```
 
-GitHub `main` contains reviewed releases. Lake resolves the latest release when
-this dependency is first added or updated; `lake-manifest.json` locks the resolved
-commit until the next update. To pin a particular release, replace `main` with a
-full commit from that history. Libraries used together must share a compatible
-Mathlib revision and toolchain; see [reproducible build](#reproducible-build) for
-this checkout's pinned environment.
+GitHub `main` contains reviewed releases.
+Lake resolves `main` when the dependency is first added or updated;
+`lake-manifest.json` locks that commit. To pin a release, use its full commit.
+Libraries used together must share a compatible Mathlib revision and toolchain.
+The root re-exports the leaves below, not the tests or their fixtures.
 
-Use ordinary `import StableRange` for the complete interface, or import a leaf
-below. The root publicly re-exports the listed leaves. The tests are not imported
-by the root and add no public library declarations.
+```lean
+module
+import StableRange
+
+example (R : Type*) [CommRing R] [IsNoetherianRing R]
+    (d : ℕ) [Ring.KrullDimLE d R] : Bass.StableRangeCondition R (d + 1) :=
+  Bass.stableRangeCondition_succ_of_krullDimLE
+```
+
+The [guide](docs/GUIDE.md#public-interface-and-use) preserves the full example,
+including the free-kernel application and detailed test-only client inventories.
+
+## Modules
 
 | Module (under `StableRange`) | Representative interface |
 | --- | --- |
@@ -339,148 +136,27 @@ by the root and add no public library declarations.
 Names without an explicit namespace in the table are in `Bass`, except the
 division-ring and matrix entries as indicated. The local radical characteristic
 and additive-object comparisons are in `IsLocalRing`; division-semiring locality
-is in `DivisionSemiring`. The [historical generated API](docs/API.md)
-shows all 121 native mathematical-leaf display sites, their complete visible
-signatures and 23 labeled authored notes for missing source docstrings.
-The [generation guide](docs/README.md) explains its scope and exact snapshot;
-[documentation credits](docs/CREDITS.md) record the reused adapter expression.
-The aggregate root and historical regression client are included as zero-site
-module records. This complete example uses only
-the ordinary root import:
+is in `DivisionSemiring`.
 
-```lean
-module
-import StableRange
-
-example (R : Type*) [CommRing R] [IsNoetherianRing R]
-    (d : ℕ) [Ring.KrullDimLE d R] : Bass.StableRangeCondition R (d + 1) :=
-  Bass.stableRangeCondition_succ_of_krullDimLE
-
-example (R : Type*) [CommRing R] (s n : ℕ)
-    (hs : Bass.StableRangeCondition R s) (a : Fin n → R)
-    (ha : Bass.IsRightUnimodular a) (hn : s + 1 ≤ n) :
-    Module.Free R (LinearMap.ker (Bass.coefficientRowLinearMap R n a)) :=
-  Bass.free_ker_coefficientRowLinearMap_of_stableRangeCondition R s n hs a ha hn
-```
-
-`tests/StableRangeTests/PublicAPIClient.lean` checks the ordinary root import
-with private regression proofs and the public zero-ring fixture
-`StableRangePublicAPIClient.zero_ring_condition`, which is not a production
-result. Its two extra Mathlib imports supply concrete `ZMod` fixtures and the
-Artinian dimension instance, not another route to project API. It covers every
-module family,
-independent universes, opposite division rings, nonassociative repeated-block
-coefficients, zero/empty boundaries, and a nonreduced ring. It is part of the
-default build. The second default client,
-`tests/StableRangeTests/ElementaryGenerationClient.lean`, independently checks
-empty-rank, rank-one and zero-ring boundaries and a nonlocal `(S₁)` example
-with an explicit elementary shear producing a unit pivot. The rank-one
-boundary is the public test fixture
-`StableRangeTests.ElementaryGenerationClient.rank_one_pivot`: an invertible
-rank-one matrix over a commutative ring already has a unit leading entry.
-These two fixtures are test-only, not production results; other helpers in
-those two clients are private. Separate applications of all three theorems use
-local rings, the nonlocal product of fields and finite Boolean indices. The
-independent boundary proofs do not rely on those applications.
-Further clients apply determinant-one generation to a nonlocal product matrix
-and its Boolean reindexing, and check the stable quotient on nonidentity units.
-`tests/StableRangeTests/SemilocalClient.lean` also establishes finite maximal
-spectrum for `ZMod 2 × ZMod 2` as the test-only public fixture
-`StableRangeTests.SemilocalClient.finite_maximalSpectrum_product`, checks a
-right-unimodular pair with neither entry a unit, and applies the semilocal
-theorem to its shortening and to the existing stable quotient determinant
-criterion. Its zero-ring and local-ring specializations use the same theorem.
-No positive-dimensional product-of-local-rings example is
-compiled here. The integer pair `(5, 2)` shows that `(S₁)` fails without the
-finite-maximal-spectrum hypothesis.
-
-For the local-semiring API, use `DivisionSemiring.isLocalRing K` directly or let
-instance search supply locality under `[DivisionSemiring K]`. The simplification
-lemma `IsLocalRing.nonunitsAddSubmonoid_eq_bot K` makes membership in that
-submonoid equivalent to equality with zero. Under `[CommSemiring R] [IsLocalRing R]`,
-rewrite by `IsLocalRing.maximalIdeal_toAddSubmonoid R` to consume the maximal ideal
-through its additive view. A `[Semifield K]` supplies both commutativity and division,
-so the two additive comparisons give `(IsLocalRing.maximalIdeal K).toAddSubmonoid = ⊥`.
-For fields, Mathlib's existing `IsLocalRing.maximalIdeal_eq_bot` and
-`Submodule.bot_toAddSubmonoid` give the same object comparison; neither an equality
-of locality proofs nor a specialized replacement instance is needed.
-
-The [division-semiring client](tests/StableRangeTests/DivisionSemiringClient.lean)
-uses the root import, explicitly installs the division-semiring locality instance
-inside generic field and semifield proofs, and consumes Mathlib's field unit criteria
-and maximal-ideal equality. The canonical nonnegative-real semifield supplies a
-semiring example without an additive inverse of one: two halves sum to one, but
-`1 + b ≠ 0` for every nonnegative real `b`. This concerns the canonical semiring
-operations, not arbitrary ring structures on the same carrier. Mathlib's `IsField`
-property is a semiring property and holds for this semifield; it is not an
-additive-inverse requirement. The real quaternion division ring supplies a
-noncommutative example. Its independent noncommutativity fixture and the
-nonnegative-real arithmetic witnesses do not assume the new conclusions.
-
-The [local Jacobson client](tests/StableRangeTests/LocalJacobsonClient.lean)
-compares the division-ring radical with zero and exhibits a nonzero nonunit and
-noncommuting elements in dual numbers over the real quaternions. The client theorem
-`StableRangeTests.LocalJacobsonClient.quaternion_dual_noncommutative`
-exhibits the embedded quaternion generators `i` and `j` as a noncommuting pair.
-The client uses Mathlib's existing dual-number locality instance and commutative
-maximal-ideal identification. It applies the proper-left-ideal bound to the ideal
-generated by `ε` and to the zero ideal, and obtains units `1 - y * r` whenever
-`r` belongs to a proper left ideal. The zero ring and the product of two fields
-provide boundaries;
-the latter has a nonunit outside its Jacobson radical.
-
-The [corner client](tests/StableRangeTests/CornerClient.lean) instantiates the
-theorem over `M₃(ZMod 4)` and `M₃(ℕ → ZMod 4)`, using a shared
-[matrix-unit fixture](tests/StableRangeTests/CornerMatrixFixtures.lean).
-Its idempotent is noncentral, and its ordered right-unimodular pair consists
-of noncommuting corner nonunits. It checks both an existential correction from
-`(S₁)` and an explicit corner unit that is not an ambient unit, as well as
-`e = 0`, `e = 1` and zero-ring cases.
-
-The [semisimple regression client](tests/StableRangeTests/SemisimpleClient.lean)
-checks complementary nonunit matrix projections and a stable-range shortening.
-Separately, it exhibits noncommuting matrix units through the public test-only
-theorem `StableRangeTests.SemisimpleClient.matrix_units_noncommutative`,
-not a production library result. The same client tests infinite and empty
-products, zero-index boundaries, a power-series ring with nonnilpotent Jacobson
-radical, and cancellation through opposite rings.
+The [historical generated API](docs/API.md), [manifest](docs/api-manifest.json) and
+[generation guide](docs/README.md) describe an older snapshot, not current signatures
+or line ranges: 121 mathematical-leaf display sites, 23 authored notes and zero-site
+root/client records. [Documentation credits](docs/CREDITS.md) record the adapter expression.
 
 ## Scope and conventions
 
-- Unimodularity uses right coefficients: `∑ i, r i * s i = 1`. Stable reduction
-  uses `r i - r₀ * t i`. The row-vector matrix map is **left-linear**, acting by
-  multiplication by the matrix on the right; no commutativity is silently added.
-- Division-semiring locality and the zero nonunits submonoid need neither
-  commutativity nor additive inverses. The maximal-ideal additive comparison
-  requires a commutative local semiring; stable-range and local Jacobson results
-  require a ring. No noncommutative maximal-ideal object comparison is asserted.
-- `(S_n)` is a property at an index, not a least-index assertion. `IsStableRange`
-  records a supplied least index. The zero ring satisfies `(S_0)`; assertions of
-  least index one require the stated nontrivial/local hypotheses. Zero-dimensional
-  `(S_1)` includes nonreduced rings such as `ZMod 4`.
-- `ℕ →₀ M` is the countable direct sum of copies of arbitrary `M`, not necessarily
-  a free or countably generated module. The shift theorem includes
-  `Module.End ℕ (ℕ →₀ ℤ)`.
-- Matrix unit-regularity permits an empty finite index. Normalization is real
-  division by the cardinality: it gives zero in the empty case. Normalized
-  identity-one and the advertised positive-size bounds use nonempty indices.
-  An empty repeated-block family is not claimed to give an injective map.
-- Right-coefficient kernel-product splitting works over arbitrary rings,
-  including empty rows and the zero ring; splitting alone does not imply a
-  free kernel. With a free right kernel, rectangular completion is equivalent
-  to right-unimodularity, without stable range, commutativity, nontriviality or
-  a specified matrix size. The square criterion needs IBN only to determine
-  the size of a genuinely free kernel; a specified square completion gives
-  freeness without IBN. The commutative free-kernel results separately use
-  either a stable-range bound or a chosen row of a specified two-sided square
-  inverse; the latter does not manufacture an index for an empty matrix.
-- Finite-free cancellation uses an explicit presentation and a stable-range
-  bound; no preliminary freeness or nontriviality hypothesis is needed.
-  First-row completion preserves the original row, not only its equivalence
-  class. Dimension-bound variants require a commutative noetherian ring.
-- This is not a general Morita-invariance theorem, stable general-linear-group
-  construction, arbitrary stably-free cancellation theorem, or K-theory library.
-  These results do not establish formal coverage of a whole source book.
+Rows use right witnesses `∑ i, r i * s i = 1` and reduction `r i - r₀ * t i`.
+Row-vector maps are left-linear, multiplying on the right; coefficient-row kernel
+and completion maps are right-linear column actions over the opposite ring.
+`(S_n)` is not a least-index assertion: the zero ring satisfies `(S_0)`;
+least index one needs the stated nontrivial/local hypotheses. Normalized identity
+rank one and positive bounds need nonempty indices. Splittings retain the supplied
+section/Bézout coefficients; a chosen invertible-matrix row needs an actual index
+and both inverse identities. Exact-size cancellation does not assert unique rank
+for zero rings. See the [full conventions](docs/GUIDE.md#scope-and-conventions).
+No general Morita invariance, general stably-free cancellation, stable general-linear-
+group construction, free-object-to-`K₀` bridge, whole-book coverage or general-ring
+determinant-one generation is claimed.
 
 ## Reproducible build
 
@@ -490,32 +166,16 @@ The exact environment is Lean `leanprover/lean4:v4.34.0-rc2`, Mathlib
 resolved graph. The pinned dependency is available from
 the [General Linear Groups GitHub repository](https://github.com/FormalFrontier/general-linear-groups).
 
-Install the pinned `lean-toolchain` with elan and, from the repository root,
-successfully fetch the matching Mathlib cache **before** building. The default
-build runs both `StableRange` and `StableRangeTests` (including the
-regression clients):
+Install the pinned toolchain with elan and fetch the matching Mathlib cache first.
+The default build includes `StableRange` and `StableRangeTests`:
 
 ```sh
 env LEAN_NUM_THREADS=2 lake exe cache get
 env LEAN_NUM_THREADS=2 lake --wfail -KwarningAsError=true build
 ```
 
-The cache fetch is also required after replacing `.lake` or changing pins;
-`LEAN_NUM_THREADS=2` does not cap child-process memory. To rebuild just the
-**project** while retaining the matching fetched dependency cache:
-
-```sh
-lake clean stable-range
-time env LEAN_NUM_THREADS=2 lake --wfail -KwarningAsError=true build
-```
-
-Do not use unqualified `lake clean` here: it removes dependency outputs.
-
-For the historical, source-bound native API and its limitations, see the
-[API reference](docs/API.md), [manifest](docs/api-manifest.json) and
-[generation guide](docs/README.md). The manifest describes an older snapshot,
-not this checkout; its historical signatures and line ranges are not current
-API documentation.
+`LEAN_NUM_THREADS=2` does not cap child-process memory. The [build guide](docs/GUIDE.md#reproducible-build)
+retains cache/rebuild details; unqualified `lake clean` removes dependency outputs.
 
 ## References
 

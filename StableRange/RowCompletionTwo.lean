@@ -286,7 +286,7 @@ theorem coefficientProductRow_apply_basis (R : Type u) [Semiring R]
     coefficientProductRow R P e i = (e (Pi.single i 1)).1 := rfl
 
 /-- Evaluation on the coordinate basis recovers the original first projection. -/
-@[simp]
+@[simp↓]
 theorem coefficientProductRow_apply (R : Type u) [CommRing R]
     (P : Type v) [AddCommGroup P] [Module R P]
     (e : (Fin 2 → R) ≃ₗ[R] (R × P)) (x : Fin 2 → R) :
@@ -302,7 +302,8 @@ theorem coefficientProductRow_witness (R : Type u) [CommRing R]
     let a := coefficientProductRow R P e
     let b := e.symm (1, 0)
     a 0 * b 0 + a 1 * b 1 = 1 := by
-  simpa [Bass.coefficientRowScalarMap_apply, dotProduct, Fin.sum_univ_two] using
+  simpa [Bass.coefficientRowScalarMap_apply, dotProduct, Fin.sum_univ_two,
+    -coefficientProductRow_apply] using
     (coefficientProductRow_apply R P e (e.symm (1, 0))).trans
       (by simp : (e (e.symm (1, 0))).1 = 1)
 

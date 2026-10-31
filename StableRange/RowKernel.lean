@@ -213,7 +213,7 @@ noncomputable abbrev kernelProdEquivOfRightInverse
     (LinearMap.ker f × B) ≃ₗ[R] A :=
   LinearMap.kerProdEquivOfRightInverse f g hfg
 
-@[simp, deprecated LinearMap.kerProdEquivOfRightInverse_apply (since := "2026-10-14")]
+@[deprecated LinearMap.kerProdEquivOfRightInverse_apply (since := "2026-10-14")]
 theorem kernelProdEquivOfRightInverse_apply
     {R A B : Type*} [Ring R]
     [AddCommGroup A] [Module R A] [AddCommGroup B] [Module R B]
@@ -223,7 +223,7 @@ theorem kernelProdEquivOfRightInverse_apply
   LinearMap.kerProdEquivOfRightInverse_apply f g hfg p
 
 /-- The second component of the inverse splitting is the original map. -/
-@[simp, deprecated LinearMap.kerProdEquivOfRightInverse_symm_snd (since := "2026-10-14")]
+@[deprecated LinearMap.kerProdEquivOfRightInverse_symm_snd (since := "2026-10-14")]
 theorem kernelProdEquivOfRightInverse_symm_snd
     {R A B : Type*} [Ring R]
     [AddCommGroup A] [Module R A] [AddCommGroup B] [Module R B]
@@ -236,8 +236,9 @@ section
 
 -- These formerly generated public names are now fixed deprecated interfaces,
 -- rather than dependencies on new unstable auxiliary declarations.
-set_option linter.auxLemma false
 
+-- Keep the public kernel-membership spelling `_proof_2` for compatibility clients.
+set_option linter.auxLemma false in
 /-- The section-dependent projection lies in the kernel. Compatibility spelling
 for the inverse-coordinate API of `LinearMap.kerProdEquivOfRightInverse`. -/
 theorem kernelProdEquivOfRightInverse._proof_2.{uA, uR, uB}
@@ -252,6 +253,8 @@ theorem kernelProdEquivOfRightInverse._proof_2.{uA, uR, uB}
     LinearMap.id_apply, LinearMap.comp_apply] using
     ((LinearMap.kerProdEquivOfRightInverse f g hcomp).symm a).1.2
 
+-- Keep the public forward-after-inverse spelling `_proof_3` for compatibility clients.
+set_option linter.auxLemma false in
 /-- Compatibility form of the forward-after-inverse identity for the kernel-product
 splitting. Prefer `LinearEquiv.apply_symm_apply` for
 `LinearMap.kerProdEquivOfRightInverse`. -/
@@ -272,6 +275,8 @@ theorem kernelProdEquivOfRightInverse._proof_3.{uA, uR, uB}
     LinearMap.kerProdEquivOfRightInverse_symm_snd] using
     (LinearMap.kerProdEquivOfRightInverse f g hcomp).apply_symm_apply a
 
+-- Keep the public inverse-after-forward spelling `_proof_4` for compatibility clients.
+set_option linter.auxLemma false in
 /-- Compatibility form of the inverse-after-forward identity for the kernel-product
 splitting. Prefer `LinearEquiv.symm_apply_apply` for
 `LinearMap.kerProdEquivOfRightInverse`. -/
@@ -296,6 +301,8 @@ theorem kernelProdEquivOfRightInverse._proof_4.{uA, uB, uR}
     simpa only [LinearMap.kerProdEquivOfRightInverse_symm_snd,
       LinearMap.kerProdEquivOfRightInverse_apply] using congrArg Prod.snd h
 
+-- Keep the public right-inverse evaluation spelling `_proof_5` for compatibility clients.
+set_option linter.auxLemma false in
 /-- Compatibility form of evaluating the right-inverse identity. Use
 `LinearMap.congr_fun`. -/
 theorem kernelProdEquivOfRightInverse._proof_5.{uB, uR, uA}
@@ -306,12 +313,20 @@ theorem kernelProdEquivOfRightInverse._proof_5.{uB, uR, uA}
       ∀ b, (f.comp g) b = (LinearMap.id : B →ₗ[R] B) b :=
   fun hfg b ↦ LinearMap.congr_fun hfg b
 
+-- Deprecate only the retained kernel-membership compatibility spelling `_proof_2`.
+set_option linter.auxLemma false in
 attribute [deprecated LinearMap.kerProdEquivOfRightInverse_symm_fst (since := "2026-10-14")]
   kernelProdEquivOfRightInverse._proof_2
+-- Deprecate only the retained forward-after-inverse compatibility spelling `_proof_3`.
+set_option linter.auxLemma false in
 attribute [deprecated LinearEquiv.apply_symm_apply (since := "2026-10-14")]
   kernelProdEquivOfRightInverse._proof_3
+-- Deprecate only the retained inverse-after-forward compatibility spelling `_proof_4`.
+set_option linter.auxLemma false in
 attribute [deprecated LinearEquiv.symm_apply_apply (since := "2026-10-14")]
   kernelProdEquivOfRightInverse._proof_4
+-- Deprecate only the retained right-inverse evaluation compatibility spelling `_proof_5`.
+set_option linter.auxLemma false in
 attribute [deprecated LinearMap.congr_fun (since := "2026-10-14")]
   kernelProdEquivOfRightInverse._proof_5
 
@@ -539,7 +554,6 @@ theorem rightCoefficientKernelProd_apply (R : Type u) [Ring R] {n : ℕ}
       p.1.1 + fun i ↦ b i * p.2 := by
   exact LinearMap.kerProdEquivOfRightInverse_apply _ _ _ _
 
-@[simp]
 theorem rightCoefficientKernelProd_symm_fst (R : Type u) [Ring R] {n : ℕ}
     (a b : Fin n → R) (hb : dotProductBilin R Rᵐᵒᵖ a b = 1)
     (x : Fin n → R) :

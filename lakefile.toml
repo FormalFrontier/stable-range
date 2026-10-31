@@ -1,5 +1,6 @@
 name = "stable-range"
 version = "0.1.0"
+lintDriver = "batteries/runLinter"
 defaultTargets = ["StableRange", "StableRangeTests"]
 
 [leanOptions]
@@ -25,3 +26,10 @@ name = "StableRange"
 name = "StableRangeTests"
 srcDir = "tests"
 roots = ["StableRangeTests"]
+
+[lean_lib.leanOptions]
+autoImplicit = false
+relaxedAutoImplicit = false
+weak.linter.mathlibStandardSet = true
+weak.linter.style.header = false
+weak.linter.privateModule = false
