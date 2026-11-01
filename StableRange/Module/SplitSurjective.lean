@@ -20,6 +20,8 @@ coordinate depends on the specified section.
 The scalar ring need only be a semiring. The source is an additive commutative
 group, while the target is only required to be an additive commutative monoid.
 The symmetric equivalence gives the decomposition `A ≃ₗ[R] ker f × B`.
+Extending a target endomorphism by the identity on the kernel intertwines with
+the corresponding product map under the equivalence for the specified section.
 For modules over a ring, the construction agrees with Mathlib's equivalence
 for a right split exact sequence, after identifying its injective first map
 with the kernel.
@@ -28,6 +30,7 @@ with the kernel.
 
 * `LinearMap.kerProdEquivOfRightInverse`: the kernel-product equivalence.
 * `LinearMap.kerProdEquivOfRightInverse_apply`: its forward formula.
+* `LinearMap.comp_kerProdEquivOfRightInverse`: the specified-section block action.
 * `LinearMap.kerProdEquivOfRightInverse_symm_fst` and
   `LinearMap.kerProdEquivOfRightInverse_symm_snd`: its inverse coordinates.
 * `LinearMap.kerProdEquivOfRightInverse_ofInjective`: comparison with a right
@@ -81,6 +84,8 @@ theorem lequivProdOfRightSplitExact_apply
 
 namespace LinearMap
 
+universe uR uA uM
+
 /-- The kernel-product equivalence of a linear map with a specified right
 inverse. It sends `(k, b)` to `k + g b`, and its inverse has coordinates
 `a - g (f a)` and `f a`. The splitting formula used for row kernels in
@@ -131,6 +136,34 @@ theorem kerProdEquivOfRightInverse_apply
     (hfg : f.comp g = LinearMap.id) (p : f.ker × B) :
     kerProdEquivOfRightInverse f g hfg p = p.1.1 + g p.2 := by
   rfl
+
+/-- Extending an endomorphism by the identity on the kernel intertwines with
+`prodMap id f` under the kernel-product equivalence for the specified section.
+The kernel is the first factor, and the target is the second factor. -/
+theorem comp_kerProdEquivOfRightInverse
+    {R : Type uR} [Semiring R]
+    {A : Type uA} [AddCommGroup A] [Module R A]
+    {M : Type uM} [AddCommMonoid M] [Module R M]
+    (p : A →ₗ[R] M) (j : M →ₗ[R] A)
+    (hpj : p.comp j = LinearMap.id) (f : Module.End R M) :
+    (j.comp (f.comp p) + (LinearMap.id - j.comp p)).comp
+        (kerProdEquivOfRightInverse p j hpj).toLinearMap =
+      (kerProdEquivOfRightInverse p j hpj).toLinearMap.comp
+        (prodMap (LinearMap.id : p.ker →ₗ[R] p.ker) f) := by
+  have hpj_apply (m : M) : p (j m) = m := LinearMap.congr_fun hpj m
+  apply LinearMap.ext
+  intro z
+  have hz : p (z.1.1 + j z.2) = z.2 := by
+    rw [map_add, mem_ker.mp z.1.property, zero_add, hpj_apply]
+  calc
+    _ = j (f z.2) + ((z.1.1 + j z.2) - j z.2) := by
+      simp only [comp_apply, add_apply, sub_apply, id_apply,
+        LinearEquiv.coe_toLinearMap, kerProdEquivOfRightInverse_apply, hz]
+    _ = j (f z.2) + z.1.1 := by rw [add_sub_cancel_right]
+    _ = z.1.1 + j (f z.2) := add_comm (j (f z.2)) z.1.1
+    _ = _ := by
+      simp only [comp_apply, LinearEquiv.coe_toLinearMap,
+        kerProdEquivOfRightInverse_apply, prodMap_apply, id_apply]
 
 /-- The first inverse coordinate is the section-dependent kernel element,
 whose underlying value is `a - g (f a)`. -/
