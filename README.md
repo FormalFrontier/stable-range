@@ -27,11 +27,19 @@ coordinate formulas, compatibility names and client inventories.
   preserve `(S₁)`; matrix reflection needs nonempty indices, corners neither
   centrality nor fullness. [Commutative semilocal rings](StableRange/Semilocal.lean)
   satisfy `(S₁)` assuming only finite maximal spectrum, including the zero ring.
+- **[Retract endomorphisms](StableRange/CategoryTheory/EndRetract.lean).**
+  In any preadditive category, `i : X ⟶ Z`, `p : Z ⟶ X` and `i ≫ p = 𝟙 X`
+  transfer `Bass.StableRangeCondition (End Z) 1` to
+  `Bass.StableRangeCondition (End X) 1` for the original canonical endomorphism
+  rings. Object and morphism universes are independent; no complementary object,
+  finite-length or nonzero hypothesis is needed.
 - **[Finite biproduct endomorphisms](StableRange/CategoryTheory/FiniteLocalEnd.lean).**
   In any preadditive category, a displayed finite biproduct of objects with local
-  endomorphism rings has canonical endomorphism ring satisfying `(S₁)`. Only that
-  biproduct is required, with independent index universe; empty families and the
-  zero biproduct are included. No vanishing of morphisms between summands is assumed.
+  endomorphism rings, and every displayed retract of that biproduct, have canonical
+  endomorphism rings satisfying `(S₁)`. Only that biproduct and, for the retract,
+  its supplied retraction are required, with independent index universe; empty
+  families and the zero biproduct are included. No vanishing of morphisms between
+  summands is assumed.
 - **Regularity and cancellation.** [`(S₁)`](StableRange/Regular.lean) implies direct
   finiteness, is equivalent to unit-valued pair shortening, and under von Neumann
   regularity is equivalent to unit-regularity.
@@ -96,9 +104,11 @@ GitHub `main` contains reviewed releases.
 Lake resolves `main` when the dependency is first added or updated;
 `lake-manifest.json` locks that commit. To pin a release, use its full commit.
 Libraries used together must share a compatible Mathlib revision and toolchain.
-For finite-biproduct endomorphisms and their module-theoretic supporting API,
-import `StableRange.CategoryTheory.FiniteLocalEnd` explicitly. The root import
-`StableRange` does not re-export these leaves or the tests and their fixtures.
+For the retract theorem, import `StableRange.CategoryTheory.EndRetract`.
+For finite-biproduct endomorphisms, their arbitrary-retract corollary and the
+module-theoretic supporting API, import `StableRange.CategoryTheory.FiniteLocalEnd`
+explicitly; it also imports the retract theorem. The root import `StableRange`
+does not re-export these leaves or the tests and their fixtures.
 
 ```lean
 module
@@ -133,8 +143,9 @@ including the free-kernel application and detailed test-only client inventories.
 | `CommutativeStableRange` | zero-dimensional stable range; commutative regular implies unit-regular |
 | `BassDimension` | finite-prime avoidance, prefix-ideal height bounds, `stableRangeCondition_succ_of_krullDimLE` |
 | `CategoryTheory.Cancellation` | `CategoryTheory.nonempty_iso_of_biprod_iso_of_end_stableRangeCondition_one` and the local-End corollary, with only the two displayed sums |
-| `CategoryTheory.EndCorner` | `CategoryTheory.Limits.biproduct.endCornerRingEquiv`, with projection and inclusion formulas and finite orthogonal completeness |
-| `CategoryTheory.FiniteLocalEnd` | `CategoryTheory.stableRangeCondition_one_end_biproduct` for a displayed finite biproduct with local summand endomorphism rings |
+| `CategoryTheory.EndCorner` | `CategoryTheory.endCornerRingEquivOfRetract` with extension and restriction formulas; `CategoryTheory.Limits.biproduct.endCornerRingEquiv` and finite orthogonal completeness |
+| `CategoryTheory.EndRetract` | `CategoryTheory.stableRangeCondition_one_end_of_retract` for the original canonical endomorphism rings of any displayed retraction |
+| `CategoryTheory.FiniteLocalEnd` | `CategoryTheory.stableRangeCondition_one_end_biproduct` and `CategoryTheory.stableRangeCondition_one_end_of_retract_biproduct` for any retract of the displayed finite local-End biproduct |
 | `Module.LocalEnd` | projective modules with local endomorphism semirings; unique maximal submodules in the finitely generated case, and simple radical quotients over rings |
 | `Module.Corner` | `IsIdempotentElem.cornerCongr`, `IsIdempotentElem.cornerOpEquiv`, `IsIdempotentElem.cornerEquivEnd` |
 | `Module.Decomposition` | `CompleteOrthogonalIdempotents.linearEquivPiRange`, with projection coordinates and summation inverse |
@@ -174,6 +185,17 @@ rank one and positive bounds need nonempty indices. Splittings retain the suppli
 section/Bézout coefficients; a chosen invertible-matrix row needs an actual index
 and both inverse identities. Exact-size cancellation does not assert unique rank
 for zero rings. See the [full conventions](docs/GUIDE.md#scope-and-conventions).
+In the retract API, the category and additive data are unchanged, and endomorphism
+multiplication is `a * b = b ≫ a`. For `i : X ⟶ Z`, `p : Z ⟶ X` and
+`hip : i ≫ p = 𝟙 X`, put
+`he := CategoryTheory.isIdempotentElem_comp_of_retract i p hip`.
+The equivalence `CategoryTheory.endCornerRingEquivOfRetract` has codomain the
+canonical `he.Corner`, with unit `p ≫ i`, not `𝟙 Z`.
+`CategoryTheory.val_endCornerRingEquivOfRetract_apply` gives the forward value
+`p ≫ a ≫ i`; `CategoryTheory.endCornerRingEquivOfRetract_symm_apply` gives
+`i ≫ c.1 ≫ p` for `c : he.Corner`. Ambient compression `r ↦ i ≫ r ≫ p`
+is not in general a ring homomorphism.
+
 No general Morita invariance, general stably-free cancellation, stable general-linear-
 group construction, free-object-to-`K₀` bridge, whole-book coverage or general-ring
 determinant-one generation is claimed.
@@ -194,7 +216,7 @@ env LEAN_NUM_THREADS=2 lake exe cache get
 env LEAN_NUM_THREADS=2 lake --wfail -KwarningAsError=true build
 ```
 
-The finite-biproduct leaf is built separately:
+The finite-biproduct leaf, which imports the retract theorem, is built separately:
 
 ```sh
 env LEAN_NUM_THREADS=2 lake --wfail -KwarningAsError=true build +StableRange.CategoryTheory.FiniteLocalEnd

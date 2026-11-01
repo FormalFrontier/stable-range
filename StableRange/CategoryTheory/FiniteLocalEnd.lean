@@ -11,6 +11,7 @@ public import StableRange.Module.Corner
 public import StableRange.Module.Decomposition
 public import StableRange.Module.SemisimpleQuotient
 public import StableRange.CategoryTheory.EndCorner
+public import StableRange.CategoryTheory.EndRetract
 public import Mathlib.CategoryTheory.Preadditive.Biproducts
 public import Mathlib.RingTheory.LocalRing.Defs
 
@@ -18,7 +19,8 @@ public import Mathlib.RingTheory.LocalRing.Defs
 # Stable range of finite biproduct endomorphism rings
 
 The endomorphism ring of a finite biproduct of objects with local endomorphism rings
-satisfies Bass's stable range condition in degree one.
+satisfies Bass's stable range condition in degree one. The same conclusion holds
+for every displayed retract of that biproduct.
 -/
 
 @[expose] public section
@@ -79,5 +81,17 @@ theorem stableRangeCondition_one_end_biproduct
     Ring.isSemisimpleRing_quotient_jacobson_of_linearEquiv_pi hp.linearEquivPiRange
   exact Bass.stableRangeCondition_one_of_isSemisimpleRing_quotient_jacobson
     (R := End (biproduct F))
+
+/-- Every retract of a finite biproduct of objects with local endomorphism
+rings has an endomorphism ring satisfying Bass's stable range condition in
+degree one. The index, object and morphism universes are independent. -/
+theorem stableRangeCondition_one_end_of_retract_biproduct
+    {C : Type u} [Category.{v} C] [Preadditive C]
+    {ι : Type w} [Finite ι] (F : ι → C) [HasBiproduct F]
+    {X : C} (i : X ⟶ biproduct F) (p : biproduct F ⟶ X)
+    (hip : i ≫ p = 𝟙 X) (h : ∀ j, IsLocalRing (End (F j))) :
+    Bass.StableRangeCondition (End X) 1 := by
+  exact stableRangeCondition_one_end_of_retract i p hip
+    (stableRangeCondition_one_end_biproduct F h)
 
 end CategoryTheory
