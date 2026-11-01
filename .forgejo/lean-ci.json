@@ -6,7 +6,8 @@
       "path": ".",
       "targets": [
         "StableRange",
-        "StableRangeTests"
+        "StableRangeTests",
+        "+StableRange.CategoryTheory.FiniteLocalEnd"
       ],
       "source_roots": [
         ".",

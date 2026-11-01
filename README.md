@@ -27,6 +27,11 @@ coordinate formulas, compatibility names and client inventories.
   preserve `(S₁)`; matrix reflection needs nonempty indices, corners neither
   centrality nor fullness. [Commutative semilocal rings](StableRange/Semilocal.lean)
   satisfy `(S₁)` assuming only finite maximal spectrum, including the zero ring.
+- **[Finite biproduct endomorphisms](StableRange/CategoryTheory/FiniteLocalEnd.lean).**
+  In any preadditive category, a displayed finite biproduct of objects with local
+  endomorphism rings has canonical endomorphism ring satisfying `(S₁)`. Only that
+  biproduct is required, with independent index universe; empty families and the
+  zero biproduct are included. No vanishing of morphisms between summands is assumed.
 - **Regularity and cancellation.** [`(S₁)`](StableRange/Regular.lean) implies direct
   finiteness, is equivalent to unit-valued pair shortening, and under von Neumann
   regularity is equivalent to unit-regularity.
@@ -91,7 +96,9 @@ GitHub `main` contains reviewed releases.
 Lake resolves `main` when the dependency is first added or updated;
 `lake-manifest.json` locks that commit. To pin a release, use its full commit.
 Libraries used together must share a compatible Mathlib revision and toolchain.
-The root re-exports the leaves below, not the tests or their fixtures.
+For finite-biproduct endomorphisms and their module-theoretic supporting API,
+import `StableRange.CategoryTheory.FiniteLocalEnd` explicitly. The root import
+`StableRange` does not re-export these leaves or the tests and their fixtures.
 
 ```lean
 module
@@ -126,6 +133,13 @@ including the free-kernel application and detailed test-only client inventories.
 | `CommutativeStableRange` | zero-dimensional stable range; commutative regular implies unit-regular |
 | `BassDimension` | finite-prime avoidance, prefix-ideal height bounds, `stableRangeCondition_succ_of_krullDimLE` |
 | `CategoryTheory.Cancellation` | `CategoryTheory.nonempty_iso_of_biprod_iso_of_end_stableRangeCondition_one` and the local-End corollary, with only the two displayed sums |
+| `CategoryTheory.EndCorner` | `CategoryTheory.Limits.biproduct.endCornerRingEquiv`, with projection and inclusion formulas and finite orthogonal completeness |
+| `CategoryTheory.FiniteLocalEnd` | `CategoryTheory.stableRangeCondition_one_end_biproduct` for a displayed finite biproduct with local summand endomorphism rings |
+| `Module.LocalEnd` | projective modules with local endomorphism semirings; unique maximal submodules in the finitely generated case, and simple radical quotients over rings |
+| `Module.Corner` | `IsIdempotentElem.cornerCongr`, `IsIdempotentElem.cornerOpEquiv`, `IsIdempotentElem.cornerEquivEnd` |
+| `Module.Decomposition` | `CompleteOrthogonalIdempotents.linearEquivPiRange`, with projection coordinates and summation inverse |
+| `Module.Radical` | `Module.jacobson_pi` for finite products of modules over arbitrary rings |
+| `Module.SemisimpleQuotient` | `Ring.isSemisimpleRing_quotient_jacobson_of_linearEquiv_pi` for finite decompositions of the canonical left regular module |
 | `Cancellation` | `exists_linearEquiv_of_prod_of_end_stableRangeCondition_one` and finite-power consequences |
 | `Module.SplitSurjective` | `LinearMap.kerProdEquivOfRightInverse`, forward and inverse coordinates over semirings, and right-split-exact comparison |
 | `RowKernel` | `kernelEquivOfLinearEquiv`, arbitrary-ring right-linear coefficient rows and split kernels; commutative free-kernel equivalences |
@@ -180,6 +194,12 @@ env LEAN_NUM_THREADS=2 lake exe cache get
 env LEAN_NUM_THREADS=2 lake --wfail -KwarningAsError=true build
 ```
 
+The finite-biproduct leaf is built separately:
+
+```sh
+env LEAN_NUM_THREADS=2 lake --wfail -KwarningAsError=true build +StableRange.CategoryTheory.FiniteLocalEnd
+```
+
 `LEAN_NUM_THREADS=2` does not cap child-process memory. The [build guide](docs/GUIDE.md#reproducible-build)
 retains cache/rebuild details; unqualified `lake clean` removes dependency outputs.
 
@@ -202,7 +222,11 @@ retains cache/rebuild details; unqualified `lake clean` removes dependency outpu
   field-locality instance using its local-semiring constructor and the
   group-with-zero unit criterion. The additive comparisons use its nonunits,
   submonoid, submodule and maximal-ideal interfaces. The proofs use these
-  definitions, theorems and constructions.
+  definitions, theorems and constructions. Finite-biproduct endomorphisms further
+  reuse its projective splitting, finite direct-sum decomposition, simple-module
+  and module-radical quotient interfaces; the proof decomposes the canonical left
+  regular module by right multiplication and identifies range endomorphisms with
+  opposite corners.
 - [Homological Algebra](https://github.com/FormalFrontier/homological-algebra),
   `HomologicalAlgebra.Preadditive.BiproductUniqueness`: the prior formalization
   approach for additive-envelope transport, canonical End ring comparison and
