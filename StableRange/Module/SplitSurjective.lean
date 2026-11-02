@@ -33,6 +33,8 @@ with the kernel.
 * `LinearMap.comp_kerProdEquivOfRightInverse`: the specified-section block action.
 * `LinearMap.kerProdEquivOfRightInverse_symm_fst` and
   `LinearMap.kerProdEquivOfRightInverse_symm_snd`: its inverse coordinates.
+* `LinearMap.range_id_sub_comp_eq_ker_of_rightInverse`: the range of the
+  complementary endomorphism is the kernel of the original map.
 * `LinearMap.kerProdEquivOfRightInverse_ofInjective`: comparison with a right
   split exact sequence having an arbitrary injective first map.
 
@@ -185,6 +187,28 @@ theorem kerProdEquivOfRightInverse_symm_snd
     (hfg : f.comp g = LinearMap.id) (a : A) :
     ((kerProdEquivOfRightInverse f g hfg).symm a).2 = f a := by
   rfl
+
+/-- The complementary endomorphism for a specified right inverse has range
+exactly the kernel of the original map. Only the source needs an additive
+group: membership in the kernel follows from the first inverse coordinate
+of `kerProdEquivOfRightInverse`. -/
+theorem range_id_sub_comp_eq_ker_of_rightInverse
+    {R : Type uR} [Semiring R]
+    {A : Type uA} [AddCommGroup A] [Module R A]
+    {B : Type uM} [AddCommMonoid B] [Module R B]
+    (f : A →ₗ[R] B) (g : B →ₗ[R] A)
+    (hfg : f.comp g = LinearMap.id) :
+    LinearMap.range (LinearMap.id - g.comp f) = f.ker := by
+  ext a
+  constructor
+  · rintro ⟨x, rfl⟩
+    change x - g (f x) ∈ f.ker
+    rw [← kerProdEquivOfRightInverse_symm_fst f g hfg x]
+    exact ((kerProdEquivOfRightInverse f g hfg).symm x).1.property
+  · intro ha
+    refine ⟨a, ?_⟩
+    change a - g (f a) = a
+    rw [mem_ker.mp ha, map_zero, sub_zero]
 
 /-- Identifying an injective first map with the kernel transports the
 kernel-product equivalence to Mathlib's `lequivProdOfRightSplitExact`.

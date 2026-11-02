@@ -65,7 +65,14 @@ coordinate formulas, compatibility names and client inventories.
   with no infinite-residue-fields premise.
 - **Specified splittings.** [A supplied linear right inverse of a linear map `f`](StableRange/Module/SplitSurjective.lean)
   gives `ker f × N ≃ₗ[R] M` over a semiring, for an additive commutative group `M`
-  and additive commutative monoid `N`, in independent universes. [Right-unimodular
+  and additive commutative monoid `N`, in independent universes. The prescribed
+  complementary endomorphism `id - g.comp f` has range exactly `ker f`.
+  [Complementary-range ranks](StableRange/Module/SplitSurjectiveRank.lean) over a
+  division ring satisfy `finrank K (range (id - g.comp f)) = finrank K M - finrank K N`
+  assuming only that `M` is finite-dimensional. A family with given equivalences
+  `N b ≃ₗ[K] F` has this rank equal to `finrank K M - finrank K F` at every `b`,
+  without a nonempty base or a finite-dimensionality assumption on `F`.
+  [Right-unimodular
   coefficient rows](StableRange/RowKernel.lean) split over `Rᵐᵒᵖ` for any ring, including empty
   rows and the zero ring. Splitting alone does not give freeness.
 - **Completion and IBN.** [Right-unimodularity and free right kernels](StableRange/RightRowCompletion.lean)
@@ -152,7 +159,8 @@ including the free-kernel application and detailed test-only client inventories.
 | `Module.Radical` | `Module.jacobson_pi` for finite products of modules over arbitrary rings |
 | `Module.SemisimpleQuotient` | `Ring.isSemisimpleRing_quotient_jacobson_of_linearEquiv_pi` for finite decompositions of the canonical left regular module |
 | `Cancellation` | `exists_linearEquiv_of_prod_of_end_stableRangeCondition_one` and finite-power consequences |
-| `Module.SplitSurjective` | `LinearMap.kerProdEquivOfRightInverse`, forward and inverse coordinates over semirings, and right-split-exact comparison |
+| `Module.SplitSurjective` | `LinearMap.kerProdEquivOfRightInverse`, forward and inverse coordinates over semirings, `LinearMap.range_id_sub_comp_eq_ker_of_rightInverse`, and right-split-exact comparison |
+| `Module.SplitSurjectiveRank` | `LinearMap.finrank_range_id_sub_comp_of_rightInverse` and its common-model family formula, with only ambient finite-dimensionality |
 | `RowKernel` | `kernelEquivOfLinearEquiv`, arbitrary-ring right-linear coefficient rows and split kernels; commutative free-kernel equivalences |
 | `RightRowCompletion` | supplied right-linear kernel coordinates and two-sided rectangular inverse matrices; converse kernel equivalence and free-kernel criterion |
 | `CountableEndomorphism` | even/odd coordinate splitting; non-IBN endomorphism ring and right-unimodular unary row with free nonzero kernel but no square completion |
